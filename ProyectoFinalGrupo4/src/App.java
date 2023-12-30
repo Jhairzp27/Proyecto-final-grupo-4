@@ -4,9 +4,9 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("Menu");
-        System.out.println("1. Transferir dinero \n 2. Pagar servicios\n + 3. Consultar Saldos  ");
-        System.out.println("4. Invertir \n 5. Recargar celular\n + 6. Cambiar contraseña  ");
-        System.out.println("7. Estado de Cuenta \n 8. Imprimir Estado de Cuenta ");
+        System.out.println("1. Transferir dinero \n2. Pagar servicios\n3. Consultar Saldos  ");
+        System.out.println("4. Invertir \n5. Recargar celular\n6. Cambiar contraseña  ");
+        System.out.println("7. Estado de Cuenta \n8. Imprimir Estado de Cuenta ");
         int opcionMenu = Integer.parseInt(sc.nextLine());
 
         switch (opcionMenu) {
