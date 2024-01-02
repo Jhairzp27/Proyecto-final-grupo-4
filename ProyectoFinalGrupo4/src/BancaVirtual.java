@@ -1,6 +1,5 @@
 public class BancaVirtual {
 
-}
 
     public void BancaVirtual() {
 
@@ -23,7 +22,8 @@ public class BancaVirtual {
     }
 
     public void recargarCelular() {
-
+        RecargarCelular oRecargarCelular = new RecargarCelular();
+        oRecargarCelular.validarNumeroCelular();
     }
 
     public void cambiarContrasena() {
@@ -34,6 +34,7 @@ public class BancaVirtual {
 
     }
 
-public void imprimirEstadoDeCuenta (){
-    
+    public void imprimirEstadoDeCuenta (){
+        
+    }
 }

@@ -8,7 +8,7 @@ public class App {
         System.out.println("4. Invertir \n5. Recargar celular\n6. Cambiar contraseña  ");
         System.out.println("7. Estado de Cuenta \n8. Imprimir Estado de Cuenta ");
         int opcionMenu = Integer.parseInt(sc.nextLine());
-
+        BancaVirtual oBancaVirtual = new BancaVirtual();
         switch (opcionMenu) {
             case 1:
 
@@ -23,7 +23,7 @@ public class App {
 
                 break;
             case 5:
-
+                oBancaVirtual.recargarCelular();
                 break;
             case 6:
 
