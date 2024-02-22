@@ -5,12 +5,15 @@ public class SexoDTO {
     private String SexoNombre;
     private String FechaCrea;
     private String FechaModifica;
+    private String Estado;
 
-    public SexoDTO(int idSexo, String sexoNombre, String fechaCrea, String fechaModifica) {
+    public SexoDTO(int idSexo, String sexoNombre, String fechaCrea, 
+                   String fechaModifica, String estado) {
         IdSexo = idSexo;
         SexoNombre = sexoNombre;
         FechaCrea = fechaCrea;
         FechaModifica = fechaModifica;
+        Estado = estado;
     }
 
     public SexoDTO() {
@@ -48,12 +51,21 @@ public class SexoDTO {
         FechaModifica = fechaModifica;
     }
 
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void getEstado(String estado) {
+        Estado = estado;
+    }
+
     @Override
     public String toString() {
         return "IdSexo:" + IdSexo +
                 " SexoNombre:" + SexoNombre +
                 " FechaCrea:" + FechaCrea +
                 " FechaModifica:" + FechaModifica +
+                " Estado:" + Estado +
                 "\n";
     }
 }

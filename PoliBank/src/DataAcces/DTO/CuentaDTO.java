@@ -3,17 +3,15 @@ package DataAcces.DTO;
 public class CuentaDTO {
     private int IdCuenta;
     private int IdPersona;
-    private String CuentaNumero;
     private double CuentaSaldo;
     private String FechaCrea;
     private String FechaModifica;
     private String Estado;
 
-    public CuentaDTO(int idCuenta, int idPersona, String cuentaNumero, double cuentaSaldo, String fechaCrea,
+    public CuentaDTO(int idCuenta, int idPersona, double cuentaSaldo, String fechaCrea,
             String fechaModifica, String estado) {
         IdCuenta = idCuenta;
         IdPersona = idPersona;
-        CuentaNumero = cuentaNumero;
         CuentaSaldo = cuentaSaldo;
         FechaCrea = fechaCrea;
         FechaModifica = fechaModifica;
@@ -37,14 +35,6 @@ public class CuentaDTO {
 
     public void setIdPersona(int idPersona) {
         IdPersona = idPersona;
-    }
-
-    public String getCuentaNumero() {
-        return CuentaNumero;
-    }
-
-    public void setCuentaNumero(String cuentaNumero) {
-        CuentaNumero = cuentaNumero;
     }
 
     public double getCuentaSaldo() {
@@ -83,7 +73,6 @@ public class CuentaDTO {
     public String toString() {
         return "IdCuenta: " + IdCuenta +
                 " IdPersona: " + IdPersona +
-                " CuentaNumero: " + CuentaNumero +
                 " CuentaSaldo: " + CuentaSaldo +
                 " FechaCrea: " + FechaCrea +
                 " FechaModifica: " + FechaModifica +

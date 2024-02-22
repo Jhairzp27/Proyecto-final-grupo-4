@@ -1,19 +1,23 @@
 -- database: ../database/DataBasePoliBank.sqlite
-INSERT INTO Sexo (SexoNombre
-                  ,FechaModifica) 
-VALUES  ('Masculino', NULL),
-        ('Femenino', NULL),
-        ('Hibrido', NULL);
+INSERT INTO Sexo (SexoNombre) 
+VALUES  ('Masculino'),
+        ('Femenino'),
+        ('Hibrido');
 
-INSERT INTO Persona (IdSexo, PersonaNombre, PersonaApellido, PersonaCedula, PersonaFechaNacimiento, FechaModifica) 
-VALUES (1, 'Sebastian', 'Sarasti', '1722217799', '2004-07-14', NULL);
+INSERT INTO Rol (IdRol_Padre, RolNombre)
+VALUES
+    (NULL, 'Administrador App'),
+    (1, 'Usuario');
+
+INSERT INTO Persona (IdSexo, IdRol, PersonaNombre, PersonaApellido, PersonaCedula, PersonaFechaNacimiento) 
+VALUES (1, 1, 'Sebastian', 'Sarasti', '1722217799', '2004-07-14');
 
 
 
-INSERT INTO Cuenta (IdPersona, CuentaNumero, CuentaSaldo, FechaModifica) 
-VALUES (1, 0000001, 500.75, NULL);
-INSERT INTO AccesoCuenta (IdCuenta, AccesoCuentaUsuario, AccesoCuentaClave, FechaModifica)
-VALUES ((SELECT IdCuenta FROM Cuenta WHERE CuentaNumero = 0000001), 'administrador', 'profe1234', NULL);
+INSERT INTO Cuenta (IdPersona, CuentaSaldo) 
+VALUES (1, 500.75);
+INSERT INTO AccesoCuenta (IdCuenta, AccesoCuentaClave)
+VALUES  (1, 'profe1234');
 
 -- INSERT INTO AccesoCuenta (AccesoCuentaUsuario
 --                           ,IdCuenta
@@ -22,7 +26,5 @@ VALUES ((SELECT IdCuenta FROM Cuenta WHERE CuentaNumero = 0000001), 'administrad
 -- VALUES('administrador', (SELECT IdCuenta FROM Cuenta WHERE IdCuenta=IdAccesoCuenta),'profe1234',NULL);
 
 
-INSERT INTO Historial (IdCuenta, HistorialMovimiento, FechaModifica) 
-VALUES (1, 'Depósito de $100', NULL);
-
-
+INSERT INTO Historial (IdCuenta, HistorialMovimiento) 
+VALUES (1, 'Depósito de $100');

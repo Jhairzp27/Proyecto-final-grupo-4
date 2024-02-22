@@ -3,6 +3,7 @@ package DataAcces.DTO;
 public class PersonaDTO {
     private int IdPersona;
     private int IdSexo;
+    private int IdRol;
     private String PersonaNombre;
     private String PersonaApellido;
     private String PersonaCedula;
@@ -11,10 +12,11 @@ public class PersonaDTO {
     private String FechaModifica;
     private String Estado;
 
-    public PersonaDTO(int idPersona, int idSexo, String personaNombre, String personaApellido, String personaCedula,
+    public PersonaDTO(int idPersona, int idSexo, int idRol,String personaNombre, String personaApellido, String personaCedula,
             String personaFechaNacimiento, String fechaCrea, String fechaModifica, String estado) {
         IdPersona = idPersona;
         IdSexo = idSexo;
+        IdRol = idRol;
         PersonaNombre = personaNombre;
         PersonaApellido = personaApellido;
         PersonaCedula = personaCedula;
@@ -41,6 +43,14 @@ public class PersonaDTO {
 
     public void setIdSexo(int idSexo) {
         IdSexo = idSexo;
+    }
+
+    public int getIdRol() {
+        return IdRol;
+    }
+
+    public void setIdRol(int idRol) {
+        IdRol = idRol;
     }
 
     public String getPersonaNombre() {
@@ -99,6 +109,7 @@ public class PersonaDTO {
     public String toString() {
         return "IdPersona: " + IdPersona +
                 " IdSexo: " + IdSexo +
+                " IdRol: " + IdRol +
                 " PersonaNombre: " + PersonaNombre +
                 " PersonaApellido: " + PersonaApellido +
                 " PersonaCedula: " + PersonaCedula +

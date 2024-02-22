@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class SexoDAO extends SQLiteDataHelper implements IDAO<SexoDTO> {
     public boolean crear(SexoDTO entidad) throws Exception {
         String query = "INSERT INTO SEXO (SexoNombre) VALUES(?)";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement prearedStatement = connection.prepareStatement(query);
             prearedStatement.setString(1, entidad.getSexoNombre());
             prearedStatement.executeUpdate();
@@ -33,12 +32,15 @@ public class SexoDAO extends SQLiteDataHelper implements IDAO<SexoDTO> {
         String query = "SELECT * FROM SEXO WHERE Estado = 'A'";
         List<SexoDTO> lista = new ArrayList<>();
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                SexoDTO sexoDTO = new SexoDTO(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4));
+                SexoDTO sexoDTO = new SexoDTO(resultSet.getInt(1),
+                                              resultSet.getString(2), 
+                                              resultSet.getString(3),
+                                              resultSet.getString(4),
+                                              resultSet.getString(5));
                 lista.add(sexoDTO);
             }
         } catch (SQLException e) {
@@ -51,12 +53,15 @@ public class SexoDAO extends SQLiteDataHelper implements IDAO<SexoDTO> {
         String query = "SELECT * FROM SEXO WHERE IdSexo=" + id.toString() + " AND Estado = 'A'";
         SexoDTO oSexoDTO = new SexoDTO();
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                oSexoDTO = new SexoDTO(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4));
+                oSexoDTO = new SexoDTO(resultSet.getInt(1),
+                                       resultSet.getString(2), 
+                                       resultSet.getString(3),
+                                       resultSet.getString(4),
+                                       resultSet.getString(5));
             }
         } catch (SQLException e) {
         }
@@ -65,13 +70,12 @@ public class SexoDAO extends SQLiteDataHelper implements IDAO<SexoDTO> {
 
     @Override
     public boolean actualizar(SexoDTO entidad) throws Exception {
-        String query = "UPDATE SEXO SET SexoNombre=?, FechaModifica=? WHERE IdSexo = ? ";
+        String query = "UPDATE SEXO SET SexoNombre=? WHERE IdSexo = ? ";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement prearedStatement = connection.prepareStatement(query);
             prearedStatement.setString(1, entidad.getSexoNombre());
-            prearedStatement.setString(2, "" + LocalDate.now());
-            prearedStatement.setInt(3, entidad.getIdSexo());
+            prearedStatement.setInt(2, entidad.getIdSexo());
             prearedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -83,7 +87,7 @@ public class SexoDAO extends SQLiteDataHelper implements IDAO<SexoDTO> {
     public boolean eliminar(Integer id) throws Exception {
         String query = "UPDATE SEXO SET Estado=? WHERE  IdSexo = " + id.toString();
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement prearedStatement = connection.prepareStatement(query);
             prearedStatement.setString(1, "X");
             prearedStatement.executeUpdate();

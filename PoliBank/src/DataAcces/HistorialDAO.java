@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +14,12 @@ public class HistorialDAO extends SQLiteDataHelper implements IDAO<HistorialDTO>
 
     @Override
     public boolean crear(HistorialDTO entidad) throws Exception {
-        String query = "INSERT INTO Historial ( HistorialMovimiento) VALUES (?)";
+        String query = "INSERT INTO Historial (IdCuenta, HistorialMovimiento) VALUES (?, ?)";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, entidad.getHistorialMovimiento());
+            preparedStatement.setInt(1, entidad.getIdCuenta());
+            preparedStatement.setString(2, entidad.getHistorialMovimiento());
 
             preparedStatement.executeUpdate();
             return true;
@@ -34,7 +34,7 @@ public class HistorialDAO extends SQLiteDataHelper implements IDAO<HistorialDTO>
         List<HistorialDTO> lista = new ArrayList<>();
         String query = "SELECT * FROM Historial WHERE Estado = 'A'";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -58,7 +58,7 @@ public class HistorialDAO extends SQLiteDataHelper implements IDAO<HistorialDTO>
         String query = "SELECT * FROM Historial WHERE IdHistorial=" + id.toString() + " AND Estado = 'A'";
         HistorialDTO historialDTO = new HistorialDTO();
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
@@ -78,14 +78,13 @@ public class HistorialDAO extends SQLiteDataHelper implements IDAO<HistorialDTO>
 
     @Override
     public boolean actualizar(HistorialDTO entidad) throws Exception {
-        String query = "UPDATE Historial SET IdCuenta=?, HistorialMovimiento=?, FechaModifica=? WHERE IdHistorial = ? AND Estado = 'A'";
+        String query = "UPDATE Historial SET IdCuenta=?, HistorialMovimiento=? WHERE IdHistorial = ? AND Estado = 'A'";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, entidad.getIdCuenta());
             preparedStatement.setString(2, entidad.getHistorialMovimiento());
-            preparedStatement.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
-            preparedStatement.setInt(4, entidad.getIdHistorial());
+            preparedStatement.setInt(3, entidad.getIdHistorial());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -98,7 +97,7 @@ public class HistorialDAO extends SQLiteDataHelper implements IDAO<HistorialDTO>
     public boolean eliminar(Integer id) throws Exception {
         String query = "UPDATE HISTORIAL SET Estado=? WHERE  IdHistorial = " + id.toString();
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement prearedStatement = connection.prepareStatement(query);
             prearedStatement.setString(1, "X");
             prearedStatement.executeUpdate();

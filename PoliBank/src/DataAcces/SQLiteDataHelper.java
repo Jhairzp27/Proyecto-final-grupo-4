@@ -12,7 +12,7 @@ public abstract class SQLiteDataHelper {
 
     }
 
-    protected static synchronized Connection abrirConeccion() throws Exception {
+    protected static synchronized Connection abrirConexion() throws Exception {
         try {
             if (coneccion == null)
                 coneccion = DriverManager.getConnection(direccionConeccionBaseDatos);

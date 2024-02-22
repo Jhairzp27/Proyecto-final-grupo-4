@@ -65,7 +65,6 @@ public class App {
         }
         // Editar fila
         CuentaDTO oC = new CuentaDTO();
-        oC.setCuentaNumero("2930193839");
         oC.setCuentaSaldo(1644.77);
         oC.setIdCuenta(1);
         oC.setIdPersona(1);
@@ -79,7 +78,6 @@ public class App {
         AccesoCuentaDAO acceso = new AccesoCuentaDAO();
         AccesoCuentaDTO acceso2 = new AccesoCuentaDTO();
         acceso2.setAccesoCuentaClave("1234");
-        acceso2.setAccesoCuentaUsuario("PEPE");
         acceso.crear(acceso2);
 
     }

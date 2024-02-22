@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +14,11 @@ public class AccesoCuentaDAO extends SQLiteDataHelper implements IDAO<AccesoCuen
 
     @Override
     public boolean crear(AccesoCuentaDTO entidad) throws Exception {
-        String query = "INSERT INTO AccesoCuenta ( AccesoCuentaUsuario, AccesoCuentaClave) VALUES (?, ?)";
+        String query = "INSERT INTO AccesoCuenta (AccesoCuentaClave) VALUES (?)";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, entidad.getAccesoCuentaUsuario());
-            preparedStatement.setString(2, entidad.getAccesoCuentaClave());
+            preparedStatement.setString(1, entidad.getAccesoCuentaClave());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -34,7 +32,7 @@ public class AccesoCuentaDAO extends SQLiteDataHelper implements IDAO<AccesoCuen
         List<AccesoCuentaDTO> lista = new ArrayList<>();
         String query = "SELECT * FROM AccesoCuenta WHERE Estado = 'A'";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -44,8 +42,7 @@ public class AccesoCuentaDAO extends SQLiteDataHelper implements IDAO<AccesoCuen
                         resultSet.getString(3),
                         resultSet.getString(4),
                         resultSet.getString(5),
-                        resultSet.getString(6),
-                        resultSet.getString(7));
+                        resultSet.getString(6));
                 lista.add(accesoCuentaDTO);
             }
         } catch (SQLException e) {
@@ -59,7 +56,7 @@ public class AccesoCuentaDAO extends SQLiteDataHelper implements IDAO<AccesoCuen
         String query = "SELECT * FROM AccesoCuenta WHERE IdAccesoCuenta=" + id.toString() + " AND Estado = 'A'";
         AccesoCuentaDTO accesoCuentaDTO = new AccesoCuentaDTO();
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
@@ -69,8 +66,7 @@ public class AccesoCuentaDAO extends SQLiteDataHelper implements IDAO<AccesoCuen
                         resultSet.getString(3),
                         resultSet.getString(4),
                         resultSet.getString(5),
-                        resultSet.getString(6),
-                        resultSet.getString(7));
+                        resultSet.getString(6));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,15 +76,13 @@ public class AccesoCuentaDAO extends SQLiteDataHelper implements IDAO<AccesoCuen
 
     @Override
     public boolean actualizar(AccesoCuentaDTO entidad) throws Exception {
-        String query = "UPDATE AccesoCuenta SET IdCuenta=?, AccesoCuentaUsuario=?, AccesoCuentaClave=?, FechaModifica=? WHERE IdAccesoCuenta = ? AND Estado = 'A'";
+        String query = "UPDATE AccesoCuenta SET IdCuenta=?, AccesoCuentaClave=? WHERE IdAccesoCuenta = ? AND Estado = 'A'";
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, entidad.getIdCuenta());
-            preparedStatement.setString(2, entidad.getAccesoCuentaUsuario());
-            preparedStatement.setString(3, entidad.getAccesoCuentaClave());
-            preparedStatement.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
-            preparedStatement.setInt(5, entidad.getIdAccesoCuenta());
+            preparedStatement.setString(2, entidad.getAccesoCuentaClave());
+            preparedStatement.setInt(4, entidad.getIdAccesoCuenta());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -101,7 +95,7 @@ public class AccesoCuentaDAO extends SQLiteDataHelper implements IDAO<AccesoCuen
     public boolean eliminar(Integer id) throws Exception {
         String query = "UPDATE CUENTA SET Estado=? WHERE  IdCuenta = " + id.toString();
         try {
-            Connection connection = abrirConeccion();
+            Connection connection = abrirConexion();
             PreparedStatement prearedStatement = connection.prepareStatement(query);
             prearedStatement.setString(1, "X");
             prearedStatement.executeUpdate();
