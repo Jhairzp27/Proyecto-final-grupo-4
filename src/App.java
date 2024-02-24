@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import DataAcces.AccesoCuentaDAO;
 import DataAcces.CuentaDAO;
 import DataAcces.PersonaDAO;
@@ -8,6 +10,7 @@ import DataAcces.DTO.AccesoCuentaDTO;
 import DataAcces.DTO.CuentaDTO;
 import DataAcces.DTO.PersonaDTO;
 import DataAcces.DTO.SexoDTO;
+import UserInterface.Form.MainMenuPanel;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -79,6 +82,26 @@ public class App {
         AccesoCuentaDTO acceso2 = new AccesoCuentaDTO();
         acceso2.setAccesoCuentaClave("1234");
         acceso.crear(acceso2);
+
+        //--------Interface principal-----------
+        // Crear el JFrame principal
+        JFrame frame = new JFrame("PoliBank");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Crear una instancia de MainMenuPanel
+        MainMenuPanel mainMenuPanel = new MainMenuPanel();
+
+        // Agregar MainMenuPanel al JFrame
+        frame.getContentPane().add(mainMenuPanel);
+
+        // Establecer el JFrame en pantalla completa
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        // Configurar el tamaño y hacer visible el JFrame
+        frame.setSize(800, 600); // Puedes ajustar el tamaño según tus necesidades
+        frame.setLocationRelativeTo(null); // Centrar en la pantalla
+        frame.setVisible(true);
+        
         
     }
 }
