@@ -23,7 +23,7 @@ public class PersonaDAO extends SQLiteDataHelper implements IDAO<PersonaDTO> {
             preparedStatement.setString(3, entidad.getPersonaNombre());
             preparedStatement.setString(4, entidad.getPersonaApellido());
             preparedStatement.setString(5, entidad.getPersonaCedula());
-            preparedStatement.setDate(6, java.sql.Date.valueOf(entidad.getPersonaFechaNacimiento()));
+            preparedStatement.setString(6, entidad.getPersonaFechaNacimiento());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -98,7 +98,7 @@ public class PersonaDAO extends SQLiteDataHelper implements IDAO<PersonaDTO> {
             preparedStatement.setString(3, entidad.getPersonaNombre());
             preparedStatement.setString(4, entidad.getPersonaApellido());
             preparedStatement.setString(5, entidad.getPersonaCedula());
-            preparedStatement.setDate(6, java.sql.Date.valueOf(entidad.getPersonaFechaNacimiento()));
+            preparedStatement.setString(6, entidad.getPersonaFechaNacimiento());
             preparedStatement.setInt(7, entidad.getIdPersona());
             preparedStatement.executeUpdate();
             return true;
