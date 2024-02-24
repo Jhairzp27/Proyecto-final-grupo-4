@@ -19,7 +19,7 @@ public class App {
         Screar.setSexoNombre("PachaLOver");
 
         // Crear sexo
-        s.crear(Screar);
+        // s.crear(Screar);
         // Leer todo de sexo
         for (SexoDTO filaSexoDTO : s.leerTodo()) {
             System.out.println(filaSexoDTO);

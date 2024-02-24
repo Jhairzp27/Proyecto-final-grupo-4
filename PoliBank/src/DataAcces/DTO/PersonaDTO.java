@@ -107,16 +107,16 @@ public class PersonaDTO {
 
     @Override
     public String toString() {
-        return "IdPersona: " + IdPersona +
-                " IdSexo: " + IdSexo +
-                " IdRol: " + IdRol +
-                " PersonaNombre: " + PersonaNombre +
-                " PersonaApellido: " + PersonaApellido +
-                " PersonaCedula: " + PersonaCedula +
-                " PersonaFechaNacimiento: " + PersonaFechaNacimiento +
-                " FechaCrea: " + FechaCrea +
-                " FechaModifica: " + FechaModifica +
-                " Estado: " + Estado +
+        return  "\n IdPersona: " + IdPersona +
+                "\n IdSexo: " + IdSexo +
+                "\n IdRol: " + IdRol +
+                "\n PersonaNombre: " + PersonaNombre +
+                "\n PersonaApellido: " + PersonaApellido +
+                "\n PersonaCedula: " + PersonaCedula +
+                "\n PersonaFechaNacimiento: " + PersonaFechaNacimiento +
+                "\n FechaCrea: " + FechaCrea +
+                "\n FechaModifica: " + FechaModifica +
+                "\n Estado: " + Estado +
                 "\n";
     }
 }
