@@ -12,7 +12,7 @@ public class PersonaDTO {
     private String FechaModifica;
     private String Estado;
 
-    public PersonaDTO(int idPersona, int idSexo, int idRol,String personaNombre, String personaApellido, String personaCedula,
+    public PersonaDTO(Integer idPersona, int idSexo, int idRol,String personaNombre, String personaApellido, String personaCedula,
             String personaFechaNacimiento, String fechaCrea, String fechaModifica, String estado) {
         IdPersona = idPersona;
         IdSexo = idSexo;
@@ -29,11 +29,11 @@ public class PersonaDTO {
     public PersonaDTO() {
     }
 
-    public int getIdPersona() {
+    public Integer getIdPersona() {
         return IdPersona;
     }
 
-    public void setIdPersona(int idPersona) {
+    public void setIdPersona(Integer idPersona) {
         IdPersona = idPersona;
     }
 
