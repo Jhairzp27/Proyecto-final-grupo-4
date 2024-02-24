@@ -37,8 +37,8 @@ public class App {
         // Borrado Logico Sexo
         s.eliminar(1);
 
-        Tabla persona
-        Mostrar todo
+        // Tabla persona
+        // Mostrar todo
         PersonaDAO oP = new PersonaDAO();
         for (PersonaDTO string : oP.leerTodo()) {
             System.out.println(string);
