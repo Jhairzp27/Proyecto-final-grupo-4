@@ -1,30 +1,15 @@
 -- database: ../database/DataBasePoliBank.sqlite
-INSERT INTO Sexo (SexoNombre) 
+INSERT INTO Sexo (Nombre) 
 VALUES  ('Masculino'),
-        ('Femenino'),
-        ('Hibrido');
+        ('Femenino');
 
-INSERT INTO Rol (IdRol_Padre, RolNombre)
-VALUES
-    (NULL, 'Administrador App'),
-    (1, 'Usuario');
-
-INSERT INTO Persona (IdSexo, IdRol, PersonaNombre, PersonaApellido, PersonaCedula, PersonaFechaNacimiento) 
-VALUES (1, 1, 'Sebastian', 'Sarasti', '1722217799', '2004-07-14');
-
-
-
-INSERT INTO Cuenta (IdPersona, CuentaSaldo) 
-VALUES (1, 500.75);
-INSERT INTO AccesoCuenta (IdCuenta, AccesoCuentaClave)
-VALUES  (1, 'profe1234');
-
--- INSERT INTO AccesoCuenta (AccesoCuentaUsuario
---                           ,IdCuenta
---                           ,AccesoCuentaClave          
---                           ,FechaModifica)
--- VALUES('administrador', (SELECT IdCuenta FROM Cuenta WHERE IdCuenta=IdAccesoCuenta),'profe1234',NULL);
-
-
-INSERT INTO Historial (IdCuenta, HistorialMovimiento) 
-VALUES (1, 'Depósito de $100');
+INSERT INTO Usuario (Nombre, Cedula, IdSexo, Clave) 
+VALUES 
+    ('Ángel Pastaz',      '1722217799', 1, 'userAngel'),
+    ('Christian Pisco',   '3453464543', 1, 'userChris'),
+    ('Isaac Proaño',      '3458209333', 1, 'userIsaac'),
+    ('Jhair Zambrano',    '4515316516', 1, 'userJhair'),
+    ('Jhordy Parra',      '0840120321', 1, 'userJhordy'),
+    ('Ruth Rueda',        '8403169822', 2, 'userRuth'),
+    ('Sebastián Ramos',   '4547898454', 1, 'userSebastianR'),
+    ('Sebastián Sarasti', '3216886176', 1, 'userSebastianS');

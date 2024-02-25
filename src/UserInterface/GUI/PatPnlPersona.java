@@ -17,7 +17,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
+import PersonaBL;
 import BusinessLogic.*;
 import DataAcces.DTO.PersonaDTO;
 import UserInterface.CustomerControl.PatButton;
