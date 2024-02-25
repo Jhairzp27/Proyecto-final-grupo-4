@@ -2,19 +2,13 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
-import DataAcces.AccesoCuentaDAO;
-import DataAcces.CuentaDAO;
-import DataAcces.PersonaDAO;
-import DataAcces.SexoDAO;
-import DataAcces.DTO.AccesoCuentaDTO;
-import DataAcces.DTO.CuentaDTO;
-import DataAcces.DTO.PersonaDTO;
-import DataAcces.DTO.SexoDTO;
+import DataAccess.SexoDAO;
+import DataAccess.DTO.SexoDTO;
 import UserInterface.Form.MainMenuPanel;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
+        /* Scanner sc = new Scanner(System.in);
         System.out.println("My primera DAC");
 
         SexoDTO Screar = new SexoDTO();
@@ -36,7 +30,7 @@ public class App {
         oS.setIdSexo(2);
         s.actualizar(oS);
         // Leer una fila de sexo
-        System.out.println(s.leer(2));
+        System.out.println(s.leerPor(2));
         // Borrado Logico Sexo
         s.eliminar(1);
 
@@ -56,7 +50,7 @@ public class App {
         P.setPersonaCedula("123455677");
         oP.actualizar(P);
         // Mostrar una fila
-        System.out.println(oP.leer(1));
+        System.out.println(oP.leerPor(1));
         // Eliminar una fila
         oP.eliminar(1);
 
@@ -73,7 +67,7 @@ public class App {
         oC.setIdPersona(1);
         // Mostrar una fila
         c.actualizar(oC);
-        System.out.println(c.leer(1));
+        System.out.println(c.leerPor(1));
         // Eliminar
         c.eliminar(1);
 
@@ -100,7 +94,7 @@ public class App {
         // Configurar el tamaño y hacer visible el JFrame
         frame.setSize(800, 600); // Puedes ajustar el tamaño según tus necesidades
         frame.setLocationRelativeTo(null); // Centrar en la pantalla
-        frame.setVisible(true);
+        frame.setVisible(true); */
         
         
     }
