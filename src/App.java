@@ -1,13 +1,9 @@
-import java.util.Scanner;
-
-import javax.swing.JFrame;
-
-import DataAccess.SexoDAO;
-import DataAccess.DTO.SexoDTO;
-import UserInterface.Form.MainMenuPanel;
+import UserInterface.GUI.MainGUI;
 
 public class App {
     public static void main(String[] args) throws Exception {
+
+        new MainGUI();
         /* Scanner sc = new Scanner(System.in);
         System.out.println("My primera DAC");
 
