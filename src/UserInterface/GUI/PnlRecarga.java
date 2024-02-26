@@ -28,7 +28,7 @@ public class PnlRecarga extends JPanel implements ActionListener {
                           saldoNuevo = saldoActual + montoRecarga;
                     usuarioDTO.setSaldo(saldoNuevo);
                     if (usuarioBL.actualizar(usuarioDTO))
-                        JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: " + usuarioDTO.getSaldo());
+                        JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
                     else
                         JOptionPane.showMessageDialog(this, "Error al realizar la recarga");
                 } else
@@ -45,7 +45,7 @@ public class PnlRecarga extends JPanel implements ActionListener {
      * FormDesing
      ************************/
 
-    private Label lblRecarga = new Label("Monto de recarga:");
+    private Label lblRecarga = new Label("Monto de recarga ($):");
     private TextField txtRecarga = new TextField(10);
     private Button btnRecargar = new Button("Recargar");
 
