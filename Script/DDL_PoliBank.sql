@@ -11,17 +11,17 @@ CREATE TABLE Sexo (
     FechaModifica           DATE
 );
 
-CREATE TABLE Usuario (
-    IdUsuario               INTEGER PRIMARY KEY AUTOINCREMENT,
-    Nombre                  TEXT NOT NULL UNIQUE,
-    Cedula                  VARCHAR(10) NOT NULL UNIQUE,
-    IdSexo                  INTEGER NOT NULL REFERENCES Sexo (IdSexo),
-    Clave                   TEXT NOT NULL,
-    Saldo                   REAL NOT NULL DEFAULT (0.0),
-    Estado                  VARCHAR(1) NOT NULL DEFAULT 'A',
-    FechaCrea               DATETIME NOT NULL DEFAULT (DATETIME('NOW', 'LOCALTIME')),
-    FechaModifica           DATE
-);
+-- CREATE TABLE Usuario (
+--     IdUsuario               INTEGER PRIMARY KEY AUTOINCREMENT,
+--     Nombre                  TEXT NOT NULL UNIQUE,
+--     Cedula                  VARCHAR(10) NOT NULL UNIQUE,
+--     IdSexo                  INTEGER NOT NULL REFERENCES Sexo (IdSexo),
+--     Clave                   TEXT NOT NULL,
+--     Saldo                   REAL NOT NULL DEFAULT (0.0),
+--     Estado                  VARCHAR(1) NOT NULL DEFAULT 'A',
+--     FechaCrea               DATETIME NOT NULL DEFAULT (DATETIME('NOW', 'LOCALTIME')),
+--     FechaModifica           DATE
+-- );
 
 CREATE TABLE Transferencia (
     IdTransferencia         INTEGER PRIMARY KEY AUTOINCREMENT,
