@@ -115,6 +115,26 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
         return usuarioDTO;
     }
 
+    public ArrayList<UsuarioDTO> leerSinUsuarioActual(Integer idUsuarioLogeado) throws Exception {
+        ArrayList<UsuarioDTO> usuarios = new ArrayList<>();
+        String consulta = "SELECT IdUsuario, Nombre FROM Usuario " 
+                        + "WHERE Estado = 'A' AND IdUsuario != ?";
+        try {
+            Connection conexion          = abrirConexion();
+            PreparedStatement declaracion = conexion.prepareStatement(consulta);
+            declaracion.setInt(1, idUsuarioLogeado);
+            ResultSet conjuntoResultante = declaracion.executeQuery();
+            while (conjuntoResultante.next()) {
+                UsuarioDTO usuarioDTO = new UsuarioDTO(conjuntoResultante.getInt(1),
+                                                        conjuntoResultante.getString(2));
+                usuarios.add(usuarioDTO);
+            }
+        } catch (SQLException e) {
+            throw new NewException(e.getMessage(), getClass().getName(), "leerPor()");
+        }
+        return usuarios;
+    }    
+
     @Override
     public boolean actualizar(UsuarioDTO entidad) throws Exception {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

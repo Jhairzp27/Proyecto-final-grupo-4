@@ -1,5 +1,6 @@
 package BusinessLogic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DataAccess.UsuarioDAO;
@@ -27,6 +28,10 @@ public class UsuarioBL {
     public UsuarioDTO leerPorUsername(String username) throws Exception {
         usuarioDTO = usuarioDAO.leerPorUsername(username);
         return usuarioDTO;
+    }
+
+    public ArrayList<UsuarioDTO> leerSinUsuarioActual(Integer idUsuarioLogeado) throws Exception {
+        return usuarioDAO.leerSinUsuarioActual(idUsuarioLogeado);
     }
 
     public boolean actualizar(UsuarioDTO usuarioDTO) throws Exception {

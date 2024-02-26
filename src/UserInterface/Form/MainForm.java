@@ -12,17 +12,21 @@ import UserInterface.GUI.PnlCambiarContrasena;
 import UserInterface.GUI.PnlLogin;
 import UserInterface.GUI.PnlMain;
 import UserInterface.GUI.PnlMenu;
+import UserInterface.GUI.PnlMovimientos;
 import UserInterface.GUI.PnlRecarga;
+import UserInterface.GUI.PnlTransferencia;
 
 public class MainForm extends JFrame {
-    PnlMenu pnlMenu = new PnlMenu();
+    UsuarioDTO usuarioDTO = null;
+    PnlMenu pnlMenu = null;
     JPanel  pnlMain = new PnlMain();
 
     public MainForm(String tilteApp, UsuarioDTO usuarioDTO, PnlLogin login) {
+        this.usuarioDTO = usuarioDTO;
         customizeComponent(tilteApp);
         pnlMenu.btnRecarga.addActionListener           (e -> setPanel(new PnlRecarga(usuarioDTO))); 
-        pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new PnlMain())); 
-        pnlMenu.btnMovimientos.addActionListener       (e -> setPanel(new PnlMain()));  
+        pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new PnlTransferencia(usuarioDTO))); 
+        pnlMenu.btnMovimientos.addActionListener       (e -> setPanel(new PnlMovimientos(usuarioDTO)));  
         pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new PnlMain())); 
         pnlMenu.btnImprimirEstado.addActionListener    (e -> setPanel(new PnlMain())); 
         pnlMenu.btnCambiarContrasena.addActionListener (e -> setPanel(new PnlCambiarContrasena(usuarioDTO))); 
@@ -42,6 +46,7 @@ public class MainForm extends JFrame {
     }
 
     private void customizeComponent(String tilteApp) {
+        pnlMenu = new PnlMenu(usuarioDTO);
         setTitle(tilteApp);
         setSize(930, 800);
         setResizable(false);
