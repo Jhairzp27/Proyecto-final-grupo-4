@@ -20,7 +20,9 @@ public class MainForm extends JFrame {
         pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new MainPanel())); 
         pnlMenu.btnImprimirEstado.addActionListener    (e -> setPanel(new MainPanel())); 
         pnlMenu.btnCambiarContrasena.addActionListener (e -> setPanel(new MainPanel())); 
-        pnlMenu.btnCerrarSesion.addActionListener      (e -> {dispose(); new PnlLogin();}); 
+        pnlMenu.btnCerrarSesion.addActionListener      (e -> {dispose(); 
+                                                        try {new PnlLogin();} 
+                                                        catch (Exception e1) {e1.printStackTrace();}}); 
     }
 
     private void setPanel(JPanel formularioPanel) {

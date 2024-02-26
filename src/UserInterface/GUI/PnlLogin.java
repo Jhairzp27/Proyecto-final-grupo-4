@@ -16,12 +16,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import DataAccess.UserDAO;
+import BusinessLogic.UsuarioBL;
 
 public class PnlLogin extends JFrame {
+    private UsuarioBL usuarioBL = new UsuarioBL();
     private List<Runnable> loginSuccessListeners = new ArrayList<>();
     
-    public PnlLogin() {
+    public PnlLogin() throws Exception {
         setTitle("Polibank Login/Register");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +44,7 @@ public class PnlLogin extends JFrame {
         setVisible(true);
     }
 
-    private void placeComponents(JPanel panel) {
+    private void placeComponents(JPanel panel) throws Exception {
         panel.setLayout(null);
 
         // Fuente
@@ -90,7 +91,11 @@ public class PnlLogin extends JFrame {
                 // Lógica para iniciar sesión
                 String username = userText.getText();
                 String password = new String(passwordText.getPassword());
-                handleLogin(username, password);
+                try {
+                    handleLogin(username, password);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         panel.add(loginButton);
@@ -120,9 +125,9 @@ public class PnlLogin extends JFrame {
         loginSuccessListeners.add(listener);
     }
 
-    private void handleLogin(String username, String password) {
+    private void handleLogin(String username, String password) throws Exception {
         // Lógica de inicio de sesión
-        boolean loginSuccessful = UserDAO.loginUsuario(username, password);
+        boolean loginSuccessful = usuarioBL.logear(username, password);
         if (loginSuccessful) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. ¡Bienvenido!");
             for (Runnable listener : loginSuccessListeners) {

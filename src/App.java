@@ -2,7 +2,7 @@ import UserInterface.Form.MainForm;
 import UserInterface.GUI.PnlLogin;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         PnlLogin login = new PnlLogin();
         login.setVisible(true); // Mostrar la ventana de Login al inicio
         login.addLoginSuccessListener(() -> {

@@ -4,8 +4,10 @@ public class UsuarioDTO {
     private Integer IdUsuario;
     private String  Nombre;
     private String  Cedula;
-    private Integer IdSexo;
+    private String  Username;
     private String  Clave;
+    private String  Email;
+    private Integer IdSexo;
     private Float   Saldo;
     private String  Estado;
     private String  FechaCrea;
@@ -16,8 +18,10 @@ public class UsuarioDTO {
     public UsuarioDTO(Integer idUsuario, 
                       String  nombre,
                       String  cedula,
-                      Integer idSexo,
+                      String  username,
                       String  clave,
+                      String  email,
+                      Integer idSexo,
                       Float   saldo,
                       String  estado,
                       String  fechaCrea,
@@ -25,8 +29,10 @@ public class UsuarioDTO {
         IdUsuario     = idUsuario;
         Nombre        = nombre;
         Cedula        = cedula;
-        IdSexo        = idSexo;
+        Username      = username;
         Clave         = clave;
+        Email         = email;
+        IdSexo        = idSexo;
         Saldo         = saldo;
         Estado        = estado;
         FechaCrea     = fechaCrea;
@@ -57,12 +63,12 @@ public class UsuarioDTO {
         Cedula = cedula;
     }
 
-    public Integer getIdSexo() {
-        return IdSexo;
+    public String getUsername() {
+        return Username;
     }
 
-    public void setIdSexo(Integer idSexo) {
-        IdSexo = idSexo;
+    public void setUsername(String username) {
+        Username = username;
     }
 
     public String getClave() {
@@ -72,6 +78,23 @@ public class UsuarioDTO {
     public void setClave(String clave) {
         Clave = clave;
     }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public Integer getIdSexo() {
+        return IdSexo;
+    }
+
+    public void setIdSexo(Integer idSexo) {
+        IdSexo = idSexo;
+    }
+
 
     public Float getSaldo() {
         return Saldo;
