@@ -1,18 +1,22 @@
-## Getting Started
+# <span style="color:rgb(0, 0, 255)">National Polytechnic Bank</span>
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+¡Bienvenido al proyecto del <span style="color:rgb(0, 0, 255)">National Polytechnic Bank</span>!
 
-## Folder Structure
+La aplicación de banca móvil tiene como propósito principal proporcionar a los estudiantes una herramienta conveniente para gestionar eficientemente sus finanzas, facilitando el acceso a información crucial y ofreciendo la opción de imprimir estados de cuenta para aquellos que prefieren la documentación física.
 
-The workspace contains two folders by default, where:
+## <span style="color:rgb(0, 0, 255)">Características principales y funcionalidades</span>
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- **Registro y autenticación de usuarios:** Los usuarios pueden registrarse en el sistema proporcionando su información básica y luego iniciar sesión para acceder a sus cuentas.
+  
+- **Lobby Virtual:** Después de iniciar sesión, los usuarios son dirigidos a un lobby virtual donde pueden encontrar información relevante sobre el banco, incluyendo noticias, promociones y actualizaciones importantes.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- **Operaciones financieras:**
+  - **Transferencias:** Los usuarios pueden transferir fondos entre sus cuentas o a cuentas de otros usuarios dentro del sistema.
+  - **Pago de servicios:** Los usuarios pueden pagar servicios como facturas de servicios públicos, tarjetas de crédito, etc., desde sus cuentas bancarias.
+  - **Estado de cuenta:** Los usuarios pueden generar y descargar estados de cuenta de sus cuentas bancarias.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## <span style="color:rgb(0, 0, 255)">Tecnologías utilizadas</span>
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- **Frontend:** Java
+- **Backend:** Java
+- **Base de datos:** MySQL
