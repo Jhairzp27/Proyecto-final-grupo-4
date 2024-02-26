@@ -1,7 +1,7 @@
 -- database: ../database/DataBasePoliBank.sqlite
--- DROP TABLE IF EXISTS Transferencia;
--- DROP TABLE IF EXISTS Usuario;
--- DROP TABLE IF EXISTS Sexo;
+DROP TABLE IF EXISTS Transferencia;
+DROP TABLE IF EXISTS Usuario;
+DROP TABLE IF EXISTS Sexo;
 
 CREATE TABLE IF NOT EXISTS Sexo (
     IdSexo                  INTEGER PRIMARY KEY AUTOINCREMENT,

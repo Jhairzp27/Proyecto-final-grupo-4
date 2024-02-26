@@ -25,194 +25,243 @@ import DataAccess.DTO.UsuarioDTO;
 import UserInterface.CustomerControl.DarkComboBoxUI;
 
 public class PnlRegistrationForm extends JFrame {
-	private PnlLogin parentLogin;
-	private JTextField nameField;
-	private JTextField cedulaField;
-	private JTextField usernameField;
-	private JPasswordField passwordField;
-	private JTextField emailField;
-	private UsuarioBL usuarioBL = new UsuarioBL();
-	private UsuarioDTO usuarioDTO = new UsuarioDTO();
-	private SexoBL sexoBL = new SexoBL();
-	private JComboBox<SexoDTO> sexoComboBox;
+    private PnlLogin parentLogin;
+    private JTextField nameField;
+    private JTextField cedulaField;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private JTextField emailField;
+    private UsuarioBL usuarioBL = new UsuarioBL();
+    private UsuarioDTO usuarioDTO = new UsuarioDTO();
+    private SexoBL sexoBL = new SexoBL();
+    private JComboBox<SexoDTO> sexoComboBox;
 
-	public PnlRegistrationForm(PnlLogin parentLogin) {
-		this.parentLogin = parentLogin;
-		setTitle("Registro de Usuario");
-		setSize(400, 300);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    public PnlRegistrationForm(PnlLogin parentLogin) {
+        this.parentLogin = parentLogin;
+        setTitle("Registro de Usuario");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		initUI();
-	}
+        initUI();
+    }
 
-	private void initUI() {
-		JPanel panel = new JPanel();
-		getContentPane().add(panel);
+    private void initUI() {
+        JPanel panel = new JPanel();
+        getContentPane().add(panel);
 
-		// Dark mode
-		panel.setBackground(new Color(40, 40, 40));
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        // Dark mode
+        panel.setBackground(new Color(40, 40, 40));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-		// Fuente
-		Font labelFont = new Font("Arial", Font.BOLD, 14);
-		Font textFont = new Font("Arial", Font.PLAIN, 14);
-		Color textColor = new Color(200, 200, 200);
+        // Configuración del tema oscuro para JOptionPane
+        UIManager.put("OptionPane.background", new Color(40, 40, 40));
+        UIManager.put("Panel.background", new Color(40, 40, 40));
+        UIManager.put("OptionPane.messageForeground", new Color(200, 200, 200));
 
-		nameField = new JTextField();
-		cedulaField = new JTextField();
-		usernameField = new JTextField();
-		passwordField = new JPasswordField();
-		emailField = new JTextField();
+        // Fuente
+        Font labelFont = new Font("Arial", Font.BOLD, 14);
+        Font textFont = new Font("Arial", Font.PLAIN, 14);
+        Color textColor = new Color(200, 200, 200);
 
-		JButton registerButton = new JButton("Registrarse");
-		configureDarkButton(registerButton);
-		registerButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				registerUser();
-			}
-		});
+        nameField = new JTextField();
+        cedulaField = new JTextField();
+        usernameField = new JTextField();
+        passwordField = new JPasswordField();
+        emailField = new JTextField();
 
-		JButton loginButton = new JButton("Iniciar Sesión");
-		configureDarkButton(loginButton);
-		loginButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// Lógica para mostrar la ventana de inicio de sesión
-				parentLogin.setVisible(true);
-				dispose();
-			}
-		});
+        // CONTROL CEDULA
+        cedulaField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = cedulaField.getText();
+                if (!isValidCedula(input)) {
+                    mostrarError("La cédula debe contener solo números y tener máximo 10 dígitos.");
+                    cedulaField.setText(""); // Limpia el campo sin no se cumple con los requisitos
+                } else {
+                    // Lógica para cédula válida, si es necesario
+                }
+            }
+        });
 
-		try {
-			sexoComboBox = new JComboBox<>(); // Cambio de Genero a SexoDTO
-			sexoComboBox.addItem(sexoBL.leerPor(1));
-			sexoComboBox.addItem(sexoBL.leerPor(2));
-			sexoComboBox.setUI(new DarkComboBoxUI());
-		} catch(Exception e) {}
+        JButton registerButton = new JButton("Registrarse");
+        configureDarkButton(registerButton);
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registerUser();
+            }
+        });
 
-		sexoComboBox.setBackground(new Color(40,40,40));
+        JButton loginButton = new JButton("Iniciar Sesión");
+        configureDarkButton(loginButton);
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Lógica para mostrar la ventana de inicio de sesión
+                parentLogin.setVisible(true);
+                dispose();
+            }
+        });
 
-		panel.add(createLabelWithField("Nombre:", nameField, labelFont, textFont, textColor));
-		panel.add(createLabelWithField("Cedula:", cedulaField, labelFont, textFont, textColor));
-		panel.add(createLabelWithField("Nombre de Usuario:", usernameField, labelFont, textFont, textColor));
-		panel.add(createLabelWithField("Contraseña:", passwordField, labelFont, textFont, textColor));
-		panel.add(createLabelWithField("Email:", emailField, labelFont, textFont, textColor));
-		panel.add(createLabelWithComboBox("Sexo:", sexoComboBox, labelFont, textFont, textColor));
-		panel.add(registerButton);
-		panel.add(loginButton);
+        try {
+            sexoComboBox = new JComboBox<>(); // Cambio de Genero a SexoDTO
+            sexoComboBox.addItem(sexoBL.leerPor(1));
+            sexoComboBox.addItem(sexoBL.leerPor(2));
+            sexoComboBox.setUI(new DarkComboBoxUI());
+        } catch (Exception e) {
+        }
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-		configureDarkButton(registerButton);
-		configureDarkButton(loginButton);
-		buttonPanel.add(registerButton);
-		buttonPanel.add(loginButton);
+        sexoComboBox.setBackground(new Color(40, 40, 40));
 
-		panel.add(buttonPanel);
-		buttonPanel.setBackground(new Color(40, 40, 40));
+        panel.add(createLabelWithField("Nombre:", nameField, labelFont, textFont, textColor));
+        panel.add(createLabelWithField("Cedula:", cedulaField, labelFont, textFont, textColor));
+        panel.add(createLabelWithField("Nombre de Usuario:", usernameField, labelFont, textFont, textColor));
+        panel.add(createLabelWithField("Contraseña:", passwordField, labelFont, textFont, textColor));
+        panel.add(createLabelWithField("Email:", emailField, labelFont, textFont, textColor));
+        panel.add(createLabelWithComboBox("Sexo:", sexoComboBox, labelFont, textFont, textColor));
+        panel.add(registerButton);
+        panel.add(loginButton);
 
-		setLocationRelativeTo(null);
-	}
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        configureDarkButton(registerButton);
+        configureDarkButton(loginButton);
+        buttonPanel.add(registerButton);
+        buttonPanel.add(loginButton);
 
-	private void configureDarkButton(JButton button) {
-		button.setBackground(new Color(60, 60, 60));
-		button.setForeground(Color.WHITE);
-		button.setBorderPainted(false); // No pintar el borde del botón
-	}
+        panel.add(buttonPanel);
+        buttonPanel.setBackground(new Color(40, 40, 40));
 
-	private JPanel createLabelWithField(String labelText, JTextField textField, Font labelFont, Font textFont, Color textColor) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-		panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        setLocationRelativeTo(null);
+    }
 
-		JLabel label = new JLabel(labelText);
-		label.setFont(labelFont);
-		label.setForeground(textColor);
-		panel.add(label);
+    private void configureDarkButton(JButton button) {
+        button.setBackground(new Color(60, 60, 60));
+        button.setForeground(Color.WHITE);
+        button.setBorderPainted(false); // No pintar el borde del botón
+    }
 
-		panel.add(Box.createHorizontalStrut(10));
+    private JPanel createLabelWithField(String labelText, JTextField textField, Font labelFont, Font textFont,
+            Color textColor) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		textField.setFont(textFont);
-		textField.setForeground(textColor);
-		textField.setBackground(new Color(80, 80, 80));
-		textField.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60))); // Añadir borde
+        JLabel label = new JLabel(labelText);
+        label.setFont(labelFont);
+        label.setForeground(textColor);
+        panel.add(label);
 
-		panel.add(textField);
+        panel.add(Box.createHorizontalStrut(10));
 
-		panel.setBackground(new Color(40, 40, 40));
+        textField.setFont(textFont);
+        textField.setForeground(textColor);
+        textField.setBackground(new Color(80, 80, 80));
+        textField.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60))); // Añadir borde
 
-		return panel;
-	}
+        panel.add(textField);
 
-	private JPanel createLabelWithComboBox(String labelText, JComboBox<SexoDTO> comboBox, Font labelFont, Font textFont, Color textColor) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-		panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel.setBackground(new Color(40, 40, 40));
 
-		JLabel label = new JLabel(labelText);
-		label.setFont(labelFont);
-		label.setForeground(textColor);
-		panel.add(label);
+        return panel;
+    }
 
-		panel.add(Box.createHorizontalStrut(10));
+    private JPanel createLabelWithComboBox(String labelText, JComboBox<SexoDTO> comboBox, Font labelFont, Font textFont,
+            Color textColor) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		comboBox.setFont(textFont);
-		comboBox.setForeground(textColor);
-		comboBox.setBackground(new Color(80, 80, 80));
-		comboBox.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60))); // Añadir borde
+        JLabel label = new JLabel(labelText);
+        label.setFont(labelFont);
+        label.setForeground(textColor);
+        panel.add(label);
 
-		panel.add(comboBox);
+        panel.add(Box.createHorizontalStrut(10));
 
-		panel.setBackground(new Color(40, 40, 40));
+        comboBox.setFont(textFont);
+        comboBox.setForeground(textColor);
+        comboBox.setBackground(new Color(80, 80, 80));
+        comboBox.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60))); // Añadir borde
 
-		return panel;
-	}
+        panel.add(comboBox);
 
-	private void registerUser() {
-		String name = nameField.getText();
-		String cedula = cedulaField.getText();
-		String username = usernameField.getText();
-		char[] passwordChars = passwordField.getPassword();
-		String password = new String(passwordChars);
-		String email = emailField.getText();
-		SexoDTO selectedSexo = (SexoDTO) sexoComboBox.getSelectedItem();
-		int idSexo = selectedSexo.getIdSexo();
+        panel.setBackground(new Color(40, 40, 40));
 
-		try{
-			usuarioDTO.setNombre(name);
-			usuarioDTO.setCedula(cedula);
-			usuarioDTO.setUsername(username);
-			usuarioDTO.setClave(password);
-			usuarioDTO.setEmail(email);
-			usuarioDTO.setIdSexo(idSexo);
-			
-			if (isStrongPassword(password) && isValidEmail(email)) {
-				// Lógica para registrar al usuario en la base de datos
-				usuarioBL.crear(usuarioDTO);
-				JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
-				parentLogin.setVisible(true);  // Hacer visible la ventana principal al cerrar esta ventana de registro
-				dispose(); // Cerrar la ventana después de registrar al usuario
-			} else {
-				JOptionPane.showMessageDialog(this, "La contraseña o el correo electrónico no cumplen con los requisitos.");
-			}
-		} catch(Exception e) {
-			JOptionPane.showMessageDialog(this, "Error al registrarse",
-			"ERROR", JOptionPane.OK_OPTION);
-		}
-	}
+        return panel;
+    }
 
-	private boolean isValidEmail(String email) {
-		return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$");
-	}
+    private void registerUser() {
+        String name = nameField.getText();
+        String cedula = cedulaField.getText();
+        String username = usernameField.getText();
+        char[] passwordChars = passwordField.getPassword();
+        String password = new String(passwordChars);
+        String email = emailField.getText();
+        SexoDTO selectedSexo = (SexoDTO) sexoComboBox.getSelectedItem();
+        int idSexo = selectedSexo.getIdSexo();
 
-	private boolean isStrongPassword(String password) {
-		return password.length() >= 8 && password.matches(".*[0-9].*") && password.matches(".*[a-zA-Z].*");
-	}
+        if (!isValidCedula(cedula)) {
+            mostrarError("La cédula debe contener solo números y tener máximo 10 dígitos.");
+        } else if (!isStrongPassword(password)) {
+            mostrarError("La contraseña debe tener al menos 8 caracteres y contener al menos un número.");
+        } else if (!isValidEmail(email)) {
+            mostrarError("El correo electrónico debe ser válido y contener '@' y '.'.");
+        } else {
+            // Lógica para registrar al usuario en la base de datos
+            usuarioDTO.setNombre(name);
+            usuarioDTO.setCedula(cedula);
+            usuarioDTO.setUsername(username);
+            usuarioDTO.setClave(password);
+            usuarioDTO.setEmail(email);
+            usuarioDTO.setIdSexo(idSexo);
+
+            try {
+                usuarioBL.crear(usuarioDTO);
+                mostrarMensaje("Usuario registrado correctamente.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                parentLogin.setVisible(true); // Hacer visible la ventana principal al cerrar esta ventana de registro
+                dispose(); // Cerrar la ventana después de registrar al usuario
+            } catch (Exception e) {
+                mostrarError("Error al registrarse");
+            }
+        }
+    }
+
+    private boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$");
+    }
+
+    private boolean isStrongPassword(String password) {
+        return password.length() >= 8 && password.matches(".*[0-9].*") && password.matches(".*[a-zA-Z].*");
+    }
+
+    private boolean isValidCedula(String cedula) {
+        return cedula.matches("\\d{1,10}");
+    }
+
+    private void mostrarMensaje(String mensaje, String titulo, int tipoMensaje) {
+        JOptionPane.showMessageDialog(this, crearDarkPanel(mensaje), titulo, tipoMensaje);
+    }
+
+    private void mostrarError(String mensaje) {
+        mostrarMensaje(mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private JPanel crearDarkPanel(String message) {
+        JPanel darkPanel = new JPanel();
+        darkPanel.setBackground(new Color(40, 40, 40));
+        darkPanel.setForeground(new Color(200, 200, 200));
+
+        JLabel label = new JLabel(message);
+        label.setForeground(new Color(200, 200, 200));
+        darkPanel.add(label);
+
+        return darkPanel;
+    }
 }
