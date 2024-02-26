@@ -1,8 +1,10 @@
+import BusinessLogic.DatabaseInitializer;
 import UserInterface.Form.MainForm;
 import UserInterface.GUI.PnlLogin;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        DatabaseInitializer.initializeDatabase();
         PnlLogin login = new PnlLogin();
         login.setVisible(true);
         login.addLoginSuccessListener(() -> {

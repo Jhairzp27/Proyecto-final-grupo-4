@@ -63,11 +63,6 @@ public class SexoDTO {
 
     @Override
     public String toString() {
-        return "\n" + getClass().getName() 
-             + "\n IdSexo:        " + getIdSexo()
-             + "\n Nombre:        " + getNombre()
-             + "\n Estado:        " + getEstado()
-             + "\n FechaCrea:     " + getFechaCrea()
-             + "\n FechaModifica: " + FechaModifica;
+        return getNombre();
     }
 }
