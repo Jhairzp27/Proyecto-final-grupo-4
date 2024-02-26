@@ -4,10 +4,10 @@ import UserInterface.GUI.PnlLogin;
 public class App {
     public static void main(String[] args) throws Exception {
         PnlLogin login = new PnlLogin();
-        login.setVisible(true); // Mostrar la ventana de Login al inicio
+        login.setVisible(true);
         login.addLoginSuccessListener(() -> {
-            login.dispose(); // Cerrar la ventana de Login una vez que se haya iniciado sesión correctamente
-            MainForm mainForm = new MainForm("PoliBank"); // Crear y mostrar el MainForm
+            login.dispose();
+            MainForm mainForm = new MainForm("PoliBank", login.getUsuarioLogeado(), login);
             mainForm.setVisible(true);
         });
     }

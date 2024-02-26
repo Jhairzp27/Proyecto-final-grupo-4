@@ -1,7 +1,6 @@
 package DataAccess;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,6 +89,32 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
         return usuarioDTO;
     }
 
+    public UsuarioDTO leerPorUsername(String username) throws Exception {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        String consulta = "SELECT * FROM Usuario WHERE Estado = 'A' AND Username = '" + username + "'";
+        try {
+            Connection conexion          = abrirConexion();
+            Statement declaracion        = conexion.createStatement();
+            ResultSet conjuntoResultante = declaracion.executeQuery(consulta);
+            while (conjuntoResultante.next()) {
+                usuarioDTO = new UsuarioDTO(conjuntoResultante.getInt(1),
+                                            conjuntoResultante.getString(2), 
+                                            conjuntoResultante.getString(3),
+                                            conjuntoResultante.getString(4),
+                                            conjuntoResultante.getString(5),
+                                            conjuntoResultante.getString(6),
+                                            conjuntoResultante.getInt(7),
+                                            conjuntoResultante.getFloat(8),
+                                            conjuntoResultante.getString(9),
+                                            conjuntoResultante.getString(10),
+                                            conjuntoResultante.getString(11));
+            }
+        } catch (SQLException e) {
+            throw new NewException(e.getMessage(), getClass().getName(), "leerPorUsername()");
+        }
+        return usuarioDTO;
+    }
+
     @Override
     public boolean actualizar(UsuarioDTO entidad) throws Exception {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -100,6 +125,8 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
                         + "Clave = ?,                     "
                         + "Email = ?,                     "
                         + "IdSexo = ?,                    "
+                        + "Saldo = ?,                     "
+                        + "Estado = ?,                    "
                         + "FechaModifica = ?              "
                         + "WHERE IdUsuario = ?            ";
         try {
@@ -111,8 +138,10 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
             declaracion.setString(4, entidad.getClave());
             declaracion.setString(5, entidad.getEmail());
             declaracion.setInt(6, entidad.getIdSexo());
-            declaracion.setString(7, formatoFecha.format(actual).toString());
-            declaracion.setInt(8, entidad.getIdUsuario());
+            declaracion.setFloat(7, entidad.getSaldo());
+            declaracion.setString(8, entidad.getEstado());
+            declaracion.setString(9, formatoFecha.format(actual).toString());
+            declaracion.setInt(10, entidad.getIdUsuario());
             declaracion.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -151,7 +180,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
     }
 
     public boolean loginUsuario(String username, String password){
-        String consulta = "SELECT * FROM Usuario WHERE Username = ? AND Clave = ?";
+        String consulta = "SELECT * FROM Usuario WHERE Estado = 'A' AND Username = ? AND Clave = ?";
         try {
             Connection conexion           = abrirConexion();
             PreparedStatement declaracion = conexion.prepareStatement(consulta);

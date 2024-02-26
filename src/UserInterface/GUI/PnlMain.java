@@ -1,4 +1,4 @@
-package UserInterface.Form;
+package UserInterface.GUI;
 
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 
 import UserInterface.CustomerControl.Estilo;
 
-public class MainPanel extends JPanel{
-    public MainPanel(){
+public class PnlMain extends JPanel{
+    public PnlMain(){
         customizeComponent();
     }
 

@@ -1,4 +1,4 @@
-package UserInterface.Form;
+package UserInterface.GUI;
 
 import java.awt.Dimension;
 
@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import UserInterface.CustomerControl.Button;
 
-public class MenuPanel extends JPanel {
+public class PnlMenu extends JPanel {
     public  Button   
             btnRecarga           = new Button("Recargar"),
             btnTransferencia     = new Button("Transferir"),
@@ -16,9 +16,10 @@ public class MenuPanel extends JPanel {
             btnVerEstado         = new Button("Ver Estado de Cuenta"),
             btnImprimirEstado    = new Button("Imprimir Estado de Cuenta"),
             btnCambiarContrasena = new Button("Cambiar Contraseña"),
+            btnBorrarCuenta      = new Button("Borrar Cuenta"),
             btnCerrarSesion      = new Button("Cerrar Sesión");
 
-    public MenuPanel(){
+    public PnlMenu(){
         customizeComponent();
     }
 
@@ -42,6 +43,7 @@ public class MenuPanel extends JPanel {
         add(btnVerEstado);
         add(btnImprimirEstado);
         add(btnCambiarContrasena);
+        add(btnBorrarCuenta);
         add(btnCerrarSesion);
 
         // add-copyright

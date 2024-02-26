@@ -19,8 +19,13 @@ public class UsuarioBL {
         return usuarioDAO.leerTodo();
     }
 
-    public UsuarioDTO leerPor(Integer idUsuario) throws Exception {
+    public UsuarioDTO leerPorId(Integer idUsuario) throws Exception {
         usuarioDTO = usuarioDAO.leerPor(idUsuario);
+        return usuarioDTO;
+    }
+
+    public UsuarioDTO leerPorUsername(String username) throws Exception {
+        usuarioDTO = usuarioDAO.leerPorUsername(username);
         return usuarioDTO;
     }
 
