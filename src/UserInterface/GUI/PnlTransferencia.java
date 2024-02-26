@@ -35,9 +35,11 @@ public class PnlTransferencia extends JPanel implements ActionListener {
     private UsuarioDTO usuarioDTOLogeado      = null;
     ArrayList<UsuarioDTO> usuariosDTOReciben  = null;
     private UsuarioBL  usuarioBL              = null;
+    private PnlMenu pnlMenu                   = null;
 
-    public PnlTransferencia(UsuarioDTO usuarioDTOLogeado) {
+    public PnlTransferencia(UsuarioDTO usuarioDTOLogeado, PnlMenu pnlMenu) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
+        this.pnlMenu           = pnlMenu;
         customerSizeControl();
         
         try {
@@ -186,6 +188,8 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                         transferenciaDTO.setMonto(monto);
                         transferenciaDTO.setFecha(formatoFecha.format(actual).toString());
 
+                        pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
+                        
                         TransferenciaBL transferenciaBL = new TransferenciaBL();
                         if (transferenciaBL.crear(transferenciaDTO))
                             JOptionPane.showMessageDialog(this, "Transferencia realizada con éxito");
