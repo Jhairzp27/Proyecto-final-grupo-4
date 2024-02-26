@@ -8,9 +8,4 @@ public class MainGUI {
     Login login = new Login();
     RegistrationForm registrarse = new RegistrationForm(login);
     UserDAO user = new UserDAO();
-
-    public static void main(String[] args) {
-        UserDAO.crearTabla();
-        new MainGUI();
-    }
 }

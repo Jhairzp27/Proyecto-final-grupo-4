@@ -1,8 +1,10 @@
+import DataAccess.UserDAO;
 import UserInterface.GUI.MainGUI;
 
 public class App {
     public static void main(String[] args) throws Exception {
 
+        UserDAO.crearTabla();
         new MainGUI();
         /* Scanner sc = new Scanner(System.in);
         System.out.println("My primera DAC");
