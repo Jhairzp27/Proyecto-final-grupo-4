@@ -1,6 +1,7 @@
 package DataAccess;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,14 +17,16 @@ import Framework.NewException;
 public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
     @Override
     public boolean crear(UsuarioDTO entidad) throws Exception {
-        String consulta = "INSERT INTO Usuario (Nombre, Cedula, IdSexo, Clave) VALUES (?, ?, ?, ?)";
+        String consulta = "INSERT INTO Usuario (Nombre, Cedula, Username, Clave, Email, IdSexo) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Connection conexion           = abrirConexion();
             PreparedStatement declaracion = conexion.prepareStatement(consulta);
             declaracion.setString(1, entidad.getNombre());
             declaracion.setString(2, entidad.getCedula());
-            declaracion.setInt(3, entidad.getIdSexo());
+            declaracion.setString(3, entidad.getUsername());
             declaracion.setString(4, entidad.getClave());
+            declaracion.setString(5, entidad.getEmail());
+            declaracion.setInt(6, entidad.getIdSexo());
             declaracion.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -44,12 +47,14 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
                 UsuarioDTO usuarioDTO = new UsuarioDTO(conjuntoResultante.getInt(1),
                                                        conjuntoResultante.getString(2), 
                                                        conjuntoResultante.getString(3),
-                                                       conjuntoResultante.getInt(4),
+                                                       conjuntoResultante.getString(4),
                                                        conjuntoResultante.getString(5),
-                                                       conjuntoResultante.getFloat(6),
-                                                       conjuntoResultante.getString(7),
-                                                       conjuntoResultante.getString(8),
-                                                       conjuntoResultante.getString(9));
+                                                       conjuntoResultante.getString(6),
+                                                       conjuntoResultante.getInt(7),
+                                                       conjuntoResultante.getFloat(8),
+                                                       conjuntoResultante.getString(9),
+                                                       conjuntoResultante.getString(10),
+                                                       conjuntoResultante.getString(11));
                 lista.add(usuarioDTO);
             }
         } catch (SQLException e) {
@@ -70,12 +75,14 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
                 usuarioDTO = new UsuarioDTO(conjuntoResultante.getInt(1),
                                             conjuntoResultante.getString(2), 
                                             conjuntoResultante.getString(3),
-                                            conjuntoResultante.getInt(4),
+                                            conjuntoResultante.getString(4),
                                             conjuntoResultante.getString(5),
-                                            conjuntoResultante.getFloat(6),
-                                            conjuntoResultante.getString(7),
-                                            conjuntoResultante.getString(8),
-                                            conjuntoResultante.getString(9));
+                                            conjuntoResultante.getString(6),
+                                            conjuntoResultante.getInt(7),
+                                            conjuntoResultante.getFloat(8),
+                                            conjuntoResultante.getString(9),
+                                            conjuntoResultante.getString(10),
+                                            conjuntoResultante.getString(11));
             }
         } catch (SQLException e) {
             throw new NewException(e.getMessage(), getClass().getName(), "leerPor()");
@@ -89,8 +96,10 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
         LocalDateTime actual = LocalDateTime.now();
         String consulta = "UPDATE Usuario SET Nombre = ?, "
                         + "Cedula = ?,                    "
-                        + "IdSexo = ?,                    "
+                        + "Username = ?,                  "
                         + "Clave = ?,                     "
+                        + "Email = ?,                     "
+                        + "IdSexo = ?,                    "
                         + "FechaModifica = ?              "
                         + "WHERE IdUsuario = ?            ";
         try {
@@ -98,10 +107,12 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
             PreparedStatement declaracion = conexion.prepareStatement(consulta);
             declaracion.setString(1, entidad.getNombre());
             declaracion.setString(2, entidad.getCedula());
-            declaracion.setInt(3, entidad.getIdSexo());
+            declaracion.setString(3, entidad.getUsername());
             declaracion.setString(4, entidad.getClave());
-            declaracion.setString(5, formatoFecha.format(actual).toString());
-            declaracion.setInt(6, entidad.getIdUsuario());
+            declaracion.setString(5, entidad.getEmail());
+            declaracion.setInt(6, entidad.getIdSexo());
+            declaracion.setString(7, formatoFecha.format(actual).toString());
+            declaracion.setInt(8, entidad.getIdUsuario());
             declaracion.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -137,5 +148,20 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
             throw new NewException(e.getMessage(), getClass().getName(), "getMaxId()");
         }
         return maxId;
+    }
+
+    public boolean loginUsuario(String username, String password){
+        String consulta = "SELECT * FROM Usuario WHERE Username = ? AND Clave = ?";
+        try {
+            Connection conexion           = abrirConexion();
+            PreparedStatement declaracion = conexion.prepareStatement(consulta);
+            declaracion.setString(1,username);
+            declaracion.setString(2,password);
+            ResultSet  conjuntoResultante = declaracion.executeQuery();
+            return conjuntoResultante.next();
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesion: " + e.getMessage());
+            return false;
+        }
     }
 }
