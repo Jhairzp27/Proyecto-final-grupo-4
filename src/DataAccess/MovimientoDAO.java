@@ -12,16 +12,19 @@ import Framework.NewException;
 public class MovimientoDAO extends SQLiteDataHelper {
     public ArrayList<MovimientoDTO> leerPorUsuarioActual(Integer idUsuarioLogeado) throws Exception {
         ArrayList<MovimientoDTO> movimientos = new ArrayList<>();
-        String consulta = "SELECT t.IdTransferencia IdTransferencia,                     "
-                        + "uenvia.Nombre UsuarioEnvia,                                   "
-                        + "urecibe.Nombre UsuarioRecibe,                                 "
-                        + "t.Monto Monto,                                                "
-                        + "t.Fecha Fecha                                                 "
-                        + "FROM Transferencia t                                          "
-                        + "JOIN Usuario uenvia ON t.IdUsuarioEnvia = uenvia.IdUsuario    "
-                        + "JOIN Usuario urecibe ON t.IdUsuarioRecibe = urecibe.IdUsuario "
-                        + "WHERE t.Estado = 'A'                                          "
-                        + "AND (t.IdUsuarioEnvia = ? OR t.IdUsuarioRecibe = ?)           ";
+        String consulta = "SELECT t.IdTransferencia IdTransferencia,                        "
+                        + "CASE                                                             "
+                        + "    WHEN t.IdUsuarioEnvia = -1 THEN 'N/A'                        "
+                        + "    ELSE uenvia.Nombre                                           "
+                        + "END UsuarioEnvia,                                                "
+                        + "urecibe.Nombre UsuarioRecibe,                                    "
+                        + "t.Monto Monto,                                                   "
+                        + "t.Fecha Fecha                                                    "
+                        + "FROM Transferencia t                                             "
+                        + "LEFT JOIN Usuario uenvia ON t.IdUsuarioEnvia = uenvia.IdUsuario  "
+                        + "JOIN Usuario urecibe ON t.IdUsuarioRecibe = urecibe.IdUsuario    "
+                        + "WHERE t.Estado = 'A'                                             "
+                        + "AND (t.IdUsuarioEnvia = ? OR t.IdUsuarioRecibe = ?)              ";
         try {
             Connection conexion            = abrirConexion();
             PreparedStatement  declaracion = conexion.prepareStatement(consulta);
@@ -29,11 +32,13 @@ public class MovimientoDAO extends SQLiteDataHelper {
             declaracion.setInt(2, idUsuarioLogeado);
             ResultSet  conjuntoResultante = declaracion.executeQuery();
             while (conjuntoResultante.next()) {
-                MovimientoDTO MovimientoDTO = new MovimientoDTO(conjuntoResultante.getInt(1),
-                                                                         conjuntoResultante.getString(2), 
-                                                                         conjuntoResultante.getString(3),
-                                                                         conjuntoResultante.getFloat(4),
-                                                                         conjuntoResultante.getString(5));
+                MovimientoDTO MovimientoDTO = new MovimientoDTO(
+                    conjuntoResultante.getInt(1),
+                    conjuntoResultante.getString(2),
+                    conjuntoResultante.getString(3),
+                    conjuntoResultante.getFloat(4),
+                    conjuntoResultante.getString(5)
+                );
                 movimientos.add(MovimientoDTO);
             }
         } catch (SQLException e) {
@@ -41,4 +46,5 @@ public class MovimientoDAO extends SQLiteDataHelper {
         }
         return movimientos;
     }
+    
 }

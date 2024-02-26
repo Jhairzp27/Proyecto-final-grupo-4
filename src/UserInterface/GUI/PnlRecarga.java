@@ -1,12 +1,17 @@
 package UserInterface.GUI;
 
 import javax.swing.*;
+
+import BusinessLogic.TransferenciaBL;
 import BusinessLogic.UsuarioBL;
+import DataAccess.DTO.TransferenciaDTO;
 import DataAccess.DTO.UsuarioDTO;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PnlRecarga extends JPanel implements ActionListener {
     private UsuarioBL usuarioBL   = new UsuarioBL();
@@ -29,9 +34,19 @@ public class PnlRecarga extends JPanel implements ActionListener {
                     float saldoActual = usuarioDTO.getSaldo(),
                           saldoNuevo = saldoActual + montoRecarga;
                     usuarioDTO.setSaldo(saldoNuevo);
-                    if (usuarioBL.actualizar(usuarioDTO)) {
-                        JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
+                    
+                    TransferenciaBL transferenciaBL = new TransferenciaBL();
+                    TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
+                    DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    LocalDateTime actual = LocalDateTime.now();
+                    transferenciaDTO.setIdUsuarioEnvia(-1);
+                    transferenciaDTO.setIdUsuarioRecibe(usuarioDTO.getIdUsuario());
+                    transferenciaDTO.setMonto(montoRecarga);
+                    transferenciaDTO.setFecha(formatoFecha.format(actual).toString());                        
+                    
+                    if (usuarioBL.actualizar(usuarioDTO) && transferenciaBL.crear(transferenciaDTO)) {  
                         pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
+                        JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
                     } else
                         JOptionPane.showMessageDialog(this, "Error al realizar la recarga");
                 } else
