@@ -66,4 +66,9 @@ public class PnlMenu extends JPanel {
         // add-copyright
         add(new JLabel("\u00A9 2024 PoliBank"));
     }
+
+    public void actualizarSaldo(float nuevoSaldo) {
+        lblSaldo.setText("Saldo actual: $" + nuevoSaldo);
+    }
+    
 }

@@ -55,7 +55,6 @@ public class PnlLogin extends JFrame {
         panel.setLayout(null);
 
         // Fuente
-        Font font = new Font("MesloLGL NerdFont", Font.BOLD, 20);
         Font textFont = new Font("Arial", Font.PLAIN, 14);
         Font labelFont = new Font("Arial", Font.BOLD, 14);
 

@@ -24,8 +24,8 @@ public class MainForm extends JFrame {
     public MainForm(String tilteApp, UsuarioDTO usuarioDTO, PnlLogin login) {
         this.usuarioDTO = usuarioDTO;
         customizeComponent(tilteApp);
-        pnlMenu.btnRecarga.addActionListener           (e -> setPanel(new PnlRecarga(usuarioDTO))); 
-        pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new PnlTransferencia(usuarioDTO))); 
+        pnlMenu.btnRecarga.addActionListener           (e -> setPanel(new PnlRecarga(usuarioDTO, pnlMenu))); 
+        pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new PnlTransferencia(usuarioDTO, pnlMenu))); 
         pnlMenu.btnMovimientos.addActionListener       (e -> setPanel(new PnlMovimientos(usuarioDTO)));  
         pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new PnlMain())); 
         pnlMenu.btnImprimirEstado.addActionListener    (e -> setPanel(new PnlMain())); 

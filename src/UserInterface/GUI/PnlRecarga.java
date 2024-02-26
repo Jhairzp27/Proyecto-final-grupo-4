@@ -9,11 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PnlRecarga extends JPanel implements ActionListener {
-    private UsuarioBL usuarioBL = new UsuarioBL();
+    private UsuarioBL usuarioBL   = new UsuarioBL();
     private UsuarioDTO usuarioDTO = null;
+    private PnlMenu pnlMenu       = null;
 
-    public PnlRecarga(UsuarioDTO usuarioDTO) {
+    public PnlRecarga(UsuarioDTO usuarioDTO, PnlMenu pnlMenu) {
         this.usuarioDTO = usuarioDTO;
+        this.pnlMenu    = pnlMenu;
         customizeComponent();
         btnRecargar.addActionListener(this);
     }
@@ -27,9 +29,10 @@ public class PnlRecarga extends JPanel implements ActionListener {
                     float saldoActual = usuarioDTO.getSaldo(),
                           saldoNuevo = saldoActual + montoRecarga;
                     usuarioDTO.setSaldo(saldoNuevo);
-                    if (usuarioBL.actualizar(usuarioDTO))
+                    if (usuarioBL.actualizar(usuarioDTO)) {
                         JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
-                    else
+                        pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
+                    } else
                         JOptionPane.showMessageDialog(this, "Error al realizar la recarga");
                 } else
                     JOptionPane.showMessageDialog(this, "Usuario no encontrado");
