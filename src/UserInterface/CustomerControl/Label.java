@@ -4,19 +4,19 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
 
-public class PatLabel extends JLabel{
+public class Label extends JLabel{
 
-    public PatLabel() {
+    public Label() {
         customizeComponent();
     }
 
-    public PatLabel(String text) {
+    public Label(String text) {
         setText(text);
         customizeComponent();
     }
 
     private void customizeComponent() {
-        setCustomizeComponent(getText(), PatStyle.FONT_SMALL, PatStyle.COLOR_FONT_LIGHT, PatStyle.ALIGNMENT_LEFT);
+        setCustomizeComponent(getText(), Estilo.FONT_SMALL, Estilo.COLOR_FONT_LIGHT, Estilo.ALIGNMENT_LEFT);
     }
 
     public void setCustomizeComponent(String text, Font font, Color color, int alignment) {

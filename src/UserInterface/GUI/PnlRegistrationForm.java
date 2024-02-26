@@ -1,4 +1,4 @@
-package UserInterface.Form;
+package UserInterface.GUI;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -20,14 +20,14 @@ import javax.swing.UIManager;
 
 import DataAccess.UserDAO;
 
-public class RegistrationForm extends JFrame {
-    private Login parentLogin;
+public class PnlRegistrationForm extends JFrame {
+    private PnlLogin parentLogin;
     private JTextField nameField;
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JTextField emailField;
 
-    public RegistrationForm(Login parentLogin) {
+    public PnlRegistrationForm(PnlLogin parentLogin) {
         this.parentLogin = parentLogin;
         setTitle("Registro de Usuario");
         setSize(400, 300);

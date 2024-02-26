@@ -21,8 +21,8 @@ import PersonaBL;
 import BusinessLogic.*;
 import DataAcces.DTO.PersonaDTO;
 import UserInterface.CustomerControl.PatButton;
-import UserInterface.CustomerControl.PatLabel;
-import UserInterface.CustomerControl.PatTextBox;
+import UserInterface.CustomerControl.Label;
+import UserInterface.CustomerControl.TextBox;
 
 public class PatPnlPersona extends JPanel implements ActionListener{
     private Integer idPersona, idMaxPersona;
@@ -273,24 +273,24 @@ public class PatPnlPersona extends JPanel implements ActionListener{
     /************************
      * FormDesing : pat_mic
      ************************/ 
-    private PatLabel 
-            lblTitulo          = new PatLabel("Usuarios"    ),
-            lblPersona         = new PatLabel("Id"),
-            lblSexo            = new PatLabel("Sexo: "),
-            lblRol             = new PatLabel("Rol: "),
-            lblNombre          = new PatLabel("Nombre: "),
-            lblApellido        = new PatLabel("Apellido: "),
-            lblCedula          = new PatLabel("Cedula: "),
-            lblFechaNacimiento = new PatLabel("Fecha Nacimiento: "),
-            lblTotalReg        = new PatLabel("  0 de 0  ");
-    private PatTextBox  
-            txtPersona          = new PatTextBox(),
-            txtSexo             = new PatTextBox(),
-            txtRol              = new PatTextBox(),
-            txtNombre           = new PatTextBox(),
-            txtApellido         = new PatTextBox(),
-            txtCedula           = new PatTextBox(),
-            txtFechaNacimiento  = new PatTextBox();
+    private Label 
+            lblTitulo          = new Label("Usuarios"    ),
+            lblPersona         = new Label("Id"),
+            lblSexo            = new Label("Sexo: "),
+            lblRol             = new Label("Rol: "),
+            lblNombre          = new Label("Nombre: "),
+            lblApellido        = new Label("Apellido: "),
+            lblCedula          = new Label("Cedula: "),
+            lblFechaNacimiento = new Label("Fecha Nacimiento: "),
+            lblTotalReg        = new Label("  0 de 0  ");
+    private TextBox  
+            txtPersona          = new TextBox(),
+            txtSexo             = new TextBox(),
+            txtRol              = new TextBox(),
+            txtNombre           = new TextBox(),
+            txtApellido         = new TextBox(),
+            txtCedula           = new TextBox(),
+            txtFechaNacimiento  = new TextBox();
     private PatButton  
             btnIni     = new PatButton(" |< "), 
             btnAnt     = new PatButton(" << "),            
