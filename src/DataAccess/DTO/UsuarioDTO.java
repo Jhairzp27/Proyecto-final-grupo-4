@@ -39,6 +39,22 @@ public class UsuarioDTO {
         FechaModifica = fechaModifica;
     }
 
+    @Override
+    public String toString() {
+        return "\n" + getClass().getName() 
+             + "\n IdUsuario:     " + getIdUsuario()
+             + "\n Nombre:        " + getNombre()
+             + "\n Cedula:        " + getCedula()
+             + "\n Username:      " + getUsername()
+             + "\n Clave:         " + getClave()
+             + "\n Email:         " + getEmail()
+             + "\n IdSexo:        " + getIdSexo()
+             + "\n Saldo:         " + getSaldo()
+             + "\n Estado:        " + getEstado()
+             + "\n FechaCrea:     " + getFechaCrea()
+             + "\n FechaModifica: " + FechaModifica;
+    }
+
     public Integer getIdUsuario() {
         return IdUsuario;
     }
@@ -128,4 +144,5 @@ public class UsuarioDTO {
         FechaModifica = fechaModifica;
     }
 
+    
 }

@@ -6,20 +6,27 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import DataAccess.DTO.UsuarioDTO;
+import UserInterface.GUI.PnlBorrarCuenta;
+import UserInterface.GUI.PnlCambiarContrasena;
 import UserInterface.GUI.PnlLogin;
+import UserInterface.GUI.PnlMain;
+import UserInterface.GUI.PnlMenu;
+import UserInterface.GUI.PnlRecarga;
 
 public class MainForm extends JFrame {
-    MenuPanel pnlMenu = new MenuPanel();
-    JPanel    pnlMain = new MainPanel();
+    PnlMenu pnlMenu = new PnlMenu();
+    JPanel  pnlMain = new PnlMain();
 
-    public MainForm(String tilteApp) {
+    public MainForm(String tilteApp, UsuarioDTO usuarioDTO, PnlLogin login) {
         customizeComponent(tilteApp);
-        pnlMenu.btnRecarga.addActionListener           (e -> setPanel(new MainPanel())); 
-        pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new MainPanel())); 
-        pnlMenu.btnMovimientos.addActionListener       (e -> setPanel(new MainPanel()));  
-        pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new MainPanel())); 
-        pnlMenu.btnImprimirEstado.addActionListener    (e -> setPanel(new MainPanel())); 
-        pnlMenu.btnCambiarContrasena.addActionListener (e -> setPanel(new MainPanel())); 
+        pnlMenu.btnRecarga.addActionListener           (e -> setPanel(new PnlRecarga(usuarioDTO))); 
+        pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new PnlMain())); 
+        pnlMenu.btnMovimientos.addActionListener       (e -> setPanel(new PnlMain()));  
+        pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new PnlMain())); 
+        pnlMenu.btnImprimirEstado.addActionListener    (e -> setPanel(new PnlMain())); 
+        pnlMenu.btnCambiarContrasena.addActionListener (e -> setPanel(new PnlCambiarContrasena(usuarioDTO))); 
+        pnlMenu.btnBorrarCuenta.addActionListener      (e -> setPanel(new PnlBorrarCuenta(usuarioDTO, login))); 
         pnlMenu.btnCerrarSesion.addActionListener      (e -> {dispose(); 
                                                         try {new PnlLogin();} 
                                                         catch (Exception e1) {e1.printStackTrace();}}); 

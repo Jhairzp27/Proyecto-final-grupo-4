@@ -17,9 +17,12 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import BusinessLogic.UsuarioBL;
+import DataAccess.DTO.UsuarioDTO;
 
 public class PnlLogin extends JFrame {
     private UsuarioBL usuarioBL = new UsuarioBL();
+    private UsuarioDTO usuarioLogeado = null;
+    
     private List<Runnable> loginSuccessListeners = new ArrayList<>();
     
     public PnlLogin() throws Exception {
@@ -36,14 +39,18 @@ public class PnlLogin extends JFrame {
         JPanel panel = new JPanel();
         add(panel);
         placeComponents(panel);
-
+        
         // Dark mode
         panel.setBackground(new Color(40, 40, 40)); // Fondo oscuro
-
+        
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
+    
+    public UsuarioDTO getUsuarioLogeado() {
+        return usuarioLogeado;
+    }
+    
     private void placeComponents(JPanel panel) throws Exception {
         panel.setLayout(null);
 
@@ -128,6 +135,7 @@ public class PnlLogin extends JFrame {
     private void handleLogin(String username, String password) throws Exception {
         // Lógica de inicio de sesión
         boolean loginSuccessful = usuarioBL.logear(username, password);
+        usuarioLogeado = usuarioBL.leerPorUsername(username);
         if (loginSuccessful) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. ¡Bienvenido!");
             for (Runnable listener : loginSuccessListeners) {
