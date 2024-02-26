@@ -1,4 +1,4 @@
-package UserInterface.Form;
+package UserInterface.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,8 +22,8 @@ import DataAccess.Genero;
 import DataAccess.UserDAO;
 import UserInterface.CustomerControl.DarkComboBoxUI;
 
-public class RegistrationForm extends JFrame {
-    private Login parentLogin;
+public class PnlRegistrationForm extends JFrame {
+    private PnlLogin parentLogin;
     private JTextField nameField;
     private JTextField cedulaField;
     private JTextField usernameField;
@@ -31,7 +31,7 @@ public class RegistrationForm extends JFrame {
     private JTextField emailField;
     private JComboBox<Genero> generoComboBox;
 
-    public RegistrationForm(Login parentLogin) {
+    public PnlRegistrationForm(PnlLogin parentLogin) {
         this.parentLogin = parentLogin;
         setTitle("Registro de Usuario");
         setSize(400, 300);
@@ -196,9 +196,5 @@ public class RegistrationForm extends JFrame {
 
     private boolean isStrongPassword(String password) {
         return password.length() >= 8 && password.matches(".*[0-9].*") && password.matches(".*[a-zA-Z].*");
-    }
-
-    public static void main(String[] args) {
-        new RegistrationForm(new Login()).setVisible(true);
     }
 }

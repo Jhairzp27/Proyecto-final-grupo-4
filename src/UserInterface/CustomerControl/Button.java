@@ -10,13 +10,13 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
-public class PatButton  extends JButton implements MouseListener {
+public class Button  extends JButton implements MouseListener {
     Font font = new Font ("MesloLGL Nerd Font", Font.CENTER_BASELINE | Font.LAYOUT_LEFT_TO_RIGHT, 12);
-    public PatButton(String label){
+    public Button(String label){
         super(label);
         goStyleLabel();
     }
-    public PatButton(String label, String iconPath){
+    public Button(String label, String iconPath){
         goStyleMenu(label, iconPath);
     }
 

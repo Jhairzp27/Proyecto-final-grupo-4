@@ -8,16 +8,16 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-public class PatTextBox extends JTextField {
-    public PatTextBox() {
+public class TextBox extends JTextField {
+    public TextBox() {
         customizeComponent();
     }
 
     private void customizeComponent() {
-        setFont(PatStyle.FONT_SMALL);
-        setForeground(PatStyle.COLOR_FONT);
+        setFont(Estilo.FONT_SMALL);
+        setForeground(Estilo.COLOR_FONT);
         setBorder(createBorderRect());
-        setCaretColor(PatStyle.COLOR_CURSOR);
+        setCaretColor(Estilo.COLOR_CURSOR);
         setMargin(new Insets(10, 10, 10, 10));
         setOpaque(false);
         // setUI(new BasicTextFieldUI()); // Para deshabilitar el subrayado por defecto
@@ -25,7 +25,7 @@ public class PatTextBox extends JTextField {
     }
 
     private Border createBorderRect() {
-        Border lineBorder = BorderFactory.createLineBorder(PatStyle.COLOR_BORDER);
+        Border lineBorder = BorderFactory.createLineBorder(Estilo.COLOR_BORDER);
         Border emptyBorder = new EmptyBorder(5, 5, 5, 5); // Margenes internos
         return new CompoundBorder(lineBorder, emptyBorder);
     }
@@ -34,7 +34,7 @@ public class PatTextBox extends JTextField {
         int thickness = 1;
         return BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(0, 0, thickness, 0),
-                BorderFactory.createMatteBorder(0, 0, thickness, 0, PatStyle.COLOR_BORDER));
+                BorderFactory.createMatteBorder(0, 0, thickness, 0, Estilo.COLOR_BORDER));
     }
 }
 

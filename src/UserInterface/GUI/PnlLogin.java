@@ -1,9 +1,11 @@
-package UserInterface.Form;
+package UserInterface.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,8 +18,10 @@ import javax.swing.UIManager;
 
 import DataAccess.UserDAO;
 
-public class Login extends JFrame {
-    public Login() {
+public class PnlLogin extends JFrame {
+    private List<Runnable> loginSuccessListeners = new ArrayList<>();
+    
+    public PnlLogin() {
         setTitle("Polibank Login/Register");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,7 +102,7 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Lógica para abrir la ventana de registro
-                RegistrationForm registrationForm = new RegistrationForm(Login.this);
+                PnlRegistrationForm registrationForm = new PnlRegistrationForm(PnlLogin.this);
                 registrationForm.setVisible(true);
                 setVisible(false); // Ocultar la ventana principal al abrir la ventana de registro
             }
@@ -112,11 +116,18 @@ public class Login extends JFrame {
         button.setBorderPainted(false);
     }
 
+    public void addLoginSuccessListener(Runnable listener) {
+        loginSuccessListeners.add(listener);
+    }
+
     private void handleLogin(String username, String password) {
         // Lógica de inicio de sesión
         boolean loginSuccessful = UserDAO.loginUsuario(username, password);
         if (loginSuccessful) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. ¡Bienvenido!");
+            for (Runnable listener : loginSuccessListeners) {
+                listener.run();
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos.");
         }

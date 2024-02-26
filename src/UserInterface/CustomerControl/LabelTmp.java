@@ -8,14 +8,14 @@ import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class PatLabelTmp extends JLabel implements MouseListener {
+public class LabelTmp extends JLabel implements MouseListener {
 
-    PatLabelTmp(String label){
+    LabelTmp(String label){
         super(label);
         setPersonalizacion();
     }
 
-    PatLabelTmp(String label, String iconPath){
+    LabelTmp(String label, String iconPath){
         super();
         setPersonalizacion();
         setIcon(new ImageIcon(iconPath));
