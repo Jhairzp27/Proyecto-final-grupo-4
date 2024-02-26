@@ -1,9 +1,9 @@
 -- database: ../database/DataBasePoliBank.sqlite
-DROP TABLE IF EXISTS Transferencia;
-DROP TABLE IF EXISTS Usuario;
-DROP TABLE IF EXISTS Sexo;
+-- DROP TABLE IF EXISTS Transferencia;
+-- DROP TABLE IF EXISTS Usuario;
+-- DROP TABLE IF EXISTS Sexo;
 
-CREATE TABLE Sexo (
+CREATE TABLE IF NOT EXISTS Sexo (
     IdSexo                  INTEGER PRIMARY KEY AUTOINCREMENT,
     Nombre                  TEXT NOT NULL UNIQUE,
     Estado                  VARCHAR(1) NOT NULL DEFAULT 'A',
@@ -11,7 +11,7 @@ CREATE TABLE Sexo (
     FechaModifica           DATE
 );
 
-CREATE TABLE Usuario (
+CREATE TABLE IF NOT EXISTS Usuario (
     IdUsuario               INTEGER PRIMARY KEY AUTOINCREMENT,
     Nombre                  TEXT NOT NULL UNIQUE,
     Cedula                  VARCHAR(10) NOT NULL UNIQUE,
@@ -25,7 +25,7 @@ CREATE TABLE Usuario (
     FechaModifica           DATE
 );
 
-CREATE TABLE Transferencia (
+CREATE TABLE IF NOT EXISTS Transferencia (
     IdTransferencia         INTEGER PRIMARY KEY AUTOINCREMENT,
     IdUsuarioEnvia          INTEGER NOT NULL REFERENCES Usuario (IdUsuario),
     IdUsuarioRecibe         INTEGER NOT NULL REFERENCES Usuario (IdUsuario),
