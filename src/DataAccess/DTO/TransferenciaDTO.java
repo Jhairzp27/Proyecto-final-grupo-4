@@ -30,6 +30,18 @@ public class TransferenciaDTO {
         FechaModifica   = fechaModifica;
     }
 
+    public TransferenciaDTO(Integer idTransferencia, 
+                            Integer idUsuarioEnvia, 
+                            Integer idUsuarioRecibe,
+                            Float   monto,
+                            String  fecha) {
+        IdTransferencia = idTransferencia;
+        IdUsuarioEnvia  = idUsuarioEnvia;
+        IdUsuarioRecibe = idUsuarioRecibe;
+        Monto           = monto;
+        Fecha           = fecha;
+    }
+
     public Integer getIdTransferencia() {
         return IdTransferencia;
     }
@@ -93,5 +105,17 @@ public class TransferenciaDTO {
     public void setFechaModifica(String fechaModifica) {
         FechaModifica = fechaModifica;
     }
-    
+ 
+    @Override
+    public String toString() {
+        return "\n" + getClass().getName() 
+             + "\n IdTransferencia: " + getIdTransferencia()
+             + "\n IdUsuarioEnvia:  " + getIdUsuarioEnvia()
+             + "\n IdUsuarioRecibe: " + getIdUsuarioRecibe()
+             + "\n Monto:           " + getMonto()
+             + "\n Fecha:           " + getFecha()
+             + "\n Estado:          " + getEstado()
+             + "\n FechaCrea:       " + getFechaCrea()
+             + "\n FechaModifica:   " + getFechaModifica();
+    }
 }
