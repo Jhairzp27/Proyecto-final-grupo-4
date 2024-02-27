@@ -1,5 +1,6 @@
 package UserInterface.GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import BusinessLogic.UsuarioBL;
 import DataAccess.DTO.UsuarioDTO;
@@ -7,15 +8,24 @@ import DataAccess.DTO.UsuarioDTO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class PnlCambiarContrasena extends JPanel implements ActionListener {
     private UsuarioBL usuarioBL = new UsuarioBL();
     private UsuarioDTO usuarioDTO = null;
+    private Image backgroundImage;
 
     public PnlCambiarContrasena(UsuarioDTO usuarioDTO) {
         this.usuarioDTO = usuarioDTO;
         customizeComponent();
         btnCambiar.addActionListener(this);
+        try {
+            backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -29,11 +39,9 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
                         JOptionPane.showMessageDialog(this, "Contraseña cambiada con éxito");
                     else
                         JOptionPane.showMessageDialog(this, "Error al cambiar la contraseña");
-                    }
-                else
+                } else
                     JOptionPane.showMessageDialog(this, "Usuario no encontrado");
-                }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }
         }
@@ -64,5 +72,13 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(btnCambiar, gbc);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }

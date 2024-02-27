@@ -19,21 +19,26 @@ import UserInterface.GUI.PnlTransferencia;
 public class MainForm extends JFrame {
     UsuarioDTO usuarioDTO = null;
     PnlMenu pnlMenu = null;
-    JPanel  pnlMain = new PnlMain();
+    JPanel pnlMain = new PnlMain();
 
     public MainForm(String tilteApp, UsuarioDTO usuarioDTO, PnlLogin login) {
         this.usuarioDTO = usuarioDTO;
         customizeComponent(tilteApp);
-        pnlMenu.btnRecarga.addActionListener           (e -> setPanel(new PnlRecarga(usuarioDTO, pnlMenu))); 
-        pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new PnlTransferencia(usuarioDTO, pnlMenu))); 
-        pnlMenu.btnMovimientos.addActionListener       (e -> setPanel(new PnlMovimientos(usuarioDTO)));  
-        pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new PnlMain())); 
-        pnlMenu.btnImprimirEstado.addActionListener    (e -> setPanel(new PnlMain())); 
-        pnlMenu.btnCambiarContrasena.addActionListener (e -> setPanel(new PnlCambiarContrasena(usuarioDTO))); 
-        pnlMenu.btnBorrarCuenta.addActionListener      (e -> setPanel(new PnlBorrarCuenta(usuarioDTO, login))); 
-        pnlMenu.btnCerrarSesion.addActionListener      (e -> {dispose(); 
-                                                        try {new PnlLogin();} 
-                                                        catch (Exception e1) {e1.printStackTrace();}}); 
+        pnlMenu.btnRecarga.addActionListener(e -> setPanel(new PnlRecarga(usuarioDTO, pnlMenu)));
+        pnlMenu.btnTransferencia.addActionListener(e -> setPanel(new PnlTransferencia(usuarioDTO, pnlMenu)));
+        pnlMenu.btnMovimientos.addActionListener(e -> setPanel(new PnlMovimientos(usuarioDTO)));
+        pnlMenu.btnVerEstado.addActionListener(e -> setPanel(new PnlMain()));
+        pnlMenu.btnImprimirEstado.addActionListener(e -> setPanel(new PnlMain()));
+        pnlMenu.btnCambiarContrasena.addActionListener(e -> setPanel(new PnlCambiarContrasena(usuarioDTO)));
+        pnlMenu.btnBorrarCuenta.addActionListener(e -> setPanel(new PnlBorrarCuenta(usuarioDTO, login)));
+        pnlMenu.btnCerrarSesion.addActionListener(e -> {
+            dispose();
+            try {
+                new PnlLogin();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     private void setPanel(JPanel formularioPanel) {
@@ -49,7 +54,7 @@ public class MainForm extends JFrame {
         pnlMenu = new PnlMenu(usuarioDTO);
         setTitle(tilteApp);
         setSize(930, 800);
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -61,5 +66,5 @@ public class MainForm extends JFrame {
         container.add(pnlMenu, BorderLayout.WEST);
         container.add(pnlMain, BorderLayout.CENTER);
         setVisible(true);
-    }  
+    }
 }

@@ -1,72 +1,57 @@
 package UserInterface.CustomerControl;
 
-import java.awt.Font;
 import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 
-public class Button  extends JButton implements MouseListener {
-    Font font = new Font ("MesloLGL Nerd Font", Font.CENTER_BASELINE | Font.LAYOUT_LEFT_TO_RIGHT, 12);
-    public Button(String label){
-        super(label);
-        goStyleLabel();
-    }
-    public Button(String label, String iconPath){
-        goStyleMenu(label, iconPath);
-    }
+public class Button extends JButton {
+    private Color backgroundColor;
+    private Color hoverBackgroundColor;
+    private Color pressedBackgroundColor;
 
-    public void goStyleMenu(String label, String iconPath){ 
-        addMouseListener(this);
-        setText(label);
-        setSize(20, 70);
-        setBounds(50, 30, 90, 20); 
-        
-        setOpaque(false);
-        setForeground(Color.GRAY);
+    public Button(String text) {
+        super(text);
         setContentAreaFilled(false);
         setFocusPainted(false);
-        setBorderPainted(false);
-        setIcon(new ImageIcon(iconPath));
-        setHorizontalAlignment(SwingConstants.LEFT);
-        setFont(font);
-    }
-    public void goStyleLabel() {
-        setOpaque(false);
-        setFocusPainted(false);
-        setBorderPainted(false);
-        setContentAreaFilled(false);
-        setForeground(Color.darkGray);
-        setHorizontalAlignment(SwingConstants.CENTER);
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-        setFont(font);
+        setBackground(new Color(34, 139, 34)); // Color de fondo por defecto
+        setFont(new Font("MesloLGL Nerd Font", Font.BOLD, 12)); // Establecer la fuente
+        setForeground(Color.WHITE); // Establecer el color del texto como blanco
+
+        // Colores personalizados para el botón
+        backgroundColor = new Color(0, 100, 0); // Cambiar a verde
+        hoverBackgroundColor = new Color(200, 200, 200);
+        pressedBackgroundColor = new Color(150, 150, 150);
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    protected void paintComponent(Graphics g) {
+        if (getModel().isPressed()) {
+            g.setColor(pressedBackgroundColor);
+        } else if (getModel().isRollover()) {
+            g.setColor(hoverBackgroundColor);
+        } else {
+            g.setColor(backgroundColor);
+        }
+        // Dibujar el fondo redondeado
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+        super.paintComponent(g);
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
+    // Establecer los colores de fondo personalizados
+    public void setBackgroundColor(Color color) {
+        backgroundColor = color;
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
+    public void setHoverBackgroundColor(Color color) {
+        hoverBackgroundColor = color;
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        setForeground(Color.BLACK);
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        setForeground(Color.GRAY);
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    public void setPressedBackgroundColor(Color color) {
+        pressedBackgroundColor = color;
     }
 }
