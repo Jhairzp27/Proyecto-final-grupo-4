@@ -38,7 +38,13 @@ public class MainForm extends JFrame {
         pnlMenu.btnCerrarSesion.addActionListener(e -> {
             dispose();
             try {
-                new PnlLogin();
+                PnlLogin login2 = new PnlLogin();
+                login2.setVisible(true);
+                login2.addLoginSuccessListener(() -> {
+                    login2.dispose();
+                    MainForm mainForm = new MainForm("PoliBank", login2.getUsuarioLogeado(), login);
+
+                });
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
