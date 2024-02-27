@@ -1,5 +1,6 @@
 package UserInterface.GUI;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -7,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,12 +23,12 @@ import DataAccess.DTO.UsuarioDTO;
 public class PnlLogin extends JFrame {
     private UsuarioBL usuarioBL = new UsuarioBL();
     private UsuarioDTO usuarioLogeado = null;
-    
+
     private List<Runnable> loginSuccessListeners = new ArrayList<>();
-    
+
     public PnlLogin() throws Exception {
         setTitle("Polibank Login/Register");
-        setSize(400, 200);
+        setSize(730, 592);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {
@@ -39,58 +40,55 @@ public class PnlLogin extends JFrame {
         JPanel panel = new JPanel();
         add(panel);
         placeComponents(panel);
-        
-        // Dark mode
-        panel.setBackground(new Color(40, 40, 40)); // Fondo oscuro
-        
+
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    
+
     public UsuarioDTO getUsuarioLogeado() {
         return usuarioLogeado;
     }
-    
+
     private void placeComponents(JPanel panel) throws Exception {
         panel.setLayout(null);
 
         // Fuente
-        Font textFont = new Font("Arial", Font.PLAIN, 14);
-        Font labelFont = new Font("Arial", Font.BOLD, 14);
+        Font textFont = new Font("Arial", Font.PLAIN, 20);
+        Font labelFont = new Font("Arial", Font.BOLD, 20);
 
         // Color para texto en modo oscuro
-        Color textColor = new Color(200, 200, 200);
+        Color textColor = new Color(0, 100, 00);
 
         JLabel userLabel = new JLabel("Usuario");
-        userLabel.setBounds(10, 20, 80, 25);
+        userLabel.setBounds(10, 20, 200, 25);
         userLabel.setFont(labelFont);
         userLabel.setForeground(textColor);
         panel.add(userLabel);
 
         JTextField userText = new JTextField(20);
-        userText.setBounds(100, 20, 165, 25);
-        userText.setForeground(textColor);
+        userText.setBounds(200, 20, 200, 40);
+        userText.setForeground(Color.white);
         userText.setBackground(new Color(80, 80, 80)); // Fondo oscuro para el campo de texto
 
         userText.setFont(textFont);
         panel.add(userText);
 
         JLabel passwordLabel = new JLabel("Contraseña");
-        passwordLabel.setBounds(10, 50, 80, 25);
+        passwordLabel.setBounds(10, 85, 200, 25);
         passwordLabel.setFont(labelFont);
         passwordLabel.setForeground(textColor);
         panel.add(passwordLabel);
 
         JPasswordField passwordText = new JPasswordField(20);
-        passwordText.setBounds(100, 50, 165, 25);
-        passwordText.setForeground(textColor);
+        passwordText.setBounds(200, 80, 200, 40);
+        passwordText.setForeground(Color.white);
         passwordText.setBackground(new Color(80, 80, 80)); // Fondo oscuro para el campo de contraseña
         passwordText.setFont(textFont);
         panel.add(passwordText);
 
-        JButton loginButton = new JButton("Iniciar Sesión");
+        Button loginButton = new Button("Iniciar Sesión");
         configurarDarkButton(loginButton);
-        loginButton.setBounds(10, 80, 150, 25);
+        loginButton.setBounds(10, 130, 150, 25);
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,9 +104,9 @@ public class PnlLogin extends JFrame {
         });
         panel.add(loginButton);
 
-        JButton registerButton = new JButton("Registrarse");
+        Button registerButton = new Button("Registrarse");
         configurarDarkButton(registerButton);
-        registerButton.setBounds(180, 80, 150, 25);
+        registerButton.setBounds(200, 130, 150, 25);
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -119,12 +117,21 @@ public class PnlLogin extends JFrame {
             }
         });
         panel.add(registerButton);
+        // Carga la imagen de fondo
+        ImageIcon backgroundImage = new ImageIcon(
+                getClass().getResource("/UserInterface/Resource/FondoLogin.png"));
+
+        // Crea un JLabel con la imagen de fondo
+        JLabel backgroundLabel = new JLabel(backgroundImage);
+        backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
+
+        // Establece que el JLabel sea el fondo del panel
+        panel.add(backgroundLabel);
     }
 
-    private void configurarDarkButton(JButton button) {
-        button.setBackground(new Color(60, 60, 60));
-        button.setForeground(Color.orange);
-        button.setBorderPainted(false);
+    private void configurarDarkButton(Button button) {
+        button.setBackground(new Color(47, 79, 79));
+        button.setForeground(Color.green);
     }
 
     public void addLoginSuccessListener(Runnable listener) {

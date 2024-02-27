@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,24 +21,23 @@ public class PnlMenu extends JPanel {
     private Label lblSaldo;
     private UsuarioDTO usuarioDTO;
 
-    public  Button   
-            btnRecarga           = new Button("Recargar"),
-            btnTransferencia     = new Button("Transferir"),
-            btnMovimientos       = new Button("Ver Movimientos"),
-            btnVerEstado         = new Button("Ver Estado de Cuenta"),
-            btnImprimirEstado    = new Button("Imprimir Estado de Cuenta"),
+    public Button btnRecarga = new Button("Recargar"),
+            btnTransferencia = new Button("Transferir"),
+            btnMovimientos = new Button("Ver Movimientos"),
+            btnVerEstado = new Button("Ver Estado de Cuenta"),
+            btnImprimirEstado = new Button("Imprimir Estado de Cuenta"),
             btnCambiarContrasena = new Button("Cambiar Contraseña"),
-            btnBorrarCuenta      = new Button("Borrar Cuenta"),
-            btnCerrarSesion      = new Button("Cerrar Sesión");
+            btnBorrarCuenta = new Button("Borrar Cuenta"),
+            btnCerrarSesion = new Button("Cerrar Sesión");
 
-    public PnlMenu(UsuarioDTO usuarioDTO){
+    public PnlMenu(UsuarioDTO usuarioDTO) {
         this.usuarioDTO = usuarioDTO;
         customizeComponent();
     }
 
     private void customizeComponent() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(250, getHeight())); 
+        setPreferredSize(new Dimension(250, getHeight()));
 
         // add-logo
         try {
@@ -55,12 +55,19 @@ public class PnlMenu extends JPanel {
 
         // add-botones
         add(btnRecarga);
+        add(Box.createVerticalStrut(10)); // Espacio en blanco vertical
         add(btnTransferencia);
+        add(Box.createVerticalStrut(10));
         add(btnMovimientos);
+        add(Box.createVerticalStrut(10));
         add(btnVerEstado);
+        add(Box.createVerticalStrut(10));
         add(btnImprimirEstado);
+        add(Box.createVerticalStrut(10));
         add(btnCambiarContrasena);
+        add(Box.createVerticalStrut(10));
         add(btnBorrarCuenta);
+        add(Box.createVerticalStrut(10));
         add(btnCerrarSesion);
 
         // add-copyright
@@ -70,5 +77,5 @@ public class PnlMenu extends JPanel {
     public void actualizarSaldo(float nuevoSaldo) {
         lblSaldo.setText("Saldo actual: $" + nuevoSaldo);
     }
-    
+
 }
