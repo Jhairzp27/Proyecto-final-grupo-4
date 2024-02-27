@@ -1,5 +1,6 @@
 package UserInterface.GUI;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -47,15 +48,19 @@ public class PnlMenu extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         // add saldo
-        lblSaldo = new Label("Saldo actual: $" + usuarioDTO.getSaldo());
+        add(Box.createVerticalStrut(10)); // Espacio en blanco vertical
+        lblSaldo = new Label("   Saldo actual: $" + usuarioDTO.getSaldo());
         lblSaldo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblSaldo.setFont(lblSaldo.getFont().deriveFont(15f)); // Establecer el tamaño de la fuente a 30 puntos
+        lblSaldo.setBackground(new Color(0, 200, 00));
+        lblSaldo.setForeground(Color.white); // Establecer el color de la letra
         add(lblSaldo);
+        add(Box.createVerticalStrut(10)); // Espacio en blanco vertical
 
         // add-botones
         add(btnRecarga);
-        add(Box.createVerticalStrut(10)); // Espacio en blanco vertical
+        add(Box.createVerticalStrut(10));
         add(btnTransferencia);
         add(Box.createVerticalStrut(10));
         add(btnMovimientos);
@@ -69,13 +74,16 @@ public class PnlMenu extends JPanel {
         add(btnBorrarCuenta);
         add(Box.createVerticalStrut(10));
         add(btnCerrarSesion);
+        add(Box.createVerticalStrut(10));
 
         // add-copyright
         add(new JLabel("\u00A9 2024 PoliBank"));
     }
 
     public void actualizarSaldo(float nuevoSaldo) {
+        lblSaldo.setPreferredSize(new Dimension(2000, 250));
         lblSaldo.setText("Saldo actual: $" + nuevoSaldo);
+
     }
 
 }
