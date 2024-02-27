@@ -1,3 +1,5 @@
+import javax.swing.ImageIcon;
+
 import DataAccess.DatabaseInitializer;
 import UserInterface.Form.MainForm;
 import UserInterface.Form.SplashScreenForm;
@@ -12,7 +14,7 @@ public class App {
         login.addLoginSuccessListener(() -> {
             login.dispose();
             MainForm mainForm = new MainForm("PoliBank", login.getUsuarioLogeado(), login);
-            mainForm.setVisible(true);
+
         });
     }
 }
