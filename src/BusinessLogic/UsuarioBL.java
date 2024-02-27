@@ -42,10 +42,6 @@ public class UsuarioBL {
         return usuarioDAO.eliminar(idUsuario);
     }
 
-    public int getMaxId() throws Exception {
-        return usuarioDAO.getMaxId();
-    }
-
     public boolean logear(String username, String password) throws Exception {
         return usuarioDAO.loginUsuario(username, password);
     }

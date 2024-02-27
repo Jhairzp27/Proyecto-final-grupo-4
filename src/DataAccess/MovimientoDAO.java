@@ -46,5 +46,4 @@ public class MovimientoDAO extends SQLiteDataHelper {
         }
         return movimientos;
     }
-    
 }

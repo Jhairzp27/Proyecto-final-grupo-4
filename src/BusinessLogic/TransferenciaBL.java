@@ -31,8 +31,4 @@ public class TransferenciaBL {
     public boolean eliminar(Integer idTransferencia) throws Exception {
         return transferenciaDAO.eliminar(idTransferencia);
     }
-
-    public int getMaxId() throws Exception {
-        return transferenciaDAO.getMaxId();
-    }
 }

@@ -15,22 +15,22 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import BusinessLogic.MovimientoBL;
-import DataAccess.DTO.MovimientoDTO;
+import BusinessLogic.EstadoCuentaBL;
+import DataAccess.DTO.EstadoCuentaDTO;
 import DataAccess.DTO.UsuarioDTO;
 import UserInterface.CustomerControl.Button;
 import UserInterface.CustomerControl.Estilo;
 import UserInterface.CustomerControl.Label;
 
-public class PnlMovimientos extends JPanel implements ActionListener {
+public class PnlEstadoCuenta extends JPanel implements ActionListener {
     @SuppressWarnings("unused")
     private Integer idMovimiento, idMaxMovimiento, 
                     nroPagina = 1, totalPaginas;
-    private UsuarioDTO usuarioDTOLogeado        = null;
-    ArrayList<MovimientoDTO> listaMovimientoDTO = null;
-    private MovimientoBL movimientoBL           = null;
+    private UsuarioDTO usuarioDTOLogeado            = null;
+    ArrayList<EstadoCuentaDTO> listaEstadoCuentaDTO = null;
+    private EstadoCuentaBL estadoCuentaBL           = null;
 
-    public PnlMovimientos(UsuarioDTO usuarioDTOLogeado) {
+    public PnlEstadoCuenta(UsuarioDTO usuarioDTOLogeado) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
         customerSizeControl();
         
@@ -47,10 +47,10 @@ public class PnlMovimientos extends JPanel implements ActionListener {
     }
     
     private void cargarDatos() throws Exception {
-        idMovimiento       = 1;
-        movimientoBL       = new MovimientoBL();
-        listaMovimientoDTO = movimientoBL.leerPorUsuarioActual(usuarioDTOLogeado.getIdUsuario());
-        idMaxMovimiento    = listaMovimientoDTO.size();
+        idMovimiento         = 1;
+        estadoCuentaBL       = new EstadoCuentaBL();
+        listaEstadoCuentaDTO = estadoCuentaBL.leerPorUsuarioActual(usuarioDTOLogeado.getIdUsuario());
+        idMaxMovimiento      = listaEstadoCuentaDTO.size();
     }
 
     private void mostrarDatos() {
@@ -63,17 +63,17 @@ public class PnlMovimientos extends JPanel implements ActionListener {
             startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
             endIndex = startIndex + 9;
         
-        String[] encabezado = {"Id Transferencia", "Remitente", "Destinatario", "Monto ($)", "Fecha"};
+        String[] encabezado = {"Fecha", "Id Movimiento", "Descripción", "Monto ($)", "Saldo ($)"};
         Object[][] data = new Object[10][5];  
         int index = 0;
         for(int i = startIndex; i <= endIndex; i++) {
             try {
-                MovimientoDTO m = listaMovimientoDTO.get(i - 1);
-                data[index][0] = m.getIdTransferencia();
-                data[index][1] = m.getUsuarioEnvia();
-                data[index][2] = m.getUsuarioRecibe();
+                EstadoCuentaDTO m = listaEstadoCuentaDTO.get(i - 1);
+                data[index][0] = m.getFecha();
+                data[index][1] = m.getIdMovimiento();
+                data[index][2] = m.getDescripcion();
                 data[index][3] = m.getMonto();
-                data[index][4] = m.getFecha();
+                data[index][4] = m.getSaldo();
                 index++;
             } catch(Exception e) {
                 break;
@@ -89,11 +89,11 @@ public class PnlMovimientos extends JPanel implements ActionListener {
     
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        table.getColumnModel().getColumn(0).setPreferredWidth(100);
-        table.getColumnModel().getColumn(1).setPreferredWidth(120);
+        table.getColumnModel().getColumn(0).setPreferredWidth(120);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(2).setPreferredWidth(120);
         table.getColumnModel().getColumn(3).setPreferredWidth(70);
-        table.getColumnModel().getColumn(4).setPreferredWidth(120);
+        table.getColumnModel().getColumn(4).setPreferredWidth(70);
         for (int i = 0; i < table.getColumnCount(); i++)
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
     
@@ -136,7 +136,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
  * FormDesing : Christian Pisco
  ********************************/ 
     private Label 
-            lblTitulo   = new Label("HISTORIAL DE MOVIMIENTOS"),
+            lblTitulo   = new Label("ESTADO DE CUENTA"),
             lblTotalReg = new Label("  0 de 0  ");
     private Button  
             btnIni = new Button(" |< "), 

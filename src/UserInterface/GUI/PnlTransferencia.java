@@ -73,21 +73,18 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             endIndex = startIndex + 9;
         
         String[] encabezado = {"Id", "Nombre"};
-        Object[][] data = new Object[endIndex - startIndex + 1][2];  
-    
-        ArrayList<UsuarioDTO> usuarios = usuarioBL.leerSinUsuarioActual(usuarioDTOLogeado.getIdUsuario());
+        Object[][] data = new Object[10][2];  
     
         int index = 0;
         for(int i = startIndex; i <= endIndex; i++) {
-            if (index < usuarios.size()) {
-                UsuarioDTO u = usuarios.get(index);
+            try {
+                UsuarioDTO u = usuariosDTOReciben.get(i - 1);
                 data[index][0] = u.getIdUsuario();
                 data[index][1] = u.getNombre();
-            } else {
-                data[index][0] = "";
-                data[index][1] = "";
+                index++;
+            } catch(Exception e) {
+                break;
             }
-            index++;
         }
     
         JTable table  = new JTable(data, encabezado);
