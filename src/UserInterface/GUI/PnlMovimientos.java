@@ -32,7 +32,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
     private Integer idMovimiento, idMaxMovimiento,
             nroPagina = 1, totalPaginas;
     private UsuarioDTO usuarioDTOLogeado = null;
-    ArrayList<MovimientoDTO> movimientoDTO = null;
+    ArrayList<MovimientoDTO> listaMovimientoDTO = null;
     private MovimientoBL movimientoBL = null;
     private Image backgroundImage;
 
@@ -62,8 +62,8 @@ public class PnlMovimientos extends JPanel implements ActionListener {
     private void cargarDatos() throws Exception {
         idMovimiento = 1;
         movimientoBL = new MovimientoBL();
-        movimientoDTO = movimientoBL.leerPorUsuarioActual(usuarioDTOLogeado.getIdUsuario());
-        idMaxMovimiento = movimientoDTO.size();
+        listaMovimientoDTO = movimientoBL.leerPorUsuarioActual(usuarioDTOLogeado.getIdUsuario());
+        idMaxMovimiento = listaMovimientoDTO.size();
     }
 
     private void mostrarDatos() {
@@ -77,27 +77,21 @@ public class PnlMovimientos extends JPanel implements ActionListener {
                 endIndex = startIndex + 9;
 
         String[] encabezado = { "Id Transferencia", "Remitente", "Destinatario", "Monto ($)", "Fecha" };
-        Object[][] data = new Object[endIndex - startIndex + 1][5];
-
-        ArrayList<MovimientoDTO> movimientos = movimientoBL.leerPorUsuarioActual(usuarioDTOLogeado.getIdUsuario());
+        Object[][] data = new Object[tamanoPagina][5];
 
         int index = 0;
-        for (int i = startIndex; i <= endIndex; i++) {
-            if (index < movimientos.size()) {
-                MovimientoDTO m = movimientos.get(index);
+        for(int i = startIndex; i <= endIndex; i++) {
+            try {
+                MovimientoDTO m = listaMovimientoDTO.get(i - 1);
                 data[index][0] = m.getIdTransferencia();
                 data[index][1] = m.getUsuarioEnvia();
                 data[index][2] = m.getUsuarioRecibe();
                 data[index][3] = m.getMonto();
                 data[index][4] = m.getFecha();
-            } else {
-                data[index][0] = "";
-                data[index][1] = "";
-                data[index][2] = "";
-                data[index][3] = "";
-                data[index][4] = "";
+                index++;
+            } catch(Exception e) {
+                break;
             }
-            index++;
         }
 
         JTable table = new JTable(data, encabezado);

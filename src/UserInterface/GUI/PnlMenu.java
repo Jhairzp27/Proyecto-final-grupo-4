@@ -70,8 +70,12 @@ public class PnlMenu extends JPanel {
         add(Box.createVerticalStrut(10));
         add(btnCerrarSesion);
 
+        add(Box.createVerticalGlue());
+
         // add-copyright
-        add(new JLabel("\u00A9 2024 PoliBank"));
+        JLabel lblCopyright = new JLabel("\u00A9 2024 PoliBank");
+        lblCopyright.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(lblCopyright);
     }
 
     public void actualizarSaldo(float nuevoSaldo) {

@@ -77,7 +77,7 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
                 endIndex = startIndex + 9;
 
         String[] encabezado = { "Fecha", "Id Movimiento", "Descripción", "Monto ($)", "Saldo ($)" };
-        Object[][] data = new Object[10][5];
+        Object[][] data = new Object[tamanoPagina][5];
         int index = 0;
         for (int i = startIndex; i <= endIndex; i++) {
             try {
@@ -144,7 +144,7 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
     }
 
     /********************************
-     * FormDesing : Christian Pisco
+     * FormDesing
      ********************************/
     private Label lblTitulo = new Label("ESTADO DE CUENTA"),
             lblTotalReg = new Label("  0 de 0  ");
