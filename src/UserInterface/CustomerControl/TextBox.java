@@ -19,7 +19,8 @@ public class TextBox extends JTextField {
         setBorder(createBorderRect());
         setCaretColor(Estilo.COLOR_CURSOR);
         setMargin(new Insets(10, 10, 10, 10));
-        setOpaque(false);
+        setOpaque(true); // Hacer que el componente sea opaco
+        setBackground(Color.WHITE);
         // setUI(new BasicTextFieldUI()); // Para deshabilitar el subrayado por defecto
         setColumns(10); // Ajustar el tamaño para 10 caracteres
     }
@@ -37,4 +38,3 @@ public class TextBox extends JTextField {
                 BorderFactory.createMatteBorder(0, 0, thickness, 0, Estilo.COLOR_BORDER));
     }
 }
-

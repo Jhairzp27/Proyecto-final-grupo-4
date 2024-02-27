@@ -18,5 +18,7 @@ public class LabelText extends JPanel {
 
         add(lblEtiqueta, BorderLayout.NORTH);
         add(txtContenido, BorderLayout.CENTER);
+        setOpaque(true); // Hacer que el panel sea opaco
+        setBackground(Color.WHITE);
     }
 }

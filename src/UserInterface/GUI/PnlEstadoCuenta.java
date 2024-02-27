@@ -2,13 +2,18 @@ package UserInterface.GUI;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,49 +29,57 @@ import UserInterface.CustomerControl.Label;
 
 public class PnlEstadoCuenta extends JPanel implements ActionListener {
     @SuppressWarnings("unused")
-    private Integer idMovimiento, idMaxMovimiento, 
-                    nroPagina = 1, totalPaginas;
-    private UsuarioDTO usuarioDTOLogeado            = null;
+    private Integer idMovimiento, idMaxMovimiento,
+            nroPagina = 1, totalPaginas;
+    private UsuarioDTO usuarioDTOLogeado = null;
     ArrayList<EstadoCuentaDTO> listaEstadoCuentaDTO = null;
-    private EstadoCuentaBL estadoCuentaBL           = null;
+    private EstadoCuentaBL estadoCuentaBL = null;
+    private Image backgroundImage;
 
     public PnlEstadoCuenta(UsuarioDTO usuarioDTOLogeado) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
         customerSizeControl();
-        
+
         try {
             cargarDatos();
             mostrarDatos();
             mostrarTabla();
-        } catch(Exception e) {}
-    
+        } catch (Exception e) {
+        }
+
         btnIni.addActionListener(this);
         btnAnt.addActionListener(this);
         btnSig.addActionListener(this);
         btnFin.addActionListener(this);
+        try {
+            backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     private void cargarDatos() throws Exception {
-        idMovimiento         = 1;
-        estadoCuentaBL       = new EstadoCuentaBL();
+        idMovimiento = 1;
+        estadoCuentaBL = new EstadoCuentaBL();
         listaEstadoCuentaDTO = estadoCuentaBL.leerPorUsuarioActual(usuarioDTOLogeado.getIdUsuario());
-        idMaxMovimiento      = listaEstadoCuentaDTO.size();
+        idMaxMovimiento = listaEstadoCuentaDTO.size();
     }
 
     private void mostrarDatos() {
-        totalPaginas  = (idMaxMovimiento - 1) / 10 + 1;
+        totalPaginas = (idMaxMovimiento - 1) / 10 + 1;
         lblTotalReg.setText("Página " + nroPagina + " de " + totalPaginas);
     }
 
     private void mostrarTabla() throws Exception {
         int tamanoPagina = 10,
-            startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
-            endIndex = startIndex + 9;
-        
-        String[] encabezado = {"Fecha", "Id Movimiento", "Descripción", "Monto ($)", "Saldo ($)"};
-        Object[][] data = new Object[10][5];  
+                startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
+                endIndex = startIndex + 9;
+
+        String[] encabezado = { "Fecha", "Id Movimiento", "Descripción", "Monto ($)", "Saldo ($)" };
+        Object[][] data = new Object[10][5];
         int index = 0;
-        for(int i = startIndex; i <= endIndex; i++) {
+        for (int i = startIndex; i <= endIndex; i++) {
             try {
                 EstadoCuentaDTO m = listaEstadoCuentaDTO.get(i - 1);
                 data[index][0] = m.getFecha();
@@ -75,18 +88,18 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
                 data[index][3] = m.getMonto();
                 data[index][4] = m.getSaldo();
                 index++;
-            } catch(Exception e) {
+            } catch (Exception e) {
                 break;
             }
         }
-    
-        JTable table  = new JTable(data, encabezado);
+
+        JTable table = new JTable(data, encabezado);
         table.setShowHorizontalLines(true);
         table.getTableHeader().setBackground(Estilo.COLOR_BORDER);
         table.setGridColor(Estilo.COLOR_BORDER);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
-    
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setPreferredWidth(120);
@@ -96,31 +109,29 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         table.getColumnModel().getColumn(4).setPreferredWidth(70);
         for (int i = 0; i < table.getColumnCount(); i++)
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-    
+
         ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
-        
+
         table.setPreferredScrollableViewportSize(new Dimension(530, 160));
         table.setFillsViewportHeight(true);
-    
+
         JScrollPane scrollPane = new JScrollPane(table);
-    
+
         pnlTabla.removeAll();
         pnlTabla.add(scrollPane);
         pnlTabla.revalidate();
         pnlTabla.repaint();
     }
-    
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnIni)
+        if (e.getSource() == btnIni)
             nroPagina = 1;
-        if(e.getSource() == btnAnt  &&  (nroPagina > 1) )
+        if (e.getSource() == btnAnt && (nroPagina > 1))
             nroPagina--;
-        if(e.getSource() == btnSig  &&  (nroPagina < totalPaginas))
+        if (e.getSource() == btnSig && (nroPagina < totalPaginas))
             nroPagina++;
-        if(e.getSource() == btnFin)
+        if (e.getSource() == btnFin)
             nroPagina = totalPaginas;
 
         try {
@@ -132,32 +143,29 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         }
     }
 
-/********************************
- * FormDesing : Christian Pisco
- ********************************/ 
-    private Label 
-            lblTitulo   = new Label("ESTADO DE CUENTA"),
+    /********************************
+     * FormDesing : Christian Pisco
+     ********************************/
+    private Label lblTitulo = new Label("ESTADO DE CUENTA"),
             lblTotalReg = new Label("  0 de 0  ");
-    private Button  
-            btnIni = new Button(" |< "), 
-            btnAnt = new Button(" << "),            
+    private Button btnIni = new Button(" |< "),
+            btnAnt = new Button(" << "),
             btnSig = new Button(" >> "),
             btnFin = new Button(" >| ");
-    private JPanel 
-            pnlTabla     = new JPanel(),
+    private JPanel pnlTabla = new JPanel(),
             pnlBtnPagina = new JPanel(new FlowLayout());
-    
-/************************
- * Customize : Form
- ************************/ 
+
+    /************************
+     * Customize : Form
+     ************************/
     public void customerSizeControl() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Panel.Paginacion.Tabla
-        pnlBtnPagina.add(btnIni);       
-        pnlBtnPagina.add(btnAnt);  
-        pnlBtnPagina.add(lblTotalReg);        
+        pnlBtnPagina.add(btnIni);
+        pnlBtnPagina.add(btnAnt);
+        pnlBtnPagina.add(lblTotalReg);
         pnlBtnPagina.add(btnSig);
         pnlBtnPagina.add(btnFin);
 
@@ -183,5 +191,13 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         gbc.weighty = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         add(pnlBtnPagina, gbc);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }

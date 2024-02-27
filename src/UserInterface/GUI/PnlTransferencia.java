@@ -2,16 +2,20 @@ package UserInterface.GUI;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,90 +34,101 @@ import UserInterface.CustomerControl.Label;
 import UserInterface.CustomerControl.TextBox;
 
 public class PnlTransferencia extends JPanel implements ActionListener {
-    private Integer idUsuarioRecibe, idMaxUsuario, 
-                    nroPagina = 1, totalPaginas;
-    private UsuarioDTO usuarioDTOLogeado      = null;
-    ArrayList<UsuarioDTO> usuariosDTOReciben  = null;
-    private UsuarioBL  usuarioBL              = null;
-    private PnlMenu pnlMenu                   = null;
+    private Integer idUsuarioRecibe, idMaxUsuario,
+            nroPagina = 1, totalPaginas;
+    private UsuarioDTO usuarioDTOLogeado = null;
+    ArrayList<UsuarioDTO> usuariosDTOReciben = null;
+    private UsuarioBL usuarioBL = null;
+    private PnlMenu pnlMenu = null;
+    private Image backgroundImage;
 
     public PnlTransferencia(UsuarioDTO usuarioDTOLogeado, PnlMenu pnlMenu) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
-        this.pnlMenu           = pnlMenu;
+        this.pnlMenu = pnlMenu;
         customerSizeControl();
-        
+
         try {
             cargarDatos();
             mostrarDatos();
             mostrarTabla();
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         btnIni.addActionListener(this);
         btnAnt.addActionListener(this);
         btnSig.addActionListener(this);
         btnFin.addActionListener(this);
         btnTransferencia.addActionListener(this);
+        try {
+            backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     private void cargarDatos() throws Exception {
-        idUsuarioRecibe        = 1;
-        usuarioBL              = new UsuarioBL();
-        usuariosDTOReciben     = usuarioBL.leerSinUsuarioActual(usuarioDTOLogeado.getIdUsuario());
-        idMaxUsuario           = usuariosDTOReciben.size();
+        idUsuarioRecibe = 1;
+        usuarioBL = new UsuarioBL();
+        usuariosDTOReciben = usuarioBL.leerSinUsuarioActual(usuarioDTOLogeado.getIdUsuario());
+        idMaxUsuario = usuariosDTOReciben.size();
     }
 
     private void mostrarDatos() {
-        totalPaginas  = (idMaxUsuario - 1) / 10 + 1;
+        totalPaginas = (idMaxUsuario - 1) / 10 + 1;
         lblTotalReg.setText("Página " + nroPagina + " de " + totalPaginas);
     }
 
     private void mostrarTabla() throws Exception {
         int tamanoPagina = 10,
-            startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
-            endIndex = startIndex + 9;
-        
-        String[] encabezado = {"Id", "Nombre"};
-        Object[][] data = new Object[10][2];  
-    
+                startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
+                endIndex = startIndex + 9;
+
+        String[] encabezado = { "Id", "Nombre" };
+        Object[][] data = new Object[endIndex - startIndex + 1][2];
+
+        ArrayList<UsuarioDTO> usuarios = usuarioBL.leerSinUsuarioActual(usuarioDTOLogeado.getIdUsuario());
+
         int index = 0;
-        for(int i = startIndex; i <= endIndex; i++) {
-            try {
-                UsuarioDTO u = usuariosDTOReciben.get(i - 1);
+        for (int i = startIndex; i <= endIndex; i++) {
+            if (index < usuarios.size()) {
+                UsuarioDTO u = usuarios.get(index);
                 data[index][0] = u.getIdUsuario();
                 data[index][1] = u.getNombre();
-                index++;
-            } catch(Exception e) {
-                break;
+            } else {
+                data[index][0] = "";
+                data[index][1] = "";
             }
+            index++;
         }
-    
-        JTable table  = new JTable(data, encabezado);
+
+        JTable table = new JTable(data, encabezado);
         table.setShowHorizontalLines(true);
         table.getTableHeader().setBackground(Estilo.COLOR_BORDER);
         table.setGridColor(Estilo.COLOR_BORDER);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
-        
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setHorizontalAlignment(Label.CENTER);
         table.getColumnModel().getColumn(0).setPreferredWidth(50);
         table.getColumnModel().getColumn(1).setPreferredWidth(120);
         for (int i = 0; i < table.getColumnCount(); i++)
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 
-        ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(Label.CENTER);
 
         table.setPreferredScrollableViewportSize(new Dimension(170, 160));
         table.setFillsViewportHeight(true);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        
+
         pnlTabla.removeAll();
         pnlTabla.add(scrollPane);
         pnlTabla.revalidate();
         pnlTabla.repaint();
-        
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 
+
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -127,6 +142,13 @@ public class PnlTransferencia extends JPanel implements ActionListener {
         });
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -186,7 +208,7 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                         transferenciaDTO.setFecha(formatoFecha.format(actual).toString());
 
                         pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
-                        
+
                         TransferenciaBL transferenciaBL = new TransferenciaBL();
                         if (transferenciaBL.crear(transferenciaDTO))
                             JOptionPane.showMessageDialog(this, "Transferencia realizada con éxito");
@@ -202,40 +224,35 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Por favor ingresa el monto y el ID del usuario receptor");
     }
 
-    
-/********************************
- * FormDesing
- ********************************/ 
-    private Label 
-            lblTitulo    = new Label("TRANSFERENCIAS"),
+    /********************************
+     * FormDesing
+     ********************************/
+    private Label lblTitulo = new Label("TRANSFERENCIAS"),
             lblIdUsuario = new Label("Id Usuario Seleccionado: "),
-            lblMonto    = new Label("Monto ($): "),
-            lblTotalReg  = new Label("  0 de 0  ");
-    private TextBox  
-            txtIdUsuario = new TextBox (),
-            txtMonto    = new TextBox ();
-    private Button  
-            btnIni     = new Button(" |< "), 
-            btnAnt     = new Button(" << "),            
-            btnSig     = new Button(" >> "),
-            btnFin     = new Button(" >| "),
-            btnTransferencia   = new Button("Transferir");            
-    private JPanel 
-            pnlTabla            = new JPanel(),
+            lblMonto = new Label("Monto ($): "),
+            lblTotalReg = new Label("  0 de 0  ");
+    private TextBox txtIdUsuario = new TextBox(),
+            txtMonto = new TextBox();
+    private Button btnIni = new Button(" |< "),
+            btnAnt = new Button(" << "),
+            btnSig = new Button(" >> "),
+            btnFin = new Button(" >| "),
+            btnTransferencia = new Button("Transferir");
+    private JPanel pnlTabla = new JPanel(),
             pnlBtnTransferencia = new JPanel(new FlowLayout()),
-            pnlBtnPagina        = new JPanel(new FlowLayout());
-    
-/************************
- * Customize : Form
- ************************/ 
+            pnlBtnPagina = new JPanel(new FlowLayout());
+
+    /************************
+     * Customize : Form
+     ************************/
     public void customerSizeControl() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Panel.Paginacion.Tabla
-        pnlBtnPagina.add(btnIni);       
-        pnlBtnPagina.add(btnAnt);  
-        pnlBtnPagina.add(lblTotalReg);        
+        pnlBtnPagina.add(btnIni);
+        pnlBtnPagina.add(btnAnt);
+        pnlBtnPagina.add(lblTotalReg);
         pnlBtnPagina.add(btnSig);
         pnlBtnPagina.add(btnFin);
 
@@ -255,7 +272,7 @@ public class PnlTransferencia extends JPanel implements ActionListener {
         // Separador
         gbc.gridy = 1;
         gbc.gridwidth = 1;
-        add(new JLabel("■ Lista de usuarios: "), gbc);
+        add(new Label("■ Lista de usuarios: "), gbc);
 
         // Sección de datos (Tabla)
         gbc.gridy = 2;
@@ -273,7 +290,7 @@ public class PnlTransferencia extends JPanel implements ActionListener {
         // Separador
         gbc.gridy = 4;
         gbc.gridwidth = 3;
-        add(new JLabel("■ Sección de elección: "), gbc);
+        add(new Label("■ Sección de elección: "), gbc);
 
         // IdUsuario
         gbc.gridy = 5;

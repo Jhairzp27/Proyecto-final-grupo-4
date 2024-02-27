@@ -1,5 +1,6 @@
 package UserInterface.GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import BusinessLogic.TransferenciaBL;
@@ -10,19 +11,28 @@ import DataAccess.DTO.UsuarioDTO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class PnlRecarga extends JPanel implements ActionListener {
-    private UsuarioBL usuarioBL   = new UsuarioBL();
+    private UsuarioBL usuarioBL = new UsuarioBL();
     private UsuarioDTO usuarioDTO = null;
-    private PnlMenu pnlMenu       = null;
+    private PnlMenu pnlMenu = null;
+    private Image backgroundImage;
 
     public PnlRecarga(UsuarioDTO usuarioDTO, PnlMenu pnlMenu) {
         this.usuarioDTO = usuarioDTO;
-        this.pnlMenu    = pnlMenu;
+        this.pnlMenu = pnlMenu;
         customizeComponent();
         btnRecargar.addActionListener(this);
+        try {
+            backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -32,9 +42,9 @@ public class PnlRecarga extends JPanel implements ActionListener {
                 float montoRecarga = Float.parseFloat(txtRecarga.getText());
                 if (usuarioDTO != null) {
                     float saldoActual = usuarioDTO.getSaldo(),
-                          saldoNuevo = saldoActual + montoRecarga;
+                            saldoNuevo = saldoActual + montoRecarga;
                     usuarioDTO.setSaldo(saldoNuevo);
-                    
+
                     TransferenciaBL transferenciaBL = new TransferenciaBL();
                     TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
                     DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -42,17 +52,19 @@ public class PnlRecarga extends JPanel implements ActionListener {
                     transferenciaDTO.setIdUsuarioEnvia(-1);
                     transferenciaDTO.setIdUsuarioRecibe(usuarioDTO.getIdUsuario());
                     transferenciaDTO.setMonto(montoRecarga);
-                    transferenciaDTO.setFecha(formatoFecha.format(actual).toString());                        
-                    
-                    if (usuarioBL.actualizar(usuarioDTO) && transferenciaBL.crear(transferenciaDTO)) {  
+                    transferenciaDTO.setFecha(formatoFecha.format(actual).toString());
+
+                    if (usuarioBL.actualizar(usuarioDTO) && transferenciaBL.crear(transferenciaDTO)) {
                         pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
-                        JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
+                        JOptionPane.showMessageDialog(this,
+                                "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
                     } else
                         JOptionPane.showMessageDialog(this, "Error al realizar la recarga");
                 } else
                     JOptionPane.showMessageDialog(this, "Usuario no encontrado");
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Por favor ingresa valores válidos para el ID de usuario y el monto de recarga");
+                JOptionPane.showMessageDialog(this,
+                        "Por favor ingresa valores válidos para el ID de usuario y el monto de recarga");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }
@@ -84,5 +96,13 @@ public class PnlRecarga extends JPanel implements ActionListener {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(btnRecargar, gbc);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }
