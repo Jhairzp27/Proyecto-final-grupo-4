@@ -8,5 +8,4 @@ public interface IDAO<T> {
     public T leerPor(Integer id)         throws Exception;
     public boolean actualizar(T entidad) throws Exception;
     public boolean eliminar(Integer id)  throws Exception;
-    public Integer getMaxId()            throws Exception;
 }

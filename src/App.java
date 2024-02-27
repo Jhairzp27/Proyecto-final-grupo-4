@@ -1,4 +1,4 @@
-import BusinessLogic.DatabaseInitializer;
+import DataAccess.DatabaseInitializer;
 import UserInterface.Form.MainForm;
 import UserInterface.GUI.PnlLogin;
 

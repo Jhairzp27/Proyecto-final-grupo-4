@@ -31,8 +31,4 @@ public class SexoBL {
     public boolean eliminar(Integer idSexo) throws Exception {
         return sexoDAO.eliminar(idSexo);
     }
-
-    public int getMaxId() throws Exception {
-        return sexoDAO.getMaxId();
-    }
 }

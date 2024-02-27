@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import DataAccess.DTO.UsuarioDTO;
 import UserInterface.GUI.PnlBorrarCuenta;
 import UserInterface.GUI.PnlCambiarContrasena;
+import UserInterface.GUI.PnlEstadoCuenta;
 import UserInterface.GUI.PnlLogin;
 import UserInterface.GUI.PnlMain;
 import UserInterface.GUI.PnlMenu;
@@ -27,7 +28,7 @@ public class MainForm extends JFrame {
         pnlMenu.btnRecarga.addActionListener           (e -> setPanel(new PnlRecarga(usuarioDTO, pnlMenu))); 
         pnlMenu.btnTransferencia.addActionListener     (e -> setPanel(new PnlTransferencia(usuarioDTO, pnlMenu))); 
         pnlMenu.btnMovimientos.addActionListener       (e -> setPanel(new PnlMovimientos(usuarioDTO)));  
-        pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new PnlMain())); 
+        pnlMenu.btnVerEstado.addActionListener         (e -> setPanel(new PnlEstadoCuenta(usuarioDTO))); 
         pnlMenu.btnImprimirEstado.addActionListener    (e -> setPanel(new PnlMain())); 
         pnlMenu.btnCambiarContrasena.addActionListener (e -> setPanel(new PnlCambiarContrasena(usuarioDTO))); 
         pnlMenu.btnBorrarCuenta.addActionListener      (e -> setPanel(new PnlBorrarCuenta(usuarioDTO, login))); 
