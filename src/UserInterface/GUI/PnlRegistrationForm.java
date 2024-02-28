@@ -256,7 +256,7 @@ public class PnlRegistrationForm extends JFrame {
     }
 
     private boolean isStrongPassword(String password) {
-        return password.length() >= 8 && password.matches(".*[0-9].*") && password.matches(".*[a-zA-Z].*");
+        return password.length() >= 8 && password.matches(".[0-9].") && password.matches(".[a-zA-Z].");
     }
 
     private boolean isValidCedula(String cedula) {
@@ -275,11 +275,12 @@ public class PnlRegistrationForm extends JFrame {
         JPanel darkPanel = new JPanel();
         darkPanel.setBackground(new Color(40, 40, 40));
         darkPanel.setForeground(new Color(200, 200, 200));
-
+    
         JLabel label = new JLabel(message);
         label.setForeground(new Color(200, 200, 200));
         darkPanel.add(label);
-
+    
         return darkPanel;
     }
+    
 }
