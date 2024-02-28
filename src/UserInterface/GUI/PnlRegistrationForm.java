@@ -256,7 +256,7 @@ public class PnlRegistrationForm extends JFrame {
     }
 
     private boolean isStrongPassword(String password) {
-        return password.length() >= 8 && password.matches(".[0-9].") && password.matches(".[a-zA-Z].");
+        return password.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$");
     }
 
     private boolean isValidCedula(String cedula) {
