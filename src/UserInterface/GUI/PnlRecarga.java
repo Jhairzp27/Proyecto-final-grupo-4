@@ -4,8 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import BusinessLogic.TransferenciaBL;
-import BusinessLogic.UsuarioBL;
-import DataAccess.DTO.TransferenciaDTO;
 import DataAccess.DTO.UsuarioDTO;
 
 import java.awt.*;
@@ -13,11 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class PnlRecarga extends JPanel implements ActionListener {
-    private UsuarioBL usuarioBL = new UsuarioBL();
+    private TransferenciaBL transferenciaBL = new TransferenciaBL();
     private UsuarioDTO usuarioDTO = null;
     private PnlMenu pnlMenu = null;
     private Image backgroundImage;
@@ -40,36 +36,18 @@ public class PnlRecarga extends JPanel implements ActionListener {
         if (e.getSource() == btnRecargar) {
             try {
                 float montoRecarga = Float.parseFloat(txtRecarga.getText());
-                if (usuarioDTO != null) {
-                    float saldoActual = usuarioDTO.getSaldo(),
-                            saldoNuevo = saldoActual + montoRecarga;
-                    usuarioDTO.setSaldo(saldoNuevo);
-
-                    TransferenciaBL transferenciaBL = new TransferenciaBL();
-                    TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
-                    DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                    LocalDateTime actual = LocalDateTime.now();
-                    transferenciaDTO.setIdUsuarioEnvia(-1);
-                    transferenciaDTO.setIdUsuarioRecibe(usuarioDTO.getIdUsuario());
-                    transferenciaDTO.setMonto(montoRecarga);
-                    transferenciaDTO.setFecha(formatoFecha.format(actual).toString());
-
-                    if (usuarioBL.actualizar(usuarioDTO) && transferenciaBL.crear(transferenciaDTO)) {
-                        pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
-                        JOptionPane.showMessageDialog(this,
-                                "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
-                    } else
-                        JOptionPane.showMessageDialog(this, "Error al realizar la recarga");
-                } else
-                    JOptionPane.showMessageDialog(this, "Usuario no encontrado");
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this,
-                        "Por favor ingresa valores válidos para el ID de usuario y el monto de recarga");
+                if (transferenciaBL.recargar(usuarioDTO, montoRecarga)) {
+                    pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
+                    JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Por favor ingrese un monto válido");
+                }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Ingrese solo números");
             }
         }
     }
+
 
     /************************
      * FormDesing

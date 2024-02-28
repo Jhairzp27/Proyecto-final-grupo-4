@@ -145,7 +145,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
     }
 
     /********************************
-     * FormDesing : Christian Pisco
+     * FormDesing
      ********************************/
     private Label lblTitulo = new Label("HISTORIAL DE MOVIMIENTOS"),
             lblTotalReg = new Label("  0 de 0  ");

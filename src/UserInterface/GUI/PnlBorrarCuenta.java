@@ -37,16 +37,13 @@ public class PnlBorrarCuenta extends JPanel implements ActionListener {
                     "Confirmación", JOptionPane.YES_NO_OPTION);
             if (respuesta == JOptionPane.YES_OPTION) {
                 try {
-                    if (usuarioDTO != null) {
-                        usuarioDTO.setEstado("X");
-                        if (usuarioBL.actualizar(usuarioDTO)) {
-                            JOptionPane.showMessageDialog(this, "Cuenta borrada con éxito");
-                            pnlLogin.setVisible(true);
-                            SwingUtilities.getWindowAncestor(this).dispose();
-                        } else
-                            JOptionPane.showMessageDialog(this, "Error al borrar la cuenta");
-                    } else
-                        JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+                    if (usuarioBL.eliminar(usuarioDTO.getIdUsuario())) {
+                        JOptionPane.showMessageDialog(this, "Cuenta borrada con éxito");
+                        pnlLogin.setVisible(true);
+                        SwingUtilities.getWindowAncestor(this).dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error al borrar la cuenta");
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
                 }
