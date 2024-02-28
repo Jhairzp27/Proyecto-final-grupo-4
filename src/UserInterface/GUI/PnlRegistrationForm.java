@@ -1,6 +1,7 @@
 package UserInterface.GUI;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,10 +9,12 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -113,7 +116,21 @@ public class PnlRegistrationForm extends JFrame {
             sexoComboBox = new JComboBox<>(); // Cambio de Genero a SexoDTO
             sexoComboBox.addItem(sexoBL.leerPor(1));
             sexoComboBox.addItem(sexoBL.leerPor(2));
+
+            sexoComboBox.setRenderer(new DefaultListCellRenderer());
             sexoComboBox.setUI(new DarkComboBoxUI());
+            sexoComboBox.setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                        boolean isSelected, boolean cellHasFocus) {
+                    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    if (value instanceof SexoDTO) {
+                        SexoDTO sexoDTO = (SexoDTO) value;
+                        setText(sexoDTO.getNombre());
+                    }
+                    return this;
+                }
+            });
         } catch (Exception e) {
         }
 
@@ -224,7 +241,8 @@ public class PnlRegistrationForm extends JFrame {
 
             try {
                 usuarioBL.crear(usuarioDTO);
-                mostrarMensaje("Usuario registrado correctamente.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                mostrarMensaje("Usuario registrado correctamente.", "Registro Exitoso",
+                        JOptionPane.INFORMATION_MESSAGE);
                 parentLogin.setVisible(true); // Hacer visible la ventana principal al cerrar esta ventana de registro
                 dispose(); // Cerrar la ventana después de registrar al usuario
             } catch (Exception e) {

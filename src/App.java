@@ -13,6 +13,7 @@ public class App {
             login.dispose();
             @SuppressWarnings("unused")
             MainForm mainForm = new MainForm("PoliBank", login.getUsuarioLogeado(), login);
+            
 
         });
     }
