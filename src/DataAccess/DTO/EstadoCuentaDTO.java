@@ -23,6 +23,10 @@ public class EstadoCuentaDTO {
         return Fecha;
     }
 
+    public String getFechaCorta() {
+        return Fecha.substring(0, Fecha.indexOf(' '));
+    }
+
     public void setFecha(String fecha) {
         Fecha = fecha;
     }

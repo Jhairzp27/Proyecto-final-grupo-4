@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -26,7 +24,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import BusinessLogic.TransferenciaBL;
 import BusinessLogic.UsuarioBL;
-import DataAccess.DTO.TransferenciaDTO;
 import DataAccess.DTO.UsuarioDTO;
 import UserInterface.CustomerControl.Button;
 import UserInterface.CustomerControl.Estilo;
@@ -36,9 +33,10 @@ import UserInterface.CustomerControl.TextBox;
 public class PnlTransferencia extends JPanel implements ActionListener {
     private Integer idUsuarioRecibe, idMaxUsuario, 
                     nroPagina = 1, totalPaginas;
+    private TransferenciaBL transferenciaBL = new TransferenciaBL();
     private UsuarioDTO usuarioDTOLogeado      = null;
     ArrayList<UsuarioDTO> usuariosDTOReciben  = null;
-    private UsuarioBL  usuarioBL              = null;
+    private UsuarioBL  usuarioBL              = new UsuarioBL();
     private PnlMenu pnlMenu                   = null;
     private Image backgroundImage;
 
@@ -128,15 +126,17 @@ public class PnlTransferencia extends JPanel implements ActionListener {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int row = table.getSelectedRow();
-                    if (row != -1) {
-                        Object idUsuarioSeleccionado = table.getValueAt(row, 0);
-                        txtIdUsuario.setText(idUsuarioSeleccionado.toString());
+                try {
+                    if (!e.getValueIsAdjusting()) {
+                        int row = table.getSelectedRow();
+                        if (row != -1) {
+                            Object idUsuarioSeleccionado = table.getValueAt(row, 0);
+                            txtIdUsuario.setText(idUsuarioSeleccionado.toString());
+                        }
                     }
-                }
-            }
-        });
+                } catch (Exception ex) {}
+            }});
+
     }
 
     @Override
@@ -159,67 +159,40 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             nroPagina = totalPaginas;
         if (e.getSource() == btnTransferencia) {
             try {
-                transferirDinero();
+                String strMonto = txtMonto.getText();
+                String strIdUsuarioRecibe = txtIdUsuario.getText();
+        
+                if (!strMonto.isEmpty() && !strIdUsuarioRecibe.isEmpty()) {
+                    if (transferenciaBL.esNumeroFloatPositivo(strMonto) && transferenciaBL.esNumeroEntero(strIdUsuarioRecibe)) {
+                        float monto = Float.parseFloat(strMonto);
+                        int idUsuarioRecibe = Integer.parseInt(strIdUsuarioRecibe);
+                        
+                        boolean transferenciaExitosa = transferenciaBL.transferirDinero(usuarioDTOLogeado, idUsuarioRecibe, monto);
+                        
+                        if (transferenciaExitosa) {
+                            JOptionPane.showMessageDialog(null, "Transferencia realizada con éxito");
+                            pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
+                        } else
+                            JOptionPane.showMessageDialog(null, "Error al realizar la transferencia");
+                    } else 
+                        JOptionPane.showMessageDialog(null, "Monto o ID de usuario receptor inválidos");
+                } else
+                    JOptionPane.showMessageDialog(null, "Por favor ingresa el monto y el ID del usuario receptor");
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-
+    
         try {
-            cargarDatos();
-            mostrarDatos();
-            mostrarTabla();
+                cargarDatos();
+                mostrarDatos();
+                mostrarTabla();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
-    private void transferirDinero() throws Exception {
-        String strMonto = txtMonto.getText();
-        String strIdUsuarioRecibe = txtIdUsuario.getText();
-
-        if (!strMonto.isEmpty() && !strIdUsuarioRecibe.isEmpty()) {
-            float monto = Float.parseFloat(strMonto);
-            idUsuarioRecibe = Integer.parseInt(strIdUsuarioRecibe);
-
-            UsuarioDTO usuarioRecibe = usuarioBL.leerPorId(idUsuarioRecibe);
-
-            if (usuarioRecibe != null) {
-                float saldoActualUsuarioLogeado = usuarioDTOLogeado.getSaldo();
-
-                if (saldoActualUsuarioLogeado >= monto) {
-                    float nuevoSaldoUsuarioLogeado = saldoActualUsuarioLogeado - monto;
-                    float saldoActualUsuarioRecibe = usuarioRecibe.getSaldo();
-                    float nuevoSaldoUsuarioRecibe = saldoActualUsuarioRecibe + monto;
-
-                    usuarioDTOLogeado.setSaldo(nuevoSaldoUsuarioLogeado);
-                    usuarioRecibe.setSaldo(nuevoSaldoUsuarioRecibe);
-
-                    if (usuarioBL.actualizar(usuarioDTOLogeado) && usuarioBL.actualizar(usuarioRecibe)) {
-                        TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
-                        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        LocalDateTime actual = LocalDateTime.now();
-                        transferenciaDTO.setIdUsuarioEnvia(usuarioDTOLogeado.getIdUsuario());
-                        transferenciaDTO.setIdUsuarioRecibe(idUsuarioRecibe);
-                        transferenciaDTO.setMonto(monto);
-                        transferenciaDTO.setFecha(formatoFecha.format(actual).toString());
-
-                        pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
-
-                        TransferenciaBL transferenciaBL = new TransferenciaBL();
-                        if (transferenciaBL.crear(transferenciaDTO))
-                            JOptionPane.showMessageDialog(this, "Transferencia realizada con éxito");
-                        else
-                            JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
-                    } else
-                        JOptionPane.showMessageDialog(this, "Error al actualizar los saldos de los usuarios");
-                } else
-                    JOptionPane.showMessageDialog(this, "Saldo insuficiente para realizar la transferencia");
-            } else
-                JOptionPane.showMessageDialog(this, "El usuario receptor no existe");
-        } else
-            JOptionPane.showMessageDialog(this, "Por favor ingresa el monto y el ID del usuario receptor");
-    }
+    
 
     /********************************
      * FormDesing

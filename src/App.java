@@ -1,5 +1,3 @@
-import javax.swing.ImageIcon;
-
 import DataAccess.DatabaseInitializer;
 import UserInterface.Form.MainForm;
 import UserInterface.Form.SplashScreenForm;

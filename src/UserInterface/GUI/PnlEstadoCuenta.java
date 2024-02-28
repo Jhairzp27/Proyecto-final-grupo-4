@@ -35,6 +35,7 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
     ArrayList<EstadoCuentaDTO> listaEstadoCuentaDTO = null;
     private EstadoCuentaBL estadoCuentaBL = null;
     private Image backgroundImage;
+    JTable tabla = null;
 
     public PnlEstadoCuenta(UsuarioDTO usuarioDTOLogeado) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
@@ -51,6 +52,7 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         btnAnt.addActionListener(this);
         btnSig.addActionListener(this);
         btnFin.addActionListener(this);
+
         try {
             backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
 
@@ -81,41 +83,41 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         int index = 0;
         for (int i = startIndex; i <= endIndex; i++) {
             try {
-                EstadoCuentaDTO m = listaEstadoCuentaDTO.get(i - 1);
-                data[index][0] = m.getFecha();
-                data[index][1] = m.getIdMovimiento();
-                data[index][2] = m.getDescripcion();
-                data[index][3] = m.getMonto();
-                data[index][4] = m.getSaldo();
+                EstadoCuentaDTO ec = listaEstadoCuentaDTO.get(i - 1);
+                data[index][0] = ec.getFecha();
+                data[index][1] = ec.getIdMovimiento();
+                data[index][2] = ec.getDescripcion();
+                data[index][3] = ec.getMonto();
+                data[index][4] = ec.getSaldo();
                 index++;
             } catch (Exception e) {
                 break;
             }
         }
 
-        JTable table = new JTable(data, encabezado);
-        table.setShowHorizontalLines(true);
-        table.getTableHeader().setBackground(Estilo.COLOR_BORDER);
-        table.setGridColor(Estilo.COLOR_BORDER);
-        table.setRowSelectionAllowed(true);
-        table.setColumnSelectionAllowed(false);
+        tabla = new JTable(data, encabezado);
+        tabla.setShowHorizontalLines(true);
+        tabla.getTableHeader().setBackground(Estilo.COLOR_BORDER);
+        tabla.setGridColor(Estilo.COLOR_BORDER);
+        tabla.setRowSelectionAllowed(true);
+        tabla.setColumnSelectionAllowed(false);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        table.getColumnModel().getColumn(0).setPreferredWidth(120);
-        table.getColumnModel().getColumn(1).setPreferredWidth(100);
-        table.getColumnModel().getColumn(2).setPreferredWidth(120);
-        table.getColumnModel().getColumn(3).setPreferredWidth(70);
-        table.getColumnModel().getColumn(4).setPreferredWidth(70);
-        for (int i = 0; i < table.getColumnCount(); i++)
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(120);
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tabla.getColumnModel().getColumn(2).setPreferredWidth(120);
+        tabla.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tabla.getColumnModel().getColumn(4).setPreferredWidth(70);
+        for (int i = 0; i < tabla.getColumnCount(); i++)
+            tabla.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 
-        ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) tabla.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
-        table.setPreferredScrollableViewportSize(new Dimension(530, 160));
-        table.setFillsViewportHeight(true);
+        tabla.setPreferredScrollableViewportSize(new Dimension(530, 160));
+        tabla.setFillsViewportHeight(true);
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(tabla);
 
         pnlTabla.removeAll();
         pnlTabla.add(scrollPane);

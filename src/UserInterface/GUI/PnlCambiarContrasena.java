@@ -33,14 +33,14 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
         if (e.getSource() == btnCambiar) {
             try {
                 String nuevaContrasena = new String(txtNuevaContrasena.getText());
-                if (usuarioDTO != null) {
+                if (!nuevaContrasena.isEmpty()) {
                     usuarioDTO.setClave(nuevaContrasena);
                     if (usuarioBL.actualizar(usuarioDTO))
                         JOptionPane.showMessageDialog(this, "Contraseña cambiada con éxito");
                     else
                         JOptionPane.showMessageDialog(this, "Error al cambiar la contraseña");
                 } else
-                    JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+                    JOptionPane.showMessageDialog(this, "Por favor ingresa una nueva contraseña válida");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }
