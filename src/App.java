@@ -11,6 +11,7 @@ public class App {
         login.setVisible(true);
         login.addLoginSuccessListener(() -> {
             login.dispose();
+            @SuppressWarnings("unused")
             MainForm mainForm = new MainForm("PoliBank", login.getUsuarioLogeado(), login);
 
         });
