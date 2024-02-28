@@ -100,6 +100,7 @@ public class PnlLogin extends JFrame {
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
+
             }
         });
         panel.add(loginButton);
@@ -147,6 +148,7 @@ public class PnlLogin extends JFrame {
             for (Runnable listener : loginSuccessListeners) {
                 listener.run();
             }
+
         } else {
             JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos.");
         }

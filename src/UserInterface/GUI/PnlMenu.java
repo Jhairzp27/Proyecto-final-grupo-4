@@ -50,7 +50,7 @@ public class PnlMenu extends JPanel {
         }
         // add saldo
         add(Box.createVerticalStrut(10)); // Espacio en blanco vertical
-        lblSaldo = new Label("   Saldo actual: $" + usuarioDTO.getSaldo());
+        lblSaldo = new Label("Saldo actual: $" + usuarioDTO.getSaldo());
         lblSaldo.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblSaldo.setFont(lblSaldo.getFont().deriveFont(15f)); // Establecer el tamaño de la fuente a 30 puntos
         lblSaldo.setBackground(new Color(0, 200, 00));
