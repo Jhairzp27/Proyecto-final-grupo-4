@@ -14,7 +14,7 @@ public class TransferenciaBL {
     private UsuarioBL usuarioBL = new UsuarioBL();
 
     public TransferenciaBL() {}
-    
+
     public boolean crear(TransferenciaDTO transferenciaDTO) throws Exception {
         return transferenciaDAO.crear(transferenciaDTO);
     }
@@ -41,7 +41,7 @@ public class TransferenciaBL {
             return false;
 
         float saldoActual = usuarioDTO.getSaldo(),
-              saldoNuevo  = saldoActual + montoRecarga;
+                saldoNuevo = saldoActual + montoRecarga;
         usuarioDTO.setSaldo(saldoNuevo);
 
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -61,21 +61,21 @@ public class TransferenciaBL {
     public boolean transferirDinero(UsuarioDTO usuarioDTOLogeado, int idUsuarioRecibe, float monto) throws Exception {
         if (monto <= 0)
             return false;
-    
+
         UsuarioDTO usuarioRecibe = usuarioBL.leerPorId(idUsuarioRecibe);
-    
+
         float saldoActualUsuarioLogeado = usuarioDTOLogeado.getSaldo();
-    
+
         if (saldoActualUsuarioLogeado < monto)
             return false;
-    
-        float nuevoSaldoUsuarioLogeado = saldoActualUsuarioLogeado - monto;
-        float saldoActualUsuarioRecibe = usuarioRecibe.getSaldo();
-        float nuevoSaldoUsuarioRecibe = saldoActualUsuarioRecibe + monto;
-    
+
+        float nuevoSaldoUsuarioLogeado = saldoActualUsuarioLogeado - monto,
+              saldoActualUsuarioRecibe = usuarioRecibe.getSaldo(),
+              nuevoSaldoUsuarioRecibe = saldoActualUsuarioRecibe + monto;
+
         usuarioDTOLogeado.setSaldo(nuevoSaldoUsuarioLogeado);
         usuarioRecibe.setSaldo(nuevoSaldoUsuarioRecibe);
-    
+
         if (usuarioBL.actualizar(usuarioDTOLogeado) && usuarioBL.actualizar(usuarioRecibe)) {
             TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
             DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -84,7 +84,7 @@ public class TransferenciaBL {
             transferenciaDTO.setIdUsuarioRecibe(idUsuarioRecibe);
             transferenciaDTO.setMonto(monto);
             transferenciaDTO.setFecha(formatoFecha.format(actual).toString());
-    
+
             if (crear(transferenciaDTO))
                 return true;
             else
@@ -92,17 +92,17 @@ public class TransferenciaBL {
         } else
             return false;
     }
-    
+
     public boolean esNumeroFloatPositivo(String str) {
         try {
-            if(Float.parseFloat(str) >= 0)
+            if (Float.parseFloat(str) >= 0)
                 return true;
             return false;
         } catch (NumberFormatException e) {
             return false;
         }
     }
-    
+
     public boolean esNumeroEntero(String str) {
         try {
             Integer.parseInt(str);
@@ -111,5 +111,5 @@ public class TransferenciaBL {
             return false;
         }
     }
-    
+
 }
