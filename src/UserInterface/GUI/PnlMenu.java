@@ -87,7 +87,6 @@ public class PnlMenu extends JPanel {
     public void actualizarSaldo(float nuevoSaldo) {
         lblSaldo.setPreferredSize(new Dimension(2000, 250));
         lblSaldo.setText("Saldo actual: $" + nuevoSaldo);
-
     }
 
 }

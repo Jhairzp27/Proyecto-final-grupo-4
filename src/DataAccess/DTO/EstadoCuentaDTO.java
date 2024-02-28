@@ -63,4 +63,13 @@ public class EstadoCuentaDTO {
         Saldo = saldo;
     }
 
+    @Override
+    public String toString() {
+        return "\n" + getClass().getName() 
+             + "\n Fecha:        " + getFecha()
+             + "\n IdMovimiento: " + getIdMovimiento()
+             + "\n Descripcion:  " + getDescripcion()
+             + "\n Monto:        " + getMonto()
+             + "\n Saldo:        " + getSaldo();
+    }
 }
