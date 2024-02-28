@@ -31,6 +31,7 @@ import UserInterface.CustomerControl.Label;
 import UserInterface.CustomerControl.TextBox;
 
 public class PnlTransferencia extends JPanel implements ActionListener {
+    @SuppressWarnings("unused")
     private Integer idUsuarioRecibe, idMaxUsuario, 
                     nroPagina = 1, totalPaginas;
     private TransferenciaBL transferenciaBL = new TransferenciaBL();

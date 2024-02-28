@@ -26,6 +26,7 @@ public class MainForm extends JFrame {
     PnlMenu pnlMenu;
     UsuarioDTO usuarioDTO;
     
+    @SuppressWarnings("unused")
     public MainForm(String tilteApp, UsuarioDTO usuarioDTO, PnlLogin login) {
         this.usuarioDTO = usuarioDTO;
         customizeComponent(tilteApp);
