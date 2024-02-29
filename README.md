@@ -1,3 +1,8 @@
+<div style="display: flex; margin-bottom: 20px;">
+  <img src="https://raw.githubusercontent.com/Jhairzp27/Proyecto-final-grupo-4/main/src/UserInterface/Resource/SplashLogo.png" alt="logoEPN" style="flex: 50%; width: 300px; margin-right: 30px;">
+  <img src="https://raw.githubusercontent.com/fernygeek/AntBot/main/figuras/logoFIS.png" alt="LogoFIS" style="flex: 50%; width: 200px; padding: 30px">
+</div>
+
 # <span style="color:rgb(0, 0, 255)">National Polytechnic Bank</span>
 
 ¡Bienvenido al proyecto del <span style="color:rgb(0, 0, 255)">National Polytechnic Bank</span>!
