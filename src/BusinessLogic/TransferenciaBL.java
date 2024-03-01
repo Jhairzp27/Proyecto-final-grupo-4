@@ -7,6 +7,7 @@ import java.util.List;
 import DataAccess.TransferenciaDAO;
 import DataAccess.DTO.TransferenciaDTO;
 import DataAccess.DTO.UsuarioDTO;
+import Framework.NewException;
 
 public class TransferenciaBL {
     private TransferenciaDTO transferenciaDTO;
@@ -93,22 +94,23 @@ public class TransferenciaBL {
             return false;
     }
 
-    public boolean esNumeroFloatPositivo(String str) {
+    public boolean esNumeroFloatPositivo(String str) throws Exception {
         try {
             if (Float.parseFloat(str) >= 0)
                 return true;
             return false;
         } catch (NumberFormatException e) {
-            return false;
+            throw new NewException(e.getMessage(), getClass().getName(), "esNumeroFloatPositivo()");
+
         }
     }
 
-    public boolean esNumeroEntero(String str) {
+    public boolean esNumeroEntero(String str) throws Exception {
         try {
             Integer.parseInt(str);
             return true;
         } catch (NumberFormatException e) {
-            return false;
+            throw new NewException(e.getMessage(), getClass().getName(), "esNumeroEntero()");
         }
     }
 

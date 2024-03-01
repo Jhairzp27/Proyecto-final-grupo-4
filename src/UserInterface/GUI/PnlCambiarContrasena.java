@@ -42,7 +42,7 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
                 } else
                     JOptionPane.showMessageDialog(this, "Por favor ingresa una nueva contraseña válida");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+                ex.printStackTrace();
             }
         }
     }

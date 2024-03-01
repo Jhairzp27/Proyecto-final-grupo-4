@@ -24,7 +24,6 @@ public class PnlBorrarCuenta extends JPanel implements ActionListener {
         btnBorrar.addActionListener(this);
         try {
             backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,7 +44,7 @@ public class PnlBorrarCuenta extends JPanel implements ActionListener {
                         JOptionPane.showMessageDialog(this, "Error al borrar la cuenta");
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
         }

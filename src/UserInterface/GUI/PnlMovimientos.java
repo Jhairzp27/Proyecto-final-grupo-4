@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -45,6 +46,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
             mostrarDatos();
             mostrarTabla();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar recursos");
         }
 
         btnIni.addActionListener(this);
@@ -140,7 +142,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
             mostrarDatos();
             mostrarTabla();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al cargar recursos");
         }
     }
 
