@@ -19,11 +19,24 @@ import DataAccess.DTO.UsuarioDTO;
 import Framework.NewException;
 import br.com.adilson.util.PrinterMatrix;
 
+/**
+ * La clase `EstadoCuentaBL` en Java contiene métodos para leer e imprimir estados de cuenta usando una
+ * impresora matricial.
+ */
 public class EstadoCuentaBL {
     private EstadoCuentaDAO estadoCuentaDAO = new EstadoCuentaDAO();
 
     public EstadoCuentaBL() {}
 
+    /**
+     * Esta función Java lee una lista de objetos EstadoCuentaDTO según el ID del usuario actualmente
+     * conectado.
+     * 
+     * @param idUsuarioLogeado El parámetro `idUsuarioLogeado` representa el ID del usuario actualmente
+     * conectado. Este método `leerPorUsuarioActual` se utiliza para recuperar una lista de objetos
+     * `EstadoCuentaDTO` asociados al usuario identificado por el `idUsuarioLogeado` proporcionado.
+     * @return Se está devolviendo un ArrayList de objetos EstadoCuentaDTO.
+     */
     public ArrayList<EstadoCuentaDTO> leerPorUsuarioActual(Integer idUsuarioLogeado) throws Exception {
         return estadoCuentaDAO.leerPorUsuarioActual(idUsuarioLogeado);
     }
