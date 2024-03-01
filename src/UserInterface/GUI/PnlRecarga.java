@@ -39,9 +39,8 @@ public class PnlRecarga extends JPanel implements ActionListener {
                 if (transferenciaBL.recargar(usuarioDTO, montoRecarga)) {
                     pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
                     JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
-                } else {
+                } else
                     JOptionPane.showMessageDialog(this, "Por favor ingrese un monto válido");
-                }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Ingrese solo números");
             }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import Framework.NewException;
+
 public abstract class SQLiteDataHelper {
     private static String direccionConeccionBaseDatos = "jdbc:sqlite:database//DataBasePoliBank.sqlite";
     private static Connection coneccion = null;
@@ -18,17 +20,17 @@ public abstract class SQLiteDataHelper {
                 coneccion = DriverManager.getConnection(direccionConeccionBaseDatos);
 
         } catch (SQLException e) {
-            throw e;
+            throw new NewException(e.getMessage(), Connection.class.getName(), "abrirConexion()");
         }
         return coneccion;
     }
 
-    protected static void cerrarConeccion() throws Exception {
+    protected static void cerrarConecion() throws Exception {
         try {
             if (coneccion != null)
                 coneccion.close();
         } catch (SQLException e) {
-            throw e;
+            throw new NewException(e.getMessage(), Connection.class.getName(), "cerrarConexion()");
         }
     }
 }

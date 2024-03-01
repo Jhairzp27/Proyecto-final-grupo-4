@@ -32,7 +32,7 @@ public class PnlImpresion extends JPanel {
                                                                   (usuarioDTOLogeado.getIdUsuario());
                 estadoCuentaBL.imprimir(listaEstadoCuentaDTO, usuarioDTOLogeado);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al imprimir");
             }
         }
     }

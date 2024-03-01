@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -52,6 +53,7 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
             mostrarDatos();
             mostrarTabla();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar datos");
         }
 
         btnIni.addActionListener(this);
@@ -61,9 +63,8 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
 
         try {
             backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
-
         } catch (IOException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al cargar recursos");
         }
     }
 
@@ -160,7 +161,7 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
             mostrarDatos();
             mostrarTabla();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al cargar recursos");
         }
     }
 

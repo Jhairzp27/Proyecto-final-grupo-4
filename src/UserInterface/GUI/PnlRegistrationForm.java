@@ -240,7 +240,7 @@ public class PnlRegistrationForm extends JFrame {
             usuarioDTO.setIdSexo(idSexo);
 
             try {
-                usuarioBL.crear(usuarioDTO);
+                usuarioBL.registrar(usuarioDTO);
                 mostrarMensaje("Usuario registrado correctamente.", "Registro Exitoso",
                         JOptionPane.INFORMATION_MESSAGE);
                 parentLogin.setVisible(true); // Hacer visible la ventana principal al cerrar esta ventana de registro

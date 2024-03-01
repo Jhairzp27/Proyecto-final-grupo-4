@@ -183,7 +183,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
         }
     }
 
-    public boolean loginUsuario(String username, String password){
+    public boolean loginUsuario(String username, String password) throws Exception {
         String consulta = "SELECT * FROM Usuario WHERE Estado = 'A' AND Username = ? AND Clave = ?";
         try {
             Connection conexion           = abrirConexion();
@@ -193,8 +193,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO> {
             ResultSet  conjuntoResultante = declaracion.executeQuery();
             return conjuntoResultante.next();
         } catch (Exception e) {
-            System.out.println("Error al iniciar sesion: " + e.getMessage());
-            return false;
+            throw new NewException(e.getMessage(), getClass().getName(), "loginUsuario()");
         }
     }
 }

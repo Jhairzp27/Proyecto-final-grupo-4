@@ -113,7 +113,7 @@ public class PnlLogin extends JFrame {
                 try {
                     handleLogin(username, password);
                 } catch (Exception e1) {
-                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error al cargar recursos");
                 }
 
             }

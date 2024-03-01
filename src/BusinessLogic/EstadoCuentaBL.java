@@ -12,27 +12,48 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
-import javax.swing.JOptionPane;
 
 import DataAccess.EstadoCuentaDAO;
 import DataAccess.DTO.EstadoCuentaDTO;
 import DataAccess.DTO.UsuarioDTO;
+import Framework.NewException;
 import br.com.adilson.util.PrinterMatrix;
 
+/**
+ * La clase `EstadoCuentaBL` en Java contiene métodos para leer e imprimir estados de cuenta usando una
+ * impresora matricial
+ */
 public class EstadoCuentaBL {
     private EstadoCuentaDAO estadoCuentaDAO = new EstadoCuentaDAO();
 
     public EstadoCuentaBL() {}
 
+    /**
+     * Esta función Java lee una lista de objetos EstadoCuentaDTO según el ID del usuario actualmente
+     * conectado.
+     * 
+     * @param idUsuarioLogeado El parámetro `idUsuarioLogeado` representa el ID del usuario actualmente
+     * conectado. Este método `leerPorUsuarioActual` se utiliza para recuperar una lista de objetos
+     * `EstadoCuentaDTO` asociados al usuario identificado por el `idUsuarioLogeado` proporcionado.
+     * @return Se está devolviendo un ArrayList de objetos EstadoCuentaDTO.
+     */
     public ArrayList<EstadoCuentaDTO> leerPorUsuarioActual(Integer idUsuarioLogeado) throws Exception {
         return estadoCuentaDAO.leerPorUsuarioActual(idUsuarioLogeado);
     }
 
-    public void imprimir(ArrayList<EstadoCuentaDTO> listaEstadoCuentaDTO, UsuarioDTO usuarioDTOLogeado) {
+    /**
+     * La función `imprimir` en Java imprime un estado de cuenta usando una impresora matricial y luego
+     * lo envía a la impresora predeterminada para su salida física.
+     * 
+     * @param listaEstadoCuentaDTO El método `imprimir` toma dos parámetros:
+     * @param usuarioDTOLogeado El parámetro `usuarioDTOLogeado` es de tipo `UsuarioDTO` y representa
+     * al usuario que ha iniciado sesión. Contiene información como el nombre del usuario, DNI y número
+     * de DNI (C.I.).
+     */
+    public void imprimir(ArrayList<EstadoCuentaDTO> listaEstadoCuentaDTO, UsuarioDTO usuarioDTOLogeado) throws Exception {
         PrinterMatrix printer = new PrinterMatrix();
-        String rutaArchivo = "src\\UserInterface\\Resource\\data\\impresion.txt";
+        String rutaArchivo = "data\\impresion.txt";
 
-        // Pixeles de hoja A4
         printer.setOutSize((listaEstadoCuentaDTO.size() * 2) + 15, 90);
 
         // printCharAtCol(a, b, c, "texto")
@@ -72,23 +93,19 @@ public class EstadoCuentaBL {
         int i, j, lineaEmpieza = 0;
         for (i = 1, j = 0; i <= listaEstadoCuentaDTO.size(); i++, j++) {
             lineaEmpieza = i + 10 + j;
-            try {
-                EstadoCuentaDTO ec = listaEstadoCuentaDTO.get(i - 1);
-                printer.printCharAtCol(lineaEmpieza + 1, 5, 5, "|");
-                printer.printTextWrap(lineaEmpieza, lineaEmpieza, 6, 90, ec.getFechaCorta());
-                printer.printCharAtCol(lineaEmpieza + 1, 18, 18, "|");
-                printer.printTextWrap(lineaEmpieza, lineaEmpieza, 25, 90, ec.getIdMovimiento().toString());
-                printer.printCharAtCol(lineaEmpieza + 1, 34, 34, "|");
-                printer.printTextWrap(lineaEmpieza, lineaEmpieza, 35, 90, ec.getDescripcion());
-                printer.printCharAtCol(lineaEmpieza + 1, 50, 50, "|");
-                printer.printTextWrap(lineaEmpieza, lineaEmpieza, 51, 90, ec.getMonto());
-                printer.printCharAtCol(lineaEmpieza + 1, 62, 62, "|");
-                printer.printTextWrap(lineaEmpieza, lineaEmpieza, 63, 90, ec.getSaldo().toString());
-                printer.printCharAtCol(lineaEmpieza + 1, 74, 74, "|");
-                printer.printCharAtCol(lineaEmpieza + 2, 5, 74, "-");
-            } catch (Exception e) {
-                break;
-            }
+            EstadoCuentaDTO ec = listaEstadoCuentaDTO.get(i - 1);
+            printer.printCharAtCol(lineaEmpieza + 1, 5, 5, "|");
+            printer.printTextWrap(lineaEmpieza, lineaEmpieza, 6, 90, ec.getFechaCorta());
+            printer.printCharAtCol(lineaEmpieza + 1, 18, 18, "|");
+            printer.printTextWrap(lineaEmpieza, lineaEmpieza, 25, 90, ec.getIdMovimiento().toString());
+            printer.printCharAtCol(lineaEmpieza + 1, 34, 34, "|");
+            printer.printTextWrap(lineaEmpieza, lineaEmpieza, 35, 90, ec.getDescripcion());
+            printer.printCharAtCol(lineaEmpieza + 1, 50, 50, "|");
+            printer.printTextWrap(lineaEmpieza, lineaEmpieza, 51, 90, ec.getMonto());
+            printer.printCharAtCol(lineaEmpieza + 1, 62, 62, "|");
+            printer.printTextWrap(lineaEmpieza, lineaEmpieza, 63, 90, ec.getSaldo().toString());
+            printer.printCharAtCol(lineaEmpieza + 1, 74, 74, "|");
+            printer.printCharAtCol(lineaEmpieza + 2, 5, 74, "-");
         }
 
         lineaEmpieza += 4;
@@ -102,40 +119,27 @@ public class EstadoCuentaBL {
 
         printer.toFile(rutaArchivo);
 
-        // Se prepara el archivo para imprimirlo
         FileInputStream inputStream = null;
 
         try {
             inputStream = new FileInputStream(rutaArchivo);
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            throw new NewException(ex.getMessage(), getClass().getName(), "imprimir()");
         }
 
-        if (inputStream == null)
-            return;
-
-        // Formato del documento
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        // Creación del documento
         Doc document = new SimpleDoc(inputStream, docFormat, null);
 
-        // Conjunto de atributos para la impresión
         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
-        // Se busca la impresora predeterminada
         PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
 
-        // Si hay una impresora disponible, se envía el trabajo de impresión
-        if (defaultPrintService != null) {
-            // Se crea un trabajo de impresión
-            DocPrintJob printJob = defaultPrintService.createPrintJob();
-            try {
-                // Se envía el documento a imprimir
+        try {
+            if (defaultPrintService != null) {
+                DocPrintJob printJob = defaultPrintService.createPrintJob();
                 printJob.print(document, attributeSet);
-            } catch (Exception ex) {
-                System.out.println("Error: " + ex.toString());
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay una impresora instalada");
+        } catch (Exception ex) {
+            throw new NewException(ex.getMessage(), getClass().getName(), "imprimir()");
         }
     }
 }

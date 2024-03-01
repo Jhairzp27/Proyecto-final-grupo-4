@@ -51,6 +51,7 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             mostrarDatos();
             mostrarTabla();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar recursos");
         }
 
         btnIni.addActionListener(this);
@@ -135,7 +136,9 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                             txtIdUsuario.setText(idUsuarioSeleccionado.toString());
                         }
                     }
-                } catch (Exception ex) {}
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }});
 
     }
@@ -181,7 +184,7 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Por favor ingresa el monto y el ID del usuario receptor");
                 
             } catch (Exception ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al transferir");
             }
         }
     
