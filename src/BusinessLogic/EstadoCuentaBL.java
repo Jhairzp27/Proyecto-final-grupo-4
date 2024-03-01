@@ -19,15 +19,38 @@ import DataAccess.DTO.UsuarioDTO;
 import Framework.NewException;
 import br.com.adilson.util.PrinterMatrix;
 
+/**
+ * La clase `EstadoCuentaBL` en Java contiene métodos para recuperar e imprimir estados de cuenta para
+ * un usuario, utilizando una impresora matricial.
+ */
 public class EstadoCuentaBL {
     private EstadoCuentaDAO estadoCuentaDAO = new EstadoCuentaDAO();
 
     public EstadoCuentaBL() {}
 
+    /**
+     * La función lee y devuelve una lista de objetos EstadoCuentaDTO según el ID del usuario actual.
+     * 
+     * @param idUsuarioLogeado El parámetro `idUsuarioLogeado` representa el ID del usuario actualmente
+     * conectado. Este método `leerPorUsuarioActual` se utiliza para recuperar una lista de objetos
+     * `EstadoCuentaDTO` asociados al usuario identificado por el `idUsuarioLogeado` proporcionado.
+     * @return Se está devolviendo un ArrayList de objetos EstadoCuentaDTO.
+     */
     public ArrayList<EstadoCuentaDTO> leerPorUsuarioActual(Integer idUsuarioLogeado) throws Exception {
         return estadoCuentaDAO.leerPorUsuarioActual(idUsuarioLogeado);
     }
 
+    /**
+     * La función `imprimir` en Java imprime un estado de cuenta para un usuario, incluidos los
+     * detalles de las transacciones, utilizando una impresora matricial y luego lo envía a la
+     * impresora predeterminada.
+     * 
+     * @param listaEstadoCuentaDTO El método `imprimir` toma dos parámetros:
+     * @param usuarioDTOLogeado El parámetro `usuarioDTOLogeado` es de tipo `UsuarioDTO` y representa
+     * al usuario que ha iniciado sesión. Contiene información como el nombre del usuario, DNI y número
+     * de identificación (C.I.). En el método `imprimir`, este parámetro se utiliza para recuperar y
+     * mostrar el usuario
+     */
     public void imprimir(ArrayList<EstadoCuentaDTO> listaEstadoCuentaDTO, UsuarioDTO usuarioDTOLogeado) throws Exception {
         PrinterMatrix printer = new PrinterMatrix();
         String rutaArchivo = "data\\impresion.txt";
