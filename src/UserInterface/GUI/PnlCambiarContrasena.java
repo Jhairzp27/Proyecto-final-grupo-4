@@ -1,21 +1,36 @@
 package UserInterface.GUI;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import BusinessLogic.UsuarioBL;
-import DataAccess.DTO.UsuarioDTO;
-
-import java.awt.*;
+import java.awt.Button;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Label;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import BusinessLogic.UsuarioBL;
+import DataAccess.DTO.UsuarioDTO;
 
 public class PnlCambiarContrasena extends JPanel implements ActionListener {
     private UsuarioBL usuarioBL = new UsuarioBL();
     private UsuarioDTO usuarioDTO = null;
     private Image backgroundImage;
 
+    /**
+     * Constructor para inicializar el panel de cambio de contraseña.
+     * 
+     * @param usuarioDTO El objeto UsuarioDTO que contiene la información del
+     *                   usuario.
+     */
     public PnlCambiarContrasena(UsuarioDTO usuarioDTO) {
         this.usuarioDTO = usuarioDTO;
         customizeComponent();
@@ -28,6 +43,12 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Maneja las acciones realizadas en la interfaz, como hacer clic en el botón
+     * "Cambiar".
+     * 
+     * @param e El evento de acción que desencadena este método.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCambiar) {
@@ -47,14 +68,9 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
         }
     }
 
-    /************************
-     * FormDesign
-     ************************/
-
-    private Label lblNuevaContrasena = new Label("Nueva contraseña:");
-    private TextField txtNuevaContrasena = new TextField(10);
-    private Button btnCambiar = new Button("Cambiar");
-
+    /**
+     * Personaliza el diseño del panel con etiquetas, campos de texto y botones.
+     */
     private void customizeComponent() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -74,6 +90,12 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
         add(btnCambiar, gbc);
     }
 
+    /**
+     * Sobrescribe el método paintComponent de JPanel para dibujar la imagen de
+     * fondo en el panel.
+     * 
+     * @param g El objeto Graphics utilizado para dibujar la imagen de fondo.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -81,4 +103,9 @@ public class PnlCambiarContrasena extends JPanel implements ActionListener {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
+
+    // Componentes de la interfaz gráfica
+    private Label lblNuevaContrasena = new Label("Nueva contraseña:");
+    private TextField txtNuevaContrasena = new TextField(10);
+    private Button btnCambiar = new Button("Cambiar");
 }

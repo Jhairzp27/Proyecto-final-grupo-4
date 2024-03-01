@@ -26,6 +26,11 @@ public class PnlLogin extends JFrame {
 
     private List<Runnable> loginSuccessListeners = new ArrayList<>();
 
+    /**
+     * Constructor para el panel de inicio de sesión.
+     * 
+     * @throws Exception Si hay un error al inicializar el panel.
+     */
     public PnlLogin() throws Exception {
         setTitle("Polibank Login/Register");
         setSize(730, 592);
@@ -45,10 +50,21 @@ public class PnlLogin extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Obtiene el usuario que ha iniciado sesión.
+     * 
+     * @return El objeto UsuarioDTO que representa al usuario logeado.
+     */
     public UsuarioDTO getUsuarioLogeado() {
         return usuarioLogeado;
     }
 
+    /**
+     * Coloca los componentes en el panel.
+     * 
+     * @param panel El panel en el que se colocarán los componentes.
+     * @throws Exception Si hay un error al colocar los componentes.
+     */
     private void placeComponents(JPanel panel) throws Exception {
         panel.setLayout(null);
 
@@ -69,7 +85,6 @@ public class PnlLogin extends JFrame {
         userText.setBounds(200, 20, 200, 40);
         userText.setForeground(Color.white);
         userText.setBackground(new Color(80, 80, 80)); // Fondo oscuro para el campo de texto
-
         userText.setFont(textFont);
         panel.add(userText);
 
@@ -118,6 +133,7 @@ public class PnlLogin extends JFrame {
             }
         });
         panel.add(registerButton);
+        
         // Carga la imagen de fondo
         ImageIcon backgroundImage = new ImageIcon(
                 getClass().getResource("/UserInterface/Resource/FondoLogin.png"));
@@ -130,15 +146,32 @@ public class PnlLogin extends JFrame {
         panel.add(backgroundLabel);
     }
 
+    /**
+     * Configura un botón con estilo oscuro.
+     * 
+     * @param button El botón que se configurará con estilo oscuro.
+     */
     private void configurarDarkButton(Button button) {
         button.setBackground(new Color(47, 79, 79));
         button.setForeground(Color.green);
     }
 
+    /**
+     * Agrega un oyente para el evento de inicio de sesión exitoso.
+     * 
+     * @param listener El oyente que se agregará.
+     */
     public void addLoginSuccessListener(Runnable listener) {
         loginSuccessListeners.add(listener);
     }
 
+    /**
+     * Maneja el intento de inicio de sesión.
+     * 
+     * @param username El nombre de usuario proporcionado.
+     * @param password La contraseña proporcionada.
+     * @throws Exception Si hay un error al manejar el inicio de sesión.
+     */
     private void handleLogin(String username, String password) throws Exception {
         // Lógica de inicio de sesión
         boolean loginSuccessful = usuarioBL.logear(username, password);

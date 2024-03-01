@@ -37,6 +37,12 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
     private Image backgroundImage;
     JTable tabla = null;
 
+    /**
+     * Constructor para inicializar el panel de estado de cuenta.
+     * 
+     * @param usuarioDTOLogeado El objeto UsuarioDTO que representa al usuario
+     *                          logeado.
+     */
     public PnlEstadoCuenta(UsuarioDTO usuarioDTOLogeado) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
         customerSizeControl();
@@ -61,6 +67,11 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Carga los datos del estado de cuenta.
+     * 
+     * @throws Exception Si hay un error al cargar los datos.
+     */
     private void cargarDatos() throws Exception {
         idMovimiento = 1;
         estadoCuentaBL = new EstadoCuentaBL();
@@ -68,11 +79,19 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         idMaxMovimiento = listaEstadoCuentaDTO.size();
     }
 
+    /**
+     * Muestra los datos en la interfaz.
+     */
     private void mostrarDatos() {
         totalPaginas = (idMaxMovimiento - 1) / 10 + 1;
         lblTotalReg.setText("Página " + nroPagina + " de " + totalPaginas);
     }
 
+    /**
+     * Muestra la tabla con los datos del estado de cuenta.
+     * 
+     * @throws Exception Si hay un error al mostrar la tabla.
+     */
     private void mostrarTabla() throws Exception {
         int tamanoPagina = 10,
                 startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
@@ -145,9 +164,7 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
         }
     }
 
-    /********************************
-     * FormDesing
-     ********************************/
+    // Componentes de la interfaz gráfica
     private Label lblTitulo = new Label("ESTADO DE CUENTA"),
             lblTotalReg = new Label("  0 de 0  ");
     private Button btnIni = new Button(" |< "),
@@ -157,9 +174,9 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
     private JPanel pnlTabla = new JPanel(),
             pnlBtnPagina = new JPanel(new FlowLayout());
 
-    /************************
-     * Customize : Form
-     ************************/
+    /**
+     * Personaliza el tamaño y el diseño de los componentes en la interfaz gráfica.
+     */
     public void customerSizeControl() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
