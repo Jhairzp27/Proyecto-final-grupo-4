@@ -1,3 +1,6 @@
+/**
+ * Clase que representa un botón personalizado con colores de fondo configurables.
+ */
 package UserInterface.CustomerControl;
 
 import java.awt.Color;
@@ -12,6 +15,11 @@ public class Button extends JButton {
     private Color hoverBackgroundColor;
     private Color pressedBackgroundColor;
 
+    /**
+     * Constructor para crear un nuevo botón con el texto especificado.
+     * 
+     * @param text El texto que mostrará el botón.
+     */
     public Button(String text) {
         super(text);
         setContentAreaFilled(false);
@@ -26,6 +34,12 @@ public class Button extends JButton {
         pressedBackgroundColor = new Color(150, 150, 150);
     }
 
+    /**
+     * Sobrescribe el método para pintar el componente y aplicar colores de fondo
+     * personalizados.
+     * 
+     * @param g El contexto gráfico en el que se dibujará el componente.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isPressed()) {
@@ -42,15 +56,29 @@ public class Button extends JButton {
         super.paintComponent(g);
     }
 
-    // Establecer los colores de fondo personalizados
+    /**
+     * Establece el color de fondo del botón.
+     * 
+     * @param color El color de fondo a establecer.
+     */
     public void setBackgroundColor(Color color) {
         backgroundColor = color;
     }
 
+    /**
+     * Establece el color de fondo cuando el ratón pasa por encima del botón.
+     * 
+     * @param color El color de fondo a establecer cuando el ratón pasa por encima.
+     */
     public void setHoverBackgroundColor(Color color) {
         hoverBackgroundColor = color;
     }
 
+    /**
+     * Establece el color de fondo cuando el botón está presionado.
+     * 
+     * @param color El color de fondo a establecer cuando el botón está presionado.
+     */
     public void setPressedBackgroundColor(Color color) {
         pressedBackgroundColor = color;
     }

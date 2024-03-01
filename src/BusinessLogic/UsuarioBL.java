@@ -12,7 +12,7 @@ public class UsuarioBL {
 
     public UsuarioBL() {}
     
-    public boolean crear(UsuarioDTO usuarioDTO) throws Exception {
+    public boolean registrar(UsuarioDTO usuarioDTO) throws Exception {
         return usuarioDAO.crear(usuarioDTO);
     }
 
