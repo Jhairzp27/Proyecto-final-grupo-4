@@ -117,8 +117,8 @@ public class PnlEstadoCuenta extends JPanel implements ActionListener {
 
         tabla = new JTable(data, encabezado);
         tabla.setShowHorizontalLines(true);
-        tabla.getTableHeader().setBackground(Estilo.COLOR_BORDER);
-        tabla.setGridColor(Estilo.COLOR_BORDER);
+        tabla.getTableHeader().setBackground(Estilo.COLOR_LABEL);
+        tabla.setGridColor(Estilo.COLOR_LABEL);
         tabla.setRowSelectionAllowed(true);
         tabla.setColumnSelectionAllowed(false);
 
