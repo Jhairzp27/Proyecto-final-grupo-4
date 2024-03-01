@@ -8,7 +8,7 @@ import DataAccess.DTO.UsuarioDTO;
 
 /**
  * La clase `UsuarioBL` contiene métodos para registrar usuarios, leer, actualizar y eliminar usuarios,
- * así como un método para iniciar sesión como usuario llamando a métodos de la clase `UsuarioDAO`.
+ * asi como un método para iniciar sesión como usuario llamando a métodos de la clase `UsuarioDAO`.
  */
 public class UsuarioBL {
     private UsuarioDTO usuarioDTO;
