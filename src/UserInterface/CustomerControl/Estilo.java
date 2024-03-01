@@ -20,7 +20,8 @@ public abstract class Estilo {
     public static final Color COLOR_FONT = new Color(200, 100, 50); // Color de fuente principal
     public static final Color COLOR_FONT_LIGHT = new Color(100, 100, 100); // Color de fuente secundario
     public static final Color COLOR_CURSOR = Color.black; // Color de cursor
-    public static final Color COLOR_BORDER = Color.lightGray; // Color de borde
+    public static final Color COLOR_LABEL = Color.lightGray; // Color de borde
+    public static final Color COLOR_GRID = Color.white; // Color de label
     // Fuentes comunes
     public static final Font FONT = new Font("JetBrains Mono", Font.PLAIN, 14); // Fuente regular
     public static final Font FONT_BOLD = new Font("JetBrains Mono", Font.BOLD | Font.PLAIN, 14); // Fuente negrita
