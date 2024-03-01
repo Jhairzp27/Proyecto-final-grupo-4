@@ -7,8 +7,8 @@ import DataAccess.DTO.SexoDTO;
 
 /**
  * La clase `SexoBL` en Java sirve como una capa de lógica de negocios que interactúa con un objeto
- * `SexoDAO` para realizar operaciones CRUD en objetos `SexoDTO` que representan datos de género o
- * sexo.
+ * `SexoDAO` para realizar operaciones  CRUD en objetos `SexoDTO` que representan datos de género o
+ * sexo
  */
 public class SexoBL {
     private SexoDTO sexoDTO;

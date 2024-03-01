@@ -11,7 +11,7 @@ import Framework.NewException;
 
 /**
  * La clase `TransferenciaBL` en Java proporciona métodos para crear, leer, actualizar y eliminar
- * transacciones de transferencia, así como funcionalidades para recargar saldos de usuarios y
+ * transacciones de transferencia,  así como funcionalidades para recargar saldos de usuarios y
  * transferir dinero entre usuarios.
  */
 public class TransferenciaBL {

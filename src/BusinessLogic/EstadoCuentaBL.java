@@ -21,7 +21,7 @@ import br.com.adilson.util.PrinterMatrix;
 
 /**
  * La clase `EstadoCuentaBL` en Java contiene métodos para leer e imprimir estados de cuenta usando una
- * impresora matricial.
+ * impresora matricial
  */
 public class EstadoCuentaBL {
     private EstadoCuentaDAO estadoCuentaDAO = new EstadoCuentaDAO();
