@@ -75,11 +75,17 @@ public class TransferenciaBL {
      * contrario, devuelve "falso".
      */
     public boolean recargar(UsuarioDTO usuarioDTO, float montoRecarga) throws Exception {
-        if (montoRecarga < 0)
+        montoRecarga = Math.round(montoRecarga * 100.0) / 100;
+        
+        if (montoRecarga <= 0)
             return false;
 
         float saldoActual = usuarioDTO.getSaldo(),
                 saldoNuevo = saldoActual + montoRecarga;
+
+        if(saldoNuevo > 10000)
+            return false;
+        
         usuarioDTO.setSaldo(saldoNuevo);
 
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -116,6 +122,8 @@ public class TransferenciaBL {
      * condiciones para una transferencia exitosa o si hay un error durante el proceso.
      */
     public boolean transferirDinero(UsuarioDTO usuarioDTOLogeado, int idUsuarioRecibe, float monto) throws Exception {
+        monto = Math.round(monto * 100.0) / 100;
+        
         if (monto <= 0)
             return false;
 
@@ -129,6 +137,9 @@ public class TransferenciaBL {
         float nuevoSaldoUsuarioLogeado = saldoActualUsuarioLogeado - monto,
               saldoActualUsuarioRecibe = usuarioRecibe.getSaldo(),
               nuevoSaldoUsuarioRecibe = saldoActualUsuarioRecibe + monto;
+
+        if (nuevoSaldoUsuarioRecibe > 10000)
+            return false;
 
         usuarioDTOLogeado.setSaldo(nuevoSaldoUsuarioLogeado);
         usuarioRecibe.setSaldo(nuevoSaldoUsuarioRecibe);
