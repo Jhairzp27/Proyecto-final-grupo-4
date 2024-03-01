@@ -118,8 +118,8 @@ public class PnlMovimientos extends JPanel implements ActionListener {
 
         JTable table = new JTable(data, encabezado);
         table.setShowHorizontalLines(true);
-        table.getTableHeader().setBackground(Estilo.COLOR_BORDER);
-        table.setGridColor(Estilo.COLOR_BORDER);
+        table.getTableHeader().setBackground(Estilo.COLOR_LABEL);
+        table.setGridColor(Estilo.COLOR_LABEL);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
 
