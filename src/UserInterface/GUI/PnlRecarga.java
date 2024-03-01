@@ -57,12 +57,14 @@ public class PnlRecarga extends JPanel implements ActionListener {
                 // Obtiene el monto de recarga ingresado por el usuario
                 float montoRecarga = Float.parseFloat(txtRecarga.getText());
                 // Realiza la recarga y actualiza el saldo en el panel de menú
-                if (transferenciaBL.recargar(usuarioDTO, montoRecarga)) {
-                    pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
-                    JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
-                } else {
-                    JOptionPane.showMessageDialog(this, "Por favor ingrese un monto válido");
-                }
+                if(montoRecarga <= 10000) {    
+                    if (transferenciaBL.recargar(usuarioDTO, montoRecarga)) {
+                        pnlMenu.actualizarSaldo(usuarioDTO.getSaldo());
+                        JOptionPane.showMessageDialog(this, "Recarga realizada con éxito. Nuevo saldo: $" + usuarioDTO.getSaldo());
+                    } else
+                        JOptionPane.showMessageDialog(this, "Saldo insuficiente, nulo o excesivo");
+                } else
+                    JOptionPane.showMessageDialog(null, "El valor máximo de recarga es 10000.00");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Ingrese solo números");
             }
