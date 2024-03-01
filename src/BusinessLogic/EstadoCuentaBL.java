@@ -28,6 +28,15 @@ public class EstadoCuentaBL {
         return estadoCuentaDAO.leerPorUsuarioActual(idUsuarioLogeado);
     }
 
+    /**
+     * La función `imprimir` en Java imprime un estado de cuenta usando una impresora matricial y luego
+     * lo envía a la impresora predeterminada para su salida física.
+     * 
+     * @param listaEstadoCuentaDTO El método `imprimir` toma dos parámetros:
+     * @param usuarioDTOLogeado El parámetro `usuarioDTOLogeado` es de tipo `UsuarioDTO` y representa
+     * al usuario que ha iniciado sesión. Contiene información como el nombre del usuario, DNI y número
+     * de DNI (C.I.).
+     */
     public void imprimir(ArrayList<EstadoCuentaDTO> listaEstadoCuentaDTO, UsuarioDTO usuarioDTOLogeado) throws Exception {
         PrinterMatrix printer = new PrinterMatrix();
         String rutaArchivo = "data\\impresion.txt";
