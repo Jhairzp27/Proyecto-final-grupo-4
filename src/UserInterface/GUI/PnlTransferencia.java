@@ -202,7 +202,7 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                             JOptionPane.showMessageDialog(null, "Transferencia realizada con éxito");
                             pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
                         } else
-                            JOptionPane.showMessageDialog(null, "Error al realizar la transferencia");
+                            JOptionPane.showMessageDialog(null, "Saldo insuficiente");
                     } else 
                         JOptionPane.showMessageDialog(null, "Monto o ID de usuario receptor inválidos");
                 } else
