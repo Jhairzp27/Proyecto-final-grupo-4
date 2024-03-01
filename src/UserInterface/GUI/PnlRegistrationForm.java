@@ -124,6 +124,7 @@ public class PnlRegistrationForm extends JFrame {
             sexoComboBox = new JComboBox<>(); // Cambio de Genero a SexoDTO
             sexoComboBox.addItem(sexoBL.leerPor(1));
             sexoComboBox.addItem(sexoBL.leerPor(2));
+            sexoComboBox.addItem(sexoBL.leerPor(3));
 
             sexoComboBox.setRenderer(new DefaultListCellRenderer());
             sexoComboBox.setUI(new DarkComboBoxUI());
