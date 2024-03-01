@@ -19,13 +19,23 @@ import UserInterface.GUI.PnlMovimientos;
 import UserInterface.GUI.PnlRecarga;
 import UserInterface.GUI.PnlTransferencia;
 
+/**
+ * Clase MainForm que representa la ventana principal de la aplicación.
+ */
 public class MainForm extends JFrame {
-    Boolean estadoCuentaVisto = false;
-    JPanel pnlMain = new PnlMain();
-    PnlEstadoCuenta pnlEstadoCuenta;
-    PnlMenu pnlMenu;
-    UsuarioDTO usuarioDTO;
+
+    Boolean estadoCuentaVisto = false; // Estado del estado de cuenta
+    JPanel pnlMain = new PnlMain(); // Panel principal
+    PnlEstadoCuenta pnlEstadoCuenta; // Panel de estado de cuenta
+    PnlMenu pnlMenu; // Panel de menú
+    UsuarioDTO usuarioDTO; // Objeto que contiene los datos del usuario
     
+    /**
+     * Constructor de la clase MainForm.
+     * @param tilteApp Título de la aplicación.
+     * @param usuarioDTO Objeto UsuarioDTO que contiene los datos del usuario.
+     * @param login Panel de inicio de sesión.
+     */
     @SuppressWarnings("unused")
     public MainForm(String tilteApp, UsuarioDTO usuarioDTO, PnlLogin login) {
         this.usuarioDTO = usuarioDTO;
@@ -59,6 +69,10 @@ public class MainForm extends JFrame {
         });
     }
 
+    /**
+     * Método para cambiar el panel principal en la MainForm.
+     * @param formularioPanel Panel que se establecerá como panel principal.
+     */
     private void setPanel(JPanel formularioPanel) {
         Container container = getContentPane();
         container.remove(pnlMain);
@@ -68,6 +82,10 @@ public class MainForm extends JFrame {
         repaint();
     }
 
+    /**
+     * Método para personalizar los componentes de la MainForm.
+     * @param tilteApp Título de la aplicación.
+     */
     private void customizeComponent(String tilteApp) {
         pnlMenu = new PnlMenu(usuarioDTO);
         setTitle(tilteApp);
