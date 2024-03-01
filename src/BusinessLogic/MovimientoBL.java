@@ -7,7 +7,7 @@ import DataAccess.DTO.MovimientoDTO;
 
 /**
  * La clase `MovimientoBL` en Java contiene un método para leer los movimientos del usuario actualmente
- * conectado en función del ID de usuario proporcionado.
+ * conectado en función del  ID de usuario proporcionado .
  */
 public class MovimientoBL {
     private MovimientoDAO movimientoDAO = new MovimientoDAO();
