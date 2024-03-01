@@ -1,3 +1,6 @@
+/**
+ * Panel de transferencia que permite al usuario realizar transferencias de dinero a otros usuarios.
+ */
 package UserInterface.GUI;
 
 import java.awt.Dimension;
@@ -31,16 +34,21 @@ import UserInterface.CustomerControl.Label;
 import UserInterface.CustomerControl.TextBox;
 
 public class PnlTransferencia extends JPanel implements ActionListener {
-    @SuppressWarnings("unused")
-    private Integer idUsuarioRecibe, idMaxUsuario, 
-                    nroPagina = 1, totalPaginas;
+    // Variables de clase
+    private Integer idUsuarioRecibe, idMaxUsuario, nroPagina = 1, totalPaginas;
     private TransferenciaBL transferenciaBL = new TransferenciaBL();
-    private UsuarioDTO usuarioDTOLogeado      = null;
-    ArrayList<UsuarioDTO> usuariosDTOReciben  = null;
-    private UsuarioBL  usuarioBL              = new UsuarioBL();
-    private PnlMenu pnlMenu                   = null;
+    private UsuarioDTO usuarioDTOLogeado = null;
+    private ArrayList<UsuarioDTO> usuariosDTOReciben = null;
+    private UsuarioBL usuarioBL = new UsuarioBL();
+    private PnlMenu pnlMenu = null;
     private Image backgroundImage;
 
+    /**
+     * Constructor del panel de transferencia.
+     * 
+     * @param usuarioDTOLogeado El usuario que ha iniciado sesión.
+     * @param pnlMenu           El panel del menú principal.
+     */
     public PnlTransferencia(UsuarioDTO usuarioDTOLogeado, PnlMenu pnlMenu) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
         this.pnlMenu = pnlMenu;
@@ -54,12 +62,14 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Error al cargar recursos");
         }
 
+        // Asignación de eventos a los botones
         btnIni.addActionListener(this);
         btnAnt.addActionListener(this);
         btnSig.addActionListener(this);
         btnFin.addActionListener(this);
         btnTransferencia.addActionListener(this);
         try {
+            // Carga de imagen de fondo
             backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
 
         } catch (IOException e) {
@@ -67,6 +77,13 @@ public class PnlTransferencia extends JPanel implements ActionListener {
         }
     }
 
+    // Métodos privados
+
+    /**
+     * Carga los datos necesarios para el panel.
+     * 
+     * @throws Exception Si hay un error durante la carga de datos.
+     */
     private void cargarDatos() throws Exception {
         idUsuarioRecibe = 1;
         usuarioBL = new UsuarioBL();
@@ -74,11 +91,19 @@ public class PnlTransferencia extends JPanel implements ActionListener {
         idMaxUsuario = usuariosDTOReciben.size();
     }
 
+    /**
+     * Muestra la información sobre la paginación.
+     */
     private void mostrarDatos() {
         totalPaginas = (idMaxUsuario - 1) / 10 + 1;
         lblTotalReg.setText("Página " + nroPagina + " de " + totalPaginas);
     }
 
+    /**
+     * Muestra la tabla de usuarios para realizar la transferencia.
+     * 
+     * @throws Exception Si hay un error al mostrar la tabla.
+     */
     private void mostrarTabla() throws Exception {
         int tamanoPagina = 10,
                 startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
@@ -165,14 +190,14 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             try {
                 String strMonto = txtMonto.getText();
                 String strIdUsuarioRecibe = txtIdUsuario.getText();
-        
+
                 if (!strMonto.isEmpty() && !strIdUsuarioRecibe.isEmpty()) {
                     if (transferenciaBL.esNumeroFloatPositivo(strMonto) && transferenciaBL.esNumeroEntero(strIdUsuarioRecibe)) {
                         float monto = Float.parseFloat(strMonto);
                         int idUsuarioRecibe = Integer.parseInt(strIdUsuarioRecibe);
-                        
+
                         boolean transferenciaExitosa = transferenciaBL.transferirDinero(usuarioDTOLogeado, idUsuarioRecibe, monto);
-                        
+
                         if (transferenciaExitosa) {
                             JOptionPane.showMessageDialog(null, "Transferencia realizada con éxito");
                             pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
@@ -182,12 +207,12 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Monto o ID de usuario receptor inválidos");
                 } else
                     JOptionPane.showMessageDialog(null, "Por favor ingresa el monto y el ID del usuario receptor");
-                
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error al transferir");
             }
         }
-    
+
         try {
                 cargarDatos();
                 mostrarDatos();
@@ -196,11 +221,10 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             ex.printStackTrace();
         }
     }
-    
 
-    /********************************
-     * FormDesing
-     ********************************/
+
+    // Diseño del formulario
+
     private Label lblTitulo = new Label("TRANSFERENCIAS"),
             lblIdUsuario = new Label("Id Usuario Seleccionado: "),
             lblMonto = new Label("Monto ($): "),
@@ -216,9 +240,9 @@ public class PnlTransferencia extends JPanel implements ActionListener {
             pnlBtnTransferencia = new JPanel(new FlowLayout()),
             pnlBtnPagina = new JPanel(new FlowLayout());
 
-    /************************
-     * Customize : Form
-     ************************/
+    /**
+     * Personalización del diseño del formulario.
+     */
     public void customerSizeControl() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
