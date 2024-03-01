@@ -127,8 +127,8 @@ public class PnlTransferencia extends JPanel implements ActionListener {
 
         JTable table = new JTable(data, encabezado);
         table.setShowHorizontalLines(true);
-        table.getTableHeader().setBackground(Estilo.COLOR_BORDER);
-        table.setGridColor(Estilo.COLOR_BORDER);
+        table.getTableHeader().setBackground(Estilo.COLOR_LABEL);
+        table.setGridColor(Estilo.COLOR_LABEL);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
 
@@ -157,10 +157,9 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                 try {
                     if (!e.getValueIsAdjusting()) {
                         int row = table.getSelectedRow();
-                        if (row != -1) {
-                            Object idUsuarioSeleccionado = table.getValueAt(row, 0);
+                        Object idUsuarioSeleccionado = table.getValueAt(row, 0);
+                        if (row != -1 && idUsuarioSeleccionado != null)
                             txtIdUsuario.setText(idUsuarioSeleccionado.toString());
-                        }
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -197,13 +196,16 @@ public class PnlTransferencia extends JPanel implements ActionListener {
                         float monto = Float.parseFloat(strMonto);
                         int idUsuarioRecibe = Integer.parseInt(strIdUsuarioRecibe);
 
-                        boolean transferenciaExitosa = transferenciaBL.transferirDinero(usuarioDTOLogeado, idUsuarioRecibe, monto);
-
-                        if (transferenciaExitosa) {
-                            JOptionPane.showMessageDialog(null, "Transferencia realizada con éxito");
-                            pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
+                        if(monto <= 10000) {
+                            boolean transferenciaExitosa = transferenciaBL.transferirDinero(usuarioDTOLogeado, idUsuarioRecibe, monto);
+                            
+                            if (transferenciaExitosa) {
+                                JOptionPane.showMessageDialog(null, "Transferencia realizada con éxito");
+                                pnlMenu.actualizarSaldo(usuarioDTOLogeado.getSaldo());
+                            } else
+                                JOptionPane.showMessageDialog(null, "Saldo insuficiente, nulo o excesivo");
                         } else
-                            JOptionPane.showMessageDialog(null, "Saldo insuficiente");
+                            JOptionPane.showMessageDialog(null, "El valor máximo de recarga es 10000.00");
                     } else 
                         JOptionPane.showMessageDialog(null, "Monto o ID de usuario receptor inválidos");
                 } else
