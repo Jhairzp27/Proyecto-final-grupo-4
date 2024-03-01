@@ -30,6 +30,7 @@ import UserInterface.CustomerControl.Label;
 
 public class PnlMovimientos extends JPanel implements ActionListener {
     // Atributos para el control de paginación y datos
+    @SuppressWarnings("unused")
     private Integer idMovimiento, idMaxMovimiento, nroPagina = 1, totalPaginas;
     private UsuarioDTO usuarioDTOLogeado = null;
     private ArrayList<MovimientoDTO> listaMovimientoDTO = null;
