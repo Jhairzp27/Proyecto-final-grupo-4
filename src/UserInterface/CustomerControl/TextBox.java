@@ -40,7 +40,7 @@ public class TextBox extends JTextField {
      * @return El borde compuesto creado.
      */
     private Border createBorderRect() {
-        Border lineBorder = BorderFactory.createLineBorder(Estilo.COLOR_BORDER); // Borde de línea
+        Border lineBorder = BorderFactory.createLineBorder(Estilo.COLOR_LABEL); // Borde de línea
         Border emptyBorder = new EmptyBorder(5, 5, 5, 5); // Margen interno
         return new CompoundBorder(lineBorder, emptyBorder); // Borde compuesto
     }
@@ -56,7 +56,7 @@ public class TextBox extends JTextField {
         return BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(0, 0, thickness, 0), // Borde vacío en la parte superior, izquierda y
                                                                      // derecha
-                BorderFactory.createMatteBorder(0, 0, thickness, 0, Estilo.COLOR_BORDER)); // Borde mate en la parte
+                BorderFactory.createMatteBorder(0, 0, thickness, 0, Estilo.COLOR_LABEL)); // Borde mate en la parte
                                                                                            // inferior
     }
 }
