@@ -29,38 +29,50 @@ import UserInterface.CustomerControl.Estilo;
 import UserInterface.CustomerControl.Label;
 
 public class PnlMovimientos extends JPanel implements ActionListener {
+    // Atributos para el control de paginación y datos
     @SuppressWarnings("unused")
-    private Integer idMovimiento, idMaxMovimiento,
-            nroPagina = 1, totalPaginas;
+    private Integer idMovimiento, idMaxMovimiento, nroPagina = 1, totalPaginas;
     private UsuarioDTO usuarioDTOLogeado = null;
-    ArrayList<MovimientoDTO> listaMovimientoDTO = null;
+    private ArrayList<MovimientoDTO> listaMovimientoDTO = null;
     private MovimientoBL movimientoBL = null;
     private Image backgroundImage;
 
+    /**
+     * Constructor de la clase PnlMovimientos.
+     * 
+     * @param usuarioDTOLogeado El objeto UsuarioDTO que representa al usuario actual.
+     */
     public PnlMovimientos(UsuarioDTO usuarioDTOLogeado) {
         this.usuarioDTOLogeado = usuarioDTOLogeado;
-        customerSizeControl();
+        customerSizeControl(); // Configura el tamaño y diseño del panel
 
         try {
-            cargarDatos();
-            mostrarDatos();
-            mostrarTabla();
+            cargarDatos(); // Carga los datos de los movimientos del usuario
+            mostrarDatos(); // Muestra los datos generales de los movimientos
+            mostrarTabla(); // Muestra la tabla de movimientos
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar recursos");
         }
 
+        // Configura los botones de paginación
         btnIni.addActionListener(this);
         btnAnt.addActionListener(this);
         btnSig.addActionListener(this);
         btnFin.addActionListener(this);
-        try {
-            backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
 
+        try {
+            // Carga la imagen de fondo del panel
+            backgroundImage = ImageIO.read(new File("src\\UserInterface\\Resource\\FondoAcciones.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Carga los datos de los movimientos del usuario.
+     * 
+     * @throws Exception Si ocurre un error al cargar los datos.
+     */
     private void cargarDatos() throws Exception {
         idMovimiento = 1;
         movimientoBL = new MovimientoBL();
@@ -68,11 +80,19 @@ public class PnlMovimientos extends JPanel implements ActionListener {
         idMaxMovimiento = listaMovimientoDTO.size();
     }
 
+    /**
+     * Muestra los datos generales de los movimientos.
+     */
     private void mostrarDatos() {
         totalPaginas = (idMaxMovimiento - 1) / 10 + 1;
         lblTotalReg.setText("Página " + nroPagina + " de " + totalPaginas);
     }
 
+    /**
+     * Muestra la tabla de movimientos.
+     * 
+     * @throws Exception Si ocurre un error al mostrar la tabla.
+     */
     private void mostrarTabla() throws Exception {
         int tamanoPagina = 10,
                 startIndex = ((nroPagina - 1) * tamanoPagina) + 1,
@@ -82,7 +102,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
         Object[][] data = new Object[tamanoPagina][5];
 
         int index = 0;
-        for(int i = startIndex; i <= endIndex; i++) {
+        for (int i = startIndex; i <= endIndex; i++) {
             try {
                 MovimientoDTO m = listaMovimientoDTO.get(i - 1);
                 data[index][0] = m.getIdTransferencia();
@@ -91,7 +111,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
                 data[index][3] = m.getMonto();
                 data[index][4] = m.getFecha();
                 index++;
-            } catch(Exception e) {
+            } catch (Exception e) {
                 break;
             }
         }
@@ -126,6 +146,9 @@ public class PnlMovimientos extends JPanel implements ActionListener {
         pnlTabla.repaint();
     }
 
+    /**
+     * Maneja las acciones de los botones de paginación.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnIni)
@@ -146,9 +169,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
         }
     }
 
-    /********************************
-     * FormDesing
-     ********************************/
+    // Componentes de diseño del formulario
     private Label lblTitulo = new Label("HISTORIAL DE MOVIMIENTOS"),
             lblTotalReg = new Label("  0 de 0  ");
     private Button btnIni = new Button(" |< "),
@@ -158,14 +179,14 @@ public class PnlMovimientos extends JPanel implements ActionListener {
     private JPanel pnlTabla = new JPanel(),
             pnlBtnPagina = new JPanel(new FlowLayout());
 
-    /************************
-     * Customize : Form
-     ************************/
+    /**
+     * Configura el tamaño y diseño del panel.
+     */
     public void customerSizeControl() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Panel.Paginacion.Tabla
+        // Panel de paginación
         pnlBtnPagina.add(btnIni);
         pnlBtnPagina.add(btnAnt);
         pnlBtnPagina.add(lblTotalReg);
@@ -176,7 +197,7 @@ public class PnlMovimientos extends JPanel implements ActionListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Titulo
+        // Título
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 6;
@@ -196,6 +217,9 @@ public class PnlMovimientos extends JPanel implements ActionListener {
         add(pnlBtnPagina, gbc);
     }
 
+    /**
+     * Pinta el componente gráfico, incluyendo una imagen de fondo si está disponible.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

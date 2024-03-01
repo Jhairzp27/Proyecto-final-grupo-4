@@ -61,36 +61,6 @@ public class TransferenciaBL {
     }
 
     /**
-     * Esta función Java actualiza una transferencia utilizando el objeto TransferenciaDTO
-     * proporcionado.
-     * 
-     * @param transferenciaDTO El parámetro `transferenciaDTO` es un objeto de tipo `TransferenciaDTO`
-     * que contiene los datos necesarios para actualizar un registro de transferencia en la base de
-     * datos. El método `actualizar` se encarga de actualizar el registro de transferencia utilizando
-     * los datos proporcionados en el objeto `transferenciaDTO`.
-     * @return El método está devolviendo un valor booleano, el cual es el resultado de llamar al
-     * método `actualizar` sobre el objeto `transferenciaDAO` con el parámetro `transferenciaDTO`.
-     */
-    public boolean actualizar(TransferenciaDTO transferenciaDTO) throws Exception {
-        return transferenciaDAO.actualizar(transferenciaDTO);
-    }
-
-    /**
-     * La función `eliminar` en Java intenta eliminar una transferencia con el ID especificado
-     * utilizando un objeto transferenciaDAO.
-     * 
-     * @param idTransferencia El parámetro `idTransferencia` es un valor Entero que representa el
-     * identificador único de una transferencia que se desea eliminar de la base de datos. El método
-     * `eliminar` en el fragmento de código se encarga de llamar al método `eliminar` del objeto
-     * `transferenciaDAO` para eliminar el
-     * @return El método devuelve un valor booleano, que indica si la transferencia con el
-     * idTransferencia especificado se eliminó exitosamente o no.
-     */
-    public boolean eliminar(Integer idTransferencia) throws Exception {
-        return transferenciaDAO.eliminar(idTransferencia);
-    }
-
-    /**
      * La función `recargar` en Java actualiza el saldo de un usuario, crea un registro de
      * transferencia y devuelve verdadero si ambas operaciones tienen éxito.
      * 
