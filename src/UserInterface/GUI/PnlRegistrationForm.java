@@ -1,10 +1,10 @@
 /*
-|----------------------------------------|
-| (©) 2K24 EPN-FIS, All rights reserved. |
-| jhair.zambrano@epn.edu.ec   Jhairzp27  |
-|----------------------------------------|
-Autor : Blurryfacce - Jhairzp27
-Fecha : 29.feb.2k24
+|------------------------------------------|
+| (©) 2K24 EPN-FIS, All rights reserved.   |
+| gregory.zambrano@epn.edu.ec   Jhairzp27  |
+|------------------------------------------|
+Autor : Jhairzp27
+Fecha : 25.feb.2k24
 */
 package UserInterface.GUI;
 
